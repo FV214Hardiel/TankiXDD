@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: FirebirdMaterial
+  m_Shader: {fileID: -6465566751694194690, guid: 029702eddc88dac4eacc762cf9428e1d, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _Details:
+        m_Texture: {fileID: 2800000, guid: d2e756f33c521254d94ac919bf2863be, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailsTexture:
+        m_Texture: {fileID: 2800000, guid: 78097dd1bbcd04b41bcfd240ca0e83ad, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Lightmap:
+        m_Texture: {fileID: 2800000, guid: ce3a62ddf5997ed4f9a3c71a720c1f5f, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTexture:
+        m_Texture: {fileID: 2800000, guid: 32e66385067704b48a8e7ea158ef51f4, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_2afe047ad98147908c497fbf07e799b0_Texture_1:
+        m_Texture: {fileID: 2800000, guid: e742cb42d0021ba4398dcdda59e3c6f4, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_898092def8724ce8b0031db7403b5edb_Texture_1:
+        m_Texture: {fileID: 2800000, guid: b36a93ef1bfc7bf4eab0428077eeab29, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Skin:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _BUILTIN_QueueControl: 0
+    - _BUILTIN_QueueOffset: 0
+    - _isDead: 0
+    - _isShieldUp: 0
+    - _isSkin: 0
+    m_Colors:
+    - _ShieldColor: {r: 0, g: 0, b: 0.9411765, a: 0}
+    - _TankColor: {r: 0.5943396, g: 0.12615702, b: 0.12615702, a: 0}
+  m_BuildTextureStacks: []
+--- !u!114 &8013668612273361134
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 639247ca83abc874e893eb93af2b5e44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 0

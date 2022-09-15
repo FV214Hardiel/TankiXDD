@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: TestyMaterial
+  m_Shader: {fileID: -6465566751694194690, guid: 32fa356c3f0d38c43ac6ae62af393e44, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _DeadText:
+        m_Texture: {fileID: 2800000, guid: 592292423a32d73429f7f2782f5d1845, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_349db3d227bb407cb2d5d171ccaa5c99_Texture_1:
+        m_Texture: {fileID: 2800000, guid: 7256e727a3d10bd42bed67b6a49025c5, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Testytext:
+        m_Texture: {fileID: 2800000, guid: 7d93a094b2cc4e245865981d72ef4a11, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _AMOCL: 0
+    - _BUILTIN_QueueControl: 0
+    - _BUILTIN_QueueOffset: 0
+    - _Thickness: 1.15
+    m_Colors:
+    - _BaseColor: {r: 0.51886785, g: 0.51886785, b: 0.51886785, a: 0}
+    - _OutlineColor: {r: 1, g: 0, b: 0, a: 0}
+    - _TestyFrenel: {r: 0.754717, g: 0.48834625, b: 0, a: 0.6117647}
+    - _TextColor: {r: 0.6037736, g: 0.16803133, b: 0.16803133, a: 1}
+  m_BuildTextureStacks: []
+--- !u!114 &4714955715531238014
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 639247ca83abc874e893eb93af2b5e44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 0
