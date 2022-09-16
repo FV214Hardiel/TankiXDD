@@ -16,10 +16,10 @@ public class FirebirdShot : MonoBehaviour
     float damage;
     GameObject source;
     
-    void Start()
+    void OnEnable()
     {
-        //Destroying shot after expiring its ToL
-        Destroy(gameObject, timeOfLife);
+        
+        //Destroy(gameObject, timeOfLife);
 
         //Increasing shot size 
         scaleCurrent = minScale; 
@@ -67,13 +67,15 @@ public class FirebirdShot : MonoBehaviour
     }
 
     //Creating the shot prefab 
-    public static void CreateShot(GameObject prefab, Vector3 pos, Vector3 velocityVector, GameObject source, float dmg)
+    public static void CreateShot(GameObject prefab, Vector3 pos, Vector3 velocityVector, GameObject source, float dmg, float tol)
     {
         GameObject go = Instantiate(prefab, pos, Camera.main.transform.rotation);
         go.GetComponent<Rigidbody>().velocity = velocityVector;
         go.GetComponent<FirebirdShot>().damage = dmg;
         go.GetComponent<FirebirdShot>().source = source;
-        Destroy(go, 4);
+
+        //Destroying shot after expiring its ToL
+        Destroy(go, tol);
 
     }
 }

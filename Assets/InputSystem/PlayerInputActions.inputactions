@@ -7,12 +7,12 @@
             "actions": [
                 {
                     "name": "Fire",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "4412e1be-975d-4396-b96f-7e7f8dd035bb",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Movement",
@@ -22,6 +22,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "7bd4280e-f75f-47b0-bae7-ea75ec4f53bb",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -90,6 +99,76 @@
                     "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "6ea8abe2-e74c-4221-964f-70337263a97c",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "PauseMenu",
+            "id": "24e11c60-9afc-409e-9bf1-097f1c946ff6",
+            "actions": [
+                {
+                    "name": "New action",
+                    "type": "Button",
+                    "id": "ed550914-bf7b-4a4b-85db-530d976edc5e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ExitPause",
+                    "type": "Button",
+                    "id": "b62c5aa9-c541-4fc1-b89d-337afc720ddd",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "bd5e00bc-695b-4f3a-9fe6-059a233c0a85",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bdc70067-6924-481d-b2a1-67c5bb3c9c40",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ExitPause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "69be52b3-ff94-421a-af05-c3294370e6e4",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ExitPause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

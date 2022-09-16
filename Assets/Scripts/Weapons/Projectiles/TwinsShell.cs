@@ -34,17 +34,17 @@ public class TwinsShell : MonoBehaviour
             {
 
                 //Adding debuff and increasing damage if debuff exists on target
-                Effect twinsEffect = eh.TryGetEffect(debuff);
+                Effect twinsEffect = eh.effh.GetEffect(debuff.effectID);
                 if (twinsEffect == null)
                 {
                     
-                    eh.AddEffect(debuff);
+                    eh.effh.AddEffect(debuff);
                 }
                 else
                 {                   
 
                     damage += 3 * twinsEffect.effectStacks;
-                    eh.AddEffect(debuff);
+                    eh.effh.AddEffect(debuff);
                 }
                 
                 eh.DealDamage(damage, source);
@@ -62,15 +62,17 @@ public class TwinsShell : MonoBehaviour
     }
 
     //Creating the shot prefab 
-    public static void CreateShot(GameObject prefab, Vector3 pos, Vector3 velocityVector, GameObject source, float dmg, Effect debuff)
+    public static void CreateShot(GameObject prefab, Vector3 pos, Vector3 velocityVector, GameObject source, float dmg, Effect debuff, float tol)
     {
         GameObject go = Instantiate(prefab, pos, Camera.main.transform.rotation);
         go.GetComponent<Rigidbody>().velocity = velocityVector;
         TwinsShell sht = go.GetComponent<TwinsShell>();
         sht.damage = dmg;
         sht.source = source;
-        sht.debuff = debuff;        
+        sht.debuff = debuff;
 
+        //Destroying shot after expiring its ToL
+        Destroy(go, tol);
     }
 
 }

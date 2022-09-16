@@ -10,6 +10,8 @@ public class PlayerRailgun : PlayerShooting
     public Light hitLight;
     Color c;
 
+    Transform muzzle;
+
     public float shotDurF;
     WaitForSeconds shotDuration;
 
@@ -19,17 +21,24 @@ public class PlayerRailgun : PlayerShooting
     public float weapRange;
     
 
-    public float reloadTime;
-    float nextShot;
+    //public float reloadTime;
+    //float nextShot;
+
+    public float delayBetweenShots;
+    float remainingDelay;
+
+    PlayerInputActions inputActions;
 
     //WaitForSeconds reloadTime;
 
     void Start()
     {
         laserLine = GetComponent<LineRenderer>();
-        //laserLight = GetComponentInChildren<Light>();
+
+        inputActions = new();
+        
         shotLight = muzzle.GetComponent<Light>();
-        nextShot = Time.time;
+        
         shotDuration = new WaitForSeconds((shotDurF-0.04f)/10f);
         chargeDuration = new WaitForSeconds(chargDurF / 10f);
         c = laserLine.material.color;
@@ -38,9 +47,14 @@ public class PlayerRailgun : PlayerShooting
     
     void Update()
     {
-        if (!GameHandler.GameIsPaused && Input.GetButtonDown("Fire1") && Time.time > nextShot)
+
+        if (GameHandler.GameIsPaused) return; //Checking pause
+
+        if (remainingDelay > 0) remainingDelay -= Time.deltaTime; //Decreasing delay timer 
+
+        if (remainingDelay <= 0 && inputActions.PlayerTankControl.Fire.IsPressed())
         {
-            nextShot = Time.time + reloadTime + chargDurF;
+            remainingDelay = delayBetweenShots;
             StartCoroutine(ShotEffect());
 
         }

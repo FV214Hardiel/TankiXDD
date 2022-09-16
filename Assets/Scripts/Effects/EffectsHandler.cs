@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class EffectsHandler : MonoBehaviour
 {
-    public List<Effect> activeEffects;   
+    public List<Effect> activeEffects;
+    public bool isStatusAffectable = true; //Every entity can get buffs/debuffs until opposite is declared
 
     int i;
    

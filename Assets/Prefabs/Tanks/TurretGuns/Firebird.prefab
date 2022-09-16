@@ -324,10 +324,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   source: {fileID: 0}
   damage: 10
-  angle: 2
+  angle: 4
   prefab: {fileID: 8537647364723216535, guid: 80977d32d624fed40a4b2fb700a28f5a, type: 3}
   delayBetweenShots: 0.1
-  projectileSpeed: 20
+  weapRange: 50
+  projectileSpeed: 25
 --- !u!114 &6784220450071641281
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -341,6 +342,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   source: {fileID: 0}
+  damage: 0
 --- !u!114 &7347084381769038447
 MonoBehaviour:
   m_ObjectHideFlags: 0

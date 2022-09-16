@@ -7,12 +7,10 @@ public class PlayerSmoky : PlayerShooting
 
     public float weapRange;
     
-
     public float reloadTime;
     float remCD;
 
-    
-    
+    Transform muzzle;
 
     float wait;
     public GameObject expPref;
@@ -64,7 +62,7 @@ public class PlayerSmoky : PlayerShooting
             if (health != null)
             {
                 health.TakingDMG(damage, source);
-                hitAudio.Play();
+                
 
             }
             Destroy(Instantiate(expPref, hit.point, Camera.main.transform.rotation), 1);

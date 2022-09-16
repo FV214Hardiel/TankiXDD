@@ -6,7 +6,7 @@ public class AITwins : AIShooting
 
 {
     public GameObject shellPref;
-    public float shellVeloc;
+   
 
     public float delayBetweenShots;
     float remainingDelay;
@@ -20,6 +20,10 @@ public class AITwins : AIShooting
     float debuffPower;
     float debuffDuration;
     GameObject ShellFired;
+
+    public float weapRange;
+    public float projectileSpeed;
+    float timeOfLife;
 
     AudioSource shotSound;
 
@@ -36,6 +40,8 @@ public class AITwins : AIShooting
         source = GetComponentInParent<EntityHandler>().gameObject;
 
         shotSound = GetComponent<AudioSource>();
+
+        timeOfLife = weapRange / projectileSpeed;
 
         remainingDelay = 0;
         shotFromRight = true;
@@ -61,13 +67,13 @@ public class AITwins : AIShooting
             remainingDelay = delayBetweenShots;
             if (shotFromRight)
             {
-                TwinsShell.CreateShot(shellPref, muzzleR.position, muzzleR.forward * shellVeloc, source, damage, new TwinsDamageStacks(debuffPower, debuffDuration));
+                TwinsShell.CreateShot(shellPref, muzzleR.position, muzzleR.forward * projectileSpeed, source, damage, new TwinsDamageStacks(debuffPower, debuffDuration), timeOfLife);
                 shotFromRight = false;
                 shotSound.Play();
             }
             else
             {
-                TwinsShell.CreateShot(shellPref, muzzleL.position, muzzleL.forward * shellVeloc, source, damage, new TwinsDamageStacks(debuffPower, debuffDuration));
+                TwinsShell.CreateShot(shellPref, muzzleL.position, muzzleL.forward * projectileSpeed, source, damage, new TwinsDamageStacks(debuffPower, debuffDuration), timeOfLife);
                 shotFromRight = true;
                 shotSound.Play();
             }

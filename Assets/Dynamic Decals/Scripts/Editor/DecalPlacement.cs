@@ -47,6 +47,9 @@ namespace LlockhamIndustries.Decals
             //Register undo/redo callback
             Undo.undoRedoPerformed += UndoRedo;
 
+#if UNITY_EDITOR
+#pragma warning disable CS0618
+#endif
             //Register onSceneGUI
             SceneView.onSceneGUIDelegate += OnSceneGUI;
         }
@@ -54,6 +57,7 @@ namespace LlockhamIndustries.Decals
         {
             //De-register undo/redo callback
             Undo.undoRedoPerformed -= UndoRedo;
+
 
             //De-register onSceneGUI
             SceneView.onSceneGUIDelegate -= OnSceneGUI;
@@ -269,7 +273,7 @@ namespace LlockhamIndustries.Decals
                         //If the surface is of the tag, print the decal associated with it.
                         for (int i = 1; i < printTags.Length; i++)
                         {
-                            if (printTags[i] == Surface.tag)
+                            if (Surface.CompareTag(printTags[i]))
                             {
                                 DrawProjection(prints[i], Position, Rotation, Surface);
                                 printed = true;

@@ -1,0 +1,152 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PlayerVulcan : PlayerShooting
+{
+    public float delayBetweenShots;
+    float remainingDelay;
+
+    byte stacks;
+    public float stackDuration;
+    float stackTimer;
+    float modifiedDelay;
+
+    public Transform muzzle;
+
+    public float weapRange;
+
+    Vector3 shotVector;
+    float angle;
+
+    List<ushort> disperseAngles;
+    List<float> disperseLengths;
+    int index;
+
+    AudioSource shotSound;
+
+    PlayerInputActions inputActions;
+    float inputValue;
+
+    
+
+    void Start()
+    {
+        source = GetComponentInParent<EntityHandler>().gameObject;
+        muzzle = transform.Find("muzzle");
+
+        inputActions = new();
+        if (!GameHandler.GameIsPaused) inputActions.PlayerTankControl.Enable();
+
+        shotSound = GetComponent<AudioSource>();
+
+        remainingDelay = 0;        
+
+        disperseAngles = new();
+        for (int _ = 0; _ < 50; _++)
+        {
+            disperseAngles.Add((ushort)Random.Range(1, 357));
+        }
+
+        disperseLengths = new();
+        for (int _ = 0; _ < 50; _++)
+        {
+            disperseLengths.Add(Random.Range(0f, 1f));
+        }
+
+        index = 0;
+
+        stacks = 0;
+        stackTimer = 0;
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (GameHandler.GameIsPaused) return; //Checking pause
+
+        if (remainingDelay > 0) //Decreasing delay timer  
+
+        {
+            remainingDelay -= Time.deltaTime;
+            return;
+        }
+        stackTimer -= Time.deltaTime;
+        if (stackTimer <= 0 && stacks > 0)
+        {
+            stacks--;
+            stackTimer = stackDuration;
+        }
+
+        inputValue = inputActions.PlayerTankControl.Fire.ReadValue<float>();
+
+        if (inputValue > 0) //Shot
+        {
+            shotVector = DisperseVector(muzzle.forward, angle);
+
+            Shot(shotVector);
+        }
+
+
+    }
+
+    Vector3 DisperseVector(Vector3 originalVector, float angle)
+    {
+
+        Vector3 vector = originalVector.normalized; //Original vector must be normalized
+
+        //Taking random values from pregenerated lists
+        ushort angleDis = disperseAngles[index];
+        float lenghtDis = disperseLengths[index];
+        index++;
+        if (index >= disperseAngles.Count) index = 0; //Cycling indexes
+
+        angle *= Mathf.Deg2Rad; //Angle from degrees to rads
+        float ratioMultiplier = Mathf.Tan(angle); //Tangens of angle for ratio between Dispersion Leg and Base Leg
+
+        //Adding UP vector multiplied by ratio and random value and rotated on random angle
+        vector += Quaternion.AngleAxis(angleDis, originalVector) * (lenghtDis * ratioMultiplier * muzzle.up);
+
+        return vector.normalized;
+    }
+
+    void Shot(Vector3 shotVector)
+    {
+        
+        shotSound.Play();
+
+        RaycastHit hit;
+        if (Physics.Raycast(muzzle.position, shotVector, out hit, weapRange))
+        {
+            EntityHandler eh = hit.collider.GetComponentInParent<EntityHandler>(false);
+            if (eh != null)
+            {                
+                if (!eh.isDead) //Checking if target is alive and wasnt already hit by this shot
+                {
+                    eh.DealDamage(damage, source);
+                    
+
+                }
+
+            }
+        }
+
+        // Here for SHOT VFX
+
+        //Here for increasing Attack Speed
+
+
+        modifiedDelay = (delayBetweenShots * 1.8f) / (stacks + 1 + 0.8f);
+        //modifiedDelay = (delayBetweenShots) / (stacks + 1);
+        remainingDelay = modifiedDelay;
+        Debug.Log(remainingDelay);
+        Debug.Log(stacks);
+
+        stacks += 1;
+        stacks = (byte)(Mathf.Clamp(stacks, 0, 17));
+        stackTimer = stackDuration;
+
+
+    }
+}

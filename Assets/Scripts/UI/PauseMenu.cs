@@ -6,31 +6,34 @@ using UnityEngine.SceneManagement;
 public class PauseMenu : MonoBehaviour
 {
     [SerializeField] GameObject pauseMenu;
-    
+
+    PlayerInputActions inputActions;
 
     private void Start()
     {
         GameHandler.GameIsPaused = false;
-    }
-    public void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape) && !GameHandler.GameIsOver)
-        {
-            if (!GameHandler.GameIsPaused)
-            {
-                Pause();
-            }
-            else
-            {
-                Resume();
-            }
-        }
-        
+
+        inputActions = new();
+        inputActions.PlayerTankControl.Enable();
     }
 
+    public void Update()
+    {
+        if (inputActions.PlayerTankControl.Pause.WasPressedThisFrame() && !GameHandler.GameIsOver) Pause();        
+
+        if (inputActions.PauseMenu.ExitPause.WasPressedThisFrame() && !GameHandler.GameIsOver) Resume();
+    }
+
+    
     public void Pause()
     {
         pauseMenu.SetActive(true);
+
+        //Changing an input scheme
+        inputActions.PlayerTankControl.Disable();
+        inputActions.PauseMenu.Enable();
+
+        //Stopping time
         Time.timeScale = 0f;
         GameHandler.GameIsPaused = true;
     }
@@ -38,10 +41,17 @@ public class PauseMenu : MonoBehaviour
     public void Resume()
     {
         pauseMenu.SetActive(false);
+
+        //Changing an input scheme
+        inputActions.PauseMenu.Disable();
+        inputActions.PlayerTankControl.Enable();
+
+        //Unstopping time
         Time.timeScale = 1f;
         GameHandler.GameIsPaused = false;
     }
 
+    //Exiting to main menu
     public void Home(int sceneID)
     {
         Time.timeScale = 1f;
@@ -49,6 +59,7 @@ public class PauseMenu : MonoBehaviour
         SceneManager.LoadScene(sceneID);
         
     }
+    
     public void RestartLevel()
     {
         Scene scene = SceneManager.GetActiveScene(); SceneManager.LoadScene(scene.name);

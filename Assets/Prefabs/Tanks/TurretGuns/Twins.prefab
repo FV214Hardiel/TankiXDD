@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 7971763633624435608}
   - component: {fileID: 6837960406586413561}
   - component: {fileID: 3328970105360283584}
-  - component: {fileID: 2714506777692298470}
   - component: {fileID: 3992770728335424790}
   - component: {fileID: 1330480302773919916}
+  - component: {fileID: 2714506777692298470}
   - component: {fileID: 3770881703321417766}
   m_Layer: 0
   m_Name: barrel
@@ -134,25 +134,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49cf2a827e3620e44ad1c2fe9f6d1c87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2714506777692298470
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1593534449744763263}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 46717925b9e181b408f738923cb70312, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  source: {fileID: 0}
-  damage: 3
-  shellPref: {fileID: 421942829619560955, guid: 24076df6f149c5647b8f99c953d04ebd, type: 3}
-  shellVeloc: 60
-  delayBetweenShots: 0.2
-  muzzleL: {fileID: 0}
-  muzzleR: {fileID: 0}
 --- !u!114 &3992770728335424790
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -262,6 +243,25 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &2714506777692298470
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1593534449744763263}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46717925b9e181b408f738923cb70312, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  source: {fileID: 0}
+  damage: 3
+  shellPref: {fileID: 421942829619560955, guid: 24076df6f149c5647b8f99c953d04ebd, type: 3}
+  shellVeloc: 60
+  delayBetweenShots: 1
+  muzzleL: {fileID: 0}
+  muzzleR: {fileID: 0}
 --- !u!114 &3770881703321417766
 MonoBehaviour:
   m_ObjectHideFlags: 0
