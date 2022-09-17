@@ -4,82 +4,47 @@ using UnityEngine;
 
 public class scr4 : MonoBehaviour
 {
-    List<testClass> testList;
+    Collider[] colliders;
+    public GameObject item;
+
+    //public LayerMask lyaerMask;
+    int lm;
     void Start()
     {
-        testList = new();
-        testList.Add(new testClass());
-        testList.Add(new testInherit());
-        testList.Add(new testClass());
 
+        if (Physics.Linecast(transform.position, item.transform.position, out RaycastHit hit))
+        {
+            if (hit.collider.gameObject == item)
+            {
+                Debug.Log("Path is clear");
+            }
+            else
+            {
+                Debug.Log("Path is blocked by " + hit.collider.name);
+            }
+            
+        }
+        //StartCoroutine(CustomUpdate());
 
-        StartCoroutine(CustomUpdate());
-        
     }
 
-    // Update is called once per frame
-    //void Update()
-    //{
-    //    foreach (var item in testList)
-    //    {
-    //        if (item.TestMethod(Time.deltaTime) <= 0)
-    //        {
-    //            testList.Remove(item);
-    //            break;
-    //        }
-
-
-    //    }
-
-    //    Debug.Log(testList.Count);
-        
-    //}
+    
 
     public IEnumerator CustomUpdate()
     {
         
         while (true)
         {
-            Debug.Log(Time.time);
+            //Debug.Log(Time.time);
+            colliders = Physics.OverlapSphere(transform.position, 20f, ~3);
+            foreach (Collider item in colliders)
+            {
+                Debug.Log(item.name);
+            }
+
             yield return new WaitForSeconds(2);
         }
     }
 }
 
-public class testClass
-{
-    protected float varA;
-    protected float varB;
 
-    public testClass()
-    {
-        varA = 3;
-        varB = varA;
-    }
-
-    public virtual float TestMethod(float time)
-    {
-        varB -= time;
-        return varB;
-    }
-
-    public override string ToString()
-    {
-        return (varA.ToString() + " " + varB.ToString() + ";");
-    }
-}
-
-public class testInherit : testClass
-{
-    public testInherit()
-    {
-        varA = 15f;
-        varB = 10f;
-    }
-
-    public override float TestMethod(float time)
-    {
-        varB -= time;
-        return varB;
-    }
-}

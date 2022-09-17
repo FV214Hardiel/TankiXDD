@@ -10,15 +10,15 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - PlayerTank
+  - PlayerTeamGreen
   - Water
   - UI
-  - Enemy
   - Ground
-  - Shot
   - Environment
-  - 
-  - 
+  - Shot
+  - Shields
+  - Dead
+  - EnemyTeamRed
   - 
   - 
   - 

@@ -82,7 +82,8 @@ public class EntityHandler : MonoBehaviour
     {
         
         isPlayer = false;
-        
+        gameObject.layer = LayerMask.NameToLayer("EnemyTeamRed");
+
     }
 
     //Setting some specific values for Player Tank
@@ -90,6 +91,7 @@ public class EntityHandler : MonoBehaviour
     {
         
         isPlayer = true;
+        gameObject.layer = LayerMask.NameToLayer("PlayerTeamGreen");
         
         
     }
@@ -97,6 +99,8 @@ public class EntityHandler : MonoBehaviour
     public void Die()
     {
         isDead = true;
+        gameObject.layer = LayerMask.NameToLayer("Dead");
+
         foreach (MeshRenderer item in meshRenderers) //Changing shader
         {
             item.material.SetFloat("_isDead", 1.0f);

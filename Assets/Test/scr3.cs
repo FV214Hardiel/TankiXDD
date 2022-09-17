@@ -7,10 +7,19 @@ public class scr3 : MonoBehaviour
     // Start is called before the first frame update
     Collider thisColl;
     string team;
-    
+    public LayerMask lyaerMask;
+    int lm;
+
     void Start()
     {
+
+        
+        lm = lyaerMask;
+
         thisColl = GetComponent<Collider>();
+        RaycastHit hit;
+        Physics.Raycast(transform.position, transform.forward, out hit, 20f, lm, QueryTriggerInteraction.Collide);
+        Debug.Log(gameObject.name  + " hits " + hit.collider.gameObject.name);
         
     }
 
@@ -20,16 +29,7 @@ public class scr3 : MonoBehaviour
 
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        Debug.Log(team);
-        if (other.bounds.Contains(transform.position))
-        {
-            Debug.Log("Ubit na ENTER");
-            Destroy(gameObject);
-        }
-
-    }
+    
 
     public static void Create(GameObject gameObject111, Vector3 pos, Vector3 velocity111, string teamus)
     {
@@ -39,15 +39,6 @@ public class scr3 : MonoBehaviour
         Destroy(go, 4);
         
     }
-    //private void OnTriggerStay(Collider other)
-    //{
-    //    //Debug.Log("Prosto EXIT");
-    //    if (other.bounds.Contains(transform.position))
-    //    {
-    //        Debug.Log("Ubit na EXIT");
-    //        Destroy(gameObject);
-    //    }
-
-    //}
+    
 
 }

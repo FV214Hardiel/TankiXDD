@@ -39,7 +39,7 @@ public class TankHull : ScriptableObject
         //Adding EH
         EntityHandler eh = tunk.AddComponent<EntityHandler>();
         eh.tankCard = this;
-
+        eh.AITankSetup();
 
 
         //Enabling Shield and Health
@@ -67,7 +67,7 @@ public class TankHull : ScriptableObject
         //Adding EH
         EntityHandler eh = tunk.AddComponent<EntityHandler>();
         eh.tankCard = this;
-
+        eh.PlayerTankSetup();
 
         //Enabling Shield and Health
         //tunk.GetComponent<Shield>().enabled = true;

@@ -9,12 +9,13 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: TestyMaterial
   m_Shader: {fileID: -6465566751694194690, guid: 32fa356c3f0d38c43ac6ae62af393e44, type: 3}
-  m_ShaderKeywords: 
+  m_ShaderKeywords: _BUILTIN_SURFACE_TYPE_TRANSPARENT
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
+  m_CustomRenderQueue: 3000
+  stringTagMap:
+    RenderType: Transparent
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
@@ -34,12 +35,21 @@ Material:
     m_Ints: []
     m_Floats:
     - _AMOCL: 0
+    - _BUILTIN_AlphaClip: 0
+    - _BUILTIN_Blend: 3
+    - _BUILTIN_CullMode: 0
+    - _BUILTIN_DstBlend: 0
     - _BUILTIN_QueueControl: 0
     - _BUILTIN_QueueOffset: 0
-    - _Thickness: 1.15
+    - _BUILTIN_SrcBlend: 2
+    - _BUILTIN_Surface: 1
+    - _BUILTIN_ZTest: 2
+    - _BUILTIN_ZWrite: 0
+    - _BUILTIN_ZWriteControl: 0
+    - _Thickness: 6.66
     m_Colors:
-    - _BaseColor: {r: 0.51886785, g: 0.51886785, b: 0.51886785, a: 0}
-    - _OutlineColor: {r: 1, g: 0, b: 0, a: 0}
+    - _BaseColor: {r: 0.24056602, g: 0.5872643, b: 1, a: 1}
+    - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
     - _TestyFrenel: {r: 0.754717, g: 0.48834625, b: 0, a: 0.6117647}
     - _TextColor: {r: 0.6037736, g: 0.16803133, b: 0.16803133, a: 1}
   m_BuildTextureStacks: []
