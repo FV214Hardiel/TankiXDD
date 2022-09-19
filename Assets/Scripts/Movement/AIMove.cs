@@ -65,7 +65,12 @@ public class AIMove : Move
 
     }
 
-    
+    private void OnDisable()
+    {
+        StopAllCoroutines();
+    }
+
+
     void Update()
     {
        
