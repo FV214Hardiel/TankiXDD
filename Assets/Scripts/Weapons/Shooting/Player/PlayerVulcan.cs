@@ -36,9 +36,7 @@ public class PlayerVulcan : PlayerShooting
     void Start()
     {
         source = GetComponentInParent<EntityHandler>().gameObject;
-        muzzle = transform.Find("muzzle");
-
-       
+        muzzle = transform.Find("muzzle");       
 
         inputActions = new();
         if (!GameHandler.GameIsPaused) inputActions.PlayerTankControl.Enable();
@@ -132,8 +130,7 @@ public class PlayerVulcan : PlayerShooting
             {                
                 if (!eh.isDead) //Checking if target is alive and wasnt already hit by this shot
                 {
-                    eh.DealDamage(damage, source);
-                    shotSound.Play();
+                    eh.DealDamage(damage, source);                    
                 }
             }
 
