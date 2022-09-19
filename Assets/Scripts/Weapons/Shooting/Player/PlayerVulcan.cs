@@ -27,6 +27,7 @@ public class PlayerVulcan : PlayerShooting
     AudioSource chargeSound;
 
     public GameObject prefabOfShot;
+    public ParticleSystem shotEffect;
 
     PlayerInputActions inputActions;
     float inputValue;
@@ -36,6 +37,8 @@ public class PlayerVulcan : PlayerShooting
     {
         source = GetComponentInParent<EntityHandler>().gameObject;
         muzzle = transform.Find("muzzle");
+
+       
 
         inputActions = new();
         if (!GameHandler.GameIsPaused) inputActions.PlayerTankControl.Enable();
@@ -119,6 +122,7 @@ public class PlayerVulcan : PlayerShooting
     void Shot(Vector3 shotVector)
     {        
         shotSound.Play();
+        shotEffect.Play();
 
         RaycastHit hit;
         if (Physics.Raycast(muzzle.position, shotVector, out hit, weapRange))
