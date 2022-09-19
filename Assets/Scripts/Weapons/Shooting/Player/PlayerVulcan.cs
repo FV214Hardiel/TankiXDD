@@ -7,7 +7,7 @@ public class PlayerVulcan : PlayerShooting
     public float delayBetweenShots;
     float remainingDelay;
 
-    byte stacks;
+    [SerializeField] byte stacks;
     public float stackDuration;
     float stackTimer;
     float modifiedDelay;
@@ -17,7 +17,7 @@ public class PlayerVulcan : PlayerShooting
     public float weapRange;
 
     Vector3 shotVector;
-    float angle;
+    public float angle;
 
     List<ushort> disperseAngles;
     List<float> disperseLengths;
@@ -26,9 +26,10 @@ public class PlayerVulcan : PlayerShooting
     AudioSource shotSound;
     AudioSource chargeSound;
 
+    public GameObject prefabOfShot;
+
     PlayerInputActions inputActions;
     float inputValue;
-
     
 
     void Start()
@@ -68,14 +69,14 @@ public class PlayerVulcan : PlayerShooting
     {
         if (GameHandler.GameIsPaused) return; //Checking pause
 
-        chargeSound.pitch = stacks > 0 ? (0.4f + stacks * 0.03f) : Mathf.Lerp(chargeSound.pitch, 0, 0.02f);
+        chargeSound.pitch = stacks > 0 ? (0.4f + stacks * 0.03f) : 0;
 
         if (remainingDelay > 0) //Decreasing delay timer  
-
         {
             remainingDelay -= Time.deltaTime;
             return;
         }
+        //Stacks are decreasing with time
         stackTimer -= Time.deltaTime;
         if (stackTimer <= 0 && stacks > 0)
         {
@@ -89,36 +90,34 @@ public class PlayerVulcan : PlayerShooting
         if (inputValue > 0) //Shot
         {
             shotVector = DisperseVector(muzzle.forward, angle);
-
             Shot(shotVector);
         }
         
-
     }
 
     Vector3 DisperseVector(Vector3 originalVector, float angle)
     {
-
         Vector3 vector = originalVector.normalized; //Original vector must be normalized
 
         //Taking random values from pregenerated lists
         ushort angleDis = disperseAngles[index];
         float lenghtDis = disperseLengths[index];
+
         index++;
         if (index >= disperseAngles.Count) index = 0; //Cycling indexes
 
         angle *= Mathf.Deg2Rad; //Angle from degrees to rads
-        float ratioMultiplier = Mathf.Tan(angle); //Tangens of angle for ratio between Dispersion Leg and Base Leg
+                
+        float ratioMultiplier = Mathf.Tan(angle); //Tangens of angle for ratio between Dispersion Leg and Base Leg       
 
         //Adding UP vector multiplied by ratio and random value and rotated on random angle
-        vector += Quaternion.AngleAxis(angleDis, originalVector) * (lenghtDis * ratioMultiplier * muzzle.up);
+        vector += Quaternion.AngleAxis(angleDis, originalVector) * (lenghtDis * ratioMultiplier * muzzle.up); 
 
         return vector.normalized;
     }
 
     void Shot(Vector3 shotVector)
-    {
-        
+    {        
         shotSound.Play();
 
         RaycastHit hit;
@@ -131,25 +130,22 @@ public class PlayerVulcan : PlayerShooting
                 {
                     eh.DealDamage(damage, source);
                     shotSound.Play();
-
                 }
-
             }
+
+            VulcanTrail.Create(prefabOfShot, muzzle.position, hit.point); //Shot VFX if hit
         }
-
-        // Here for SHOT VFX
-
+        else
+        {                     
+            VulcanTrail.Create(prefabOfShot, muzzle.position, muzzle.position+shotVector*weapRange); //Shot VFX if no hit
+        }
+        
         //Increasing Attack Speed
-        modifiedDelay = (delayBetweenShots * 1.8f) / (stacks + 1 + 0.8f);
-        //modifiedDelay = (delayBetweenShots) / (stacks + 1);
-        remainingDelay = modifiedDelay;
-        Debug.Log(remainingDelay);
-        Debug.Log(stacks);
+        modifiedDelay = (delayBetweenShots * 1.8f) / (stacks + 1 + 0.8f);        
+        remainingDelay = modifiedDelay;        
 
         stacks += 1;
         stacks = (byte)(Mathf.Clamp(stacks, 0, 17));
         stackTimer = stackDuration;
-
-
     }
 }
