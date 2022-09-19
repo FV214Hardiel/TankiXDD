@@ -11,12 +11,12 @@ public class AIMove : Move
     public Vector3 goal;
 
     NavMeshAgent agent;
-    Ray lineOfSight;
+    //Ray lineOfSight;
     RaycastHit hit;
 
     public LayerMask enemyLayers;
-    public float areaOfVision;
 
+    public float areaOfVision;
     public float attackRange;
     //public bool isTargetLocked;
     
@@ -24,12 +24,7 @@ public class AIMove : Move
     Transform newTarget;
 
     float maxBlindChaseDuration;
-    float chaseTimer;
-
-    
-
-    bool playerAlive;
-    
+    float chaseTimer;       
 
     AudioSource engineAudio;
     public enum AIEnum { Patrol, Chase, Attack}
@@ -73,20 +68,24 @@ public class AIMove : Move
 
     void Update()
     {
-       
-        //switch(AIState)
-        //{
-        //    case AIEnum.Patrol:
-                
-        //        Patrol();
-        //        break;
-        //    case AIEnum.Chase:
-        //        Chase();
-        //        break;
-        //    case AIEnum.Attack:
-        //        Attack();
-        //        break;
-        //}        
+
+        switch (AIState)
+        {
+            case AIEnum.Patrol:
+
+                Patrol();
+                break;
+            case AIEnum.Chase:
+                relPos = Vector3.ProjectOnPlane((target.transform.position - turret.transform.position), transform.up);
+                InnerRotQ = Quaternion.LookRotation(relPos, transform.up);
+                turret.transform.rotation = Quaternion.RotateTowards(turret.transform.rotation, InnerRotQ, Time.deltaTime * 50);
+                break;
+            case AIEnum.Attack:
+                relPos = Vector3.ProjectOnPlane((target.transform.position - turret.transform.position), transform.up);
+                InnerRotQ = Quaternion.LookRotation(relPos, transform.up);
+                turret.transform.rotation = Quaternion.RotateTowards(turret.transform.rotation, InnerRotQ, Time.deltaTime * 50);
+                break;
+        }
     }
 
     public IEnumerator CustomUpdate(float timeDelta)
@@ -244,7 +243,7 @@ public class AIMove : Move
 
     void Chase()
     {
-       
+        
     }
 
     void ChaseCustomUpdate()
