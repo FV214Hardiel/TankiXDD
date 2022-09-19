@@ -157,10 +157,10 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: d4cca58b9c1a9174e91af4daafb42104, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 518556caba355314bb8fe1c873f2a76e, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.86
-  m_Pitch: 1.3
+  m_Volume: 0.7
+  m_Pitch: 1.1
   Loop: 0
   Mute: 0
   Spatialize: 0
@@ -258,10 +258,11 @@ MonoBehaviour:
   source: {fileID: 0}
   damage: 3
   shellPref: {fileID: 421942829619560955, guid: 24076df6f149c5647b8f99c953d04ebd, type: 3}
-  shellVeloc: 60
-  delayBetweenShots: 1
+  delayBetweenShots: 0.2
   muzzleL: {fileID: 0}
   muzzleR: {fileID: 0}
+  weapRange: 60
+  projectileSpeed: 30
 --- !u!114 &3770881703321417766
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -277,10 +278,11 @@ MonoBehaviour:
   source: {fileID: 0}
   damage: 2
   shellPref: {fileID: 421942829619560955, guid: 24076df6f149c5647b8f99c953d04ebd, type: 3}
-  shellVeloc: 60
   delayBetweenShots: 0.5
   muzzleL: {fileID: 0}
   muzzleR: {fileID: 0}
+  weapRange: 0
+  projectileSpeed: 0
 --- !u!1 &3889425411772527566
 GameObject:
   m_ObjectHideFlags: 0
