@@ -24,6 +24,7 @@ public class PlayerVulcan : PlayerShooting
     int index;
 
     AudioSource shotSound;
+    AudioSource chargeSound;
 
     PlayerInputActions inputActions;
     float inputValue;
@@ -39,6 +40,7 @@ public class PlayerVulcan : PlayerShooting
         if (!GameHandler.GameIsPaused) inputActions.PlayerTankControl.Enable();
 
         shotSound = GetComponent<AudioSource>();
+        chargeSound = transform.Find("ChargesSound").GetComponent<AudioSource>();
 
         remainingDelay = 0;        
 
@@ -66,6 +68,8 @@ public class PlayerVulcan : PlayerShooting
     {
         if (GameHandler.GameIsPaused) return; //Checking pause
 
+        chargeSound.pitch = stacks > 0 ? (0.4f + stacks * 0.03f) : Mathf.Lerp(chargeSound.pitch, 0, 0.05f);
+
         if (remainingDelay > 0) //Decreasing delay timer  
 
         {
@@ -78,6 +82,7 @@ public class PlayerVulcan : PlayerShooting
             stacks--;
             stackTimer = stackDuration;
         }
+       
 
         inputValue = inputActions.PlayerTankControl.Fire.ReadValue<float>();
 
@@ -87,7 +92,7 @@ public class PlayerVulcan : PlayerShooting
 
             Shot(shotVector);
         }
-
+        
 
     }
 
@@ -125,7 +130,7 @@ public class PlayerVulcan : PlayerShooting
                 if (!eh.isDead) //Checking if target is alive and wasnt already hit by this shot
                 {
                     eh.DealDamage(damage, source);
-                    
+                    shotSound.Play();
 
                 }
 
@@ -134,9 +139,7 @@ public class PlayerVulcan : PlayerShooting
 
         // Here for SHOT VFX
 
-        //Here for increasing Attack Speed
-
-
+        //Increasing Attack Speed
         modifiedDelay = (delayBetweenShots * 1.8f) / (stacks + 1 + 0.8f);
         //modifiedDelay = (delayBetweenShots) / (stacks + 1);
         remainingDelay = modifiedDelay;
