@@ -4,85 +4,186 @@ using UnityEngine;
 
 public class AISmoky : AIShooting
 {
-    
-    //public Light shotLight;
-    
+    public float delayBetweenShots;
+    float remainingDelay;
+
+    public Transform muzzle;
+
     public float weapRange;
-    public float Damage;
 
-    public float reloadTime;
-    float nextShot;
+    public float angle;
 
-    Transform Muzzle;
-    AIMove hull;
+    List<ushort> disperseAngles;
+    List<float> disperseLengths;
+    int index;       
 
-    Ray shotLine;
-    Ray lineOfFire;
-    RaycastHit hit;
+    AIMove ai;
 
-    float wait;
-    public GameObject expPref;
-    public GameObject[] ShotEff;
+    AudioSource shotSound;
+    public GameObject prefabOfShot;
+    public ParticleSystem shotEffect;
+    public ParticleSystem hitEffect;
+
    
+
     void Start()
     {
-        //team = "Red enemy";
+        source = GetComponentInParent<EntityHandler>().gameObject;
+        muzzle = transform.Find("muzzle");
 
-        nextShot = Time.time;
-        hull = gameObject.GetComponentInParent<AIMove>();
-        Muzzle = transform.Find("muzzle");
-        wait = 0.1f;
-        
+        ai = gameObject.GetComponentInParent<AIMove>();
+
+        shotSound = GetComponent<AudioSource>();        
+
+        remainingDelay = 0;
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (hull.AIState == AIMove.AIEnum.Attack)
-        {
-            //Debug.Log("ataka");
-            lineOfFire = new Ray(Muzzle.position, Muzzle.forward);
+        if (GameHandler.GameIsPaused) return; //Checking pause
 
-            Physics.Raycast(lineOfFire, out hit);
-            if ((hit.collider == Player.PlayerHullColl || hit.collider == Player.PlayerTurretColl) && Time.time > nextShot)
-            {
-                //Debug.Log("nachinaem vistrel");
-                nextShot = Time.time + reloadTime;
-                StartCoroutine(ShotEffect());
-            }
+        if (remainingDelay > 0) //Decreasing delay timer  
+        {
+            remainingDelay -= Time.deltaTime;
+            return;
+        }
+        
+        if (ai.AIState == AIMove.AIEnum.Attack) //Shot
+        {            
+            Shot(muzzle.forward);
         }
     }
 
-    IEnumerator ShotEffect()
+    Vector3 DisperseVector(Vector3 originalVector, float angle)
     {
-        RaycastHit hit;
-        foreach (GameObject sht in ShotEff)
-        {
-            sht.SetActive(true);
-        }
-        if (Physics.Raycast(Muzzle.position, Muzzle.forward, out hit, weapRange))
-        {
-            // Debug.Log(hit.collider);            
+        Vector3 vector = originalVector.normalized; //Original vector must be normalized
 
-            //Health health = hit.collider.GetComponentInParent<Health>();
-            //if (health != null)
-            //{
-            //    health.TakingDMG(Damage, source);
-            //}
-            EntityHandler eh = hit.collider.GetComponentInParent<EntityHandler>();
+        //Taking random values from pregenerated lists
+        ushort angleDis = disperseAngles[index];
+        float lenghtDis = disperseLengths[index];
+
+        index++;
+        if (index >= disperseAngles.Count) index = 0; //Cycling indexes
+
+        angle *= Mathf.Deg2Rad; //Angle from degrees to rads
+
+        float ratioMultiplier = Mathf.Tan(angle); //Tangens of angle for ratio between Dispersion Leg and Base Leg       
+
+        //Adding UP vector multiplied by ratio and random value and rotated on random angle
+        vector += Quaternion.AngleAxis(angleDis, originalVector) * (lenghtDis * ratioMultiplier * muzzle.up);
+
+        return vector.normalized;
+    }
+
+    void Shot(Vector3 shotVector)
+    {
+        shotSound.Play();
+        shotEffect.Play();
+
+        RaycastHit hit;
+        if (Physics.Raycast(muzzle.position, shotVector, out hit, weapRange))
+        {
+            EntityHandler eh = hit.collider.GetComponentInParent<EntityHandler>(false);
             if (eh != null)
             {
-                eh.DealDamage(Damage, source);
-            }
+                if (!eh.isDead) //Checking if target is alive and wasnt already hit by this shot
+                {
+                    eh.DealDamage(damage, source);
 
-            Destroy(Instantiate(expPref, hit.point, Camera.main.transform.rotation), 1);
-            
+                }
+            }
+            hitEffect.transform.position = hit.point;
+            hitEffect.Play();
+
         }
-        yield return new WaitForSeconds(wait);
-        foreach (GameObject sht in ShotEff)
-        {
-            sht.SetActive(false);
-        }
+        remainingDelay = delayBetweenShots;
+
     }
 }
+
+
+//{
+
+//    //public Light shotLight;
+
+//    public float weapRange;
+//    public float Damage;
+
+//    public float reloadTime;
+//    float nextShot;
+
+//    Transform Muzzle;
+//    AIMove hull;
+
+//    Ray shotLine;
+//    Ray lineOfFire;
+//    RaycastHit hit;
+
+//    float wait;
+//    public GameObject expPref;
+//    public GameObject[] ShotEff;
+
+//    void Start()
+//    {
+//        //team = "Red enemy";
+
+//        nextShot = Time.time;
+//        hull = gameObject.GetComponentInParent<AIMove>();
+//        Muzzle = transform.Find("muzzle");
+//        wait = 0.1f;
+
+
+//    }
+
+//    // Update is called once per frame
+//    void Update()
+//    {
+//        if (hull.AIState == AIMove.AIEnum.Attack)
+//        {
+//            //Debug.Log("ataka");
+//            lineOfFire = new Ray(Muzzle.position, Muzzle.forward);
+
+//            Physics.Raycast(lineOfFire, out hit);
+//            if ((hit.collider == Player.PlayerHullColl || hit.collider == Player.PlayerTurretColl) && Time.time > nextShot)
+//            {
+//                //Debug.Log("nachinaem vistrel");
+//                nextShot = Time.time + reloadTime;
+//                StartCoroutine(ShotEffect());
+//            }
+//        }
+//    }
+
+//    IEnumerator ShotEffect()
+//    {
+//        RaycastHit hit;
+//        foreach (GameObject sht in ShotEff)
+//        {
+//            sht.SetActive(true);
+//        }
+//        if (Physics.Raycast(Muzzle.position, Muzzle.forward, out hit, weapRange))
+//        {
+//            // Debug.Log(hit.collider);            
+
+//            //Health health = hit.collider.GetComponentInParent<Health>();
+//            //if (health != null)
+//            //{
+//            //    health.TakingDMG(Damage, source);
+//            //}
+//            EntityHandler eh = hit.collider.GetComponentInParent<EntityHandler>();
+//            if (eh != null)
+//            {
+//                eh.DealDamage(Damage, source);
+//            }
+
+//            Destroy(Instantiate(expPref, hit.point, Camera.main.transform.rotation), 1);
+
+//        }
+//        yield return new WaitForSeconds(wait);
+//        foreach (GameObject sht in ShotEff)
+//        {
+//            sht.SetActive(false);
+//        }
+//    }
+//}
