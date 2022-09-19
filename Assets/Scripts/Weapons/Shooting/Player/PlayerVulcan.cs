@@ -68,7 +68,7 @@ public class PlayerVulcan : PlayerShooting
     {
         if (GameHandler.GameIsPaused) return; //Checking pause
 
-        chargeSound.pitch = stacks > 0 ? (0.4f + stacks * 0.03f) : Mathf.Lerp(chargeSound.pitch, 0, 0.05f);
+        chargeSound.pitch = stacks > 0 ? (0.4f + stacks * 0.03f) : Mathf.Lerp(chargeSound.pitch, 0, 0.02f);
 
         if (remainingDelay > 0) //Decreasing delay timer  
 
