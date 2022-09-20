@@ -21,7 +21,7 @@ public class HealthPlayer : Health
     private void OnEnable()
     {
         
-        baseHP = GetComponent<EntityHandler>().tankCard.baseHP; // Getting Base Health from tank card
+        baseHP = GetComponent<EntityHandler>().hullCard.baseHP; // Getting Base Health from tank card
         GetComponent<EntityHandler>().health = this;
        
         maxHP = baseHP;

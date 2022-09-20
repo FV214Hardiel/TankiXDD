@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a855e5fc56132674fbaf91304076cb45, type: 3}
-  m_Name: ThunderM3
+  m_Name: Thunder
   m_EditorClassIdentifier: 
   gunName: Thunder
   dmg: 150
-  turretRotation: 1
-  turretMesh: {fileID: -2092836026824628808, guid: e938c9da05988ab4dad2bef786b407f4, type: 3}
-  gunMesh: {fileID: -2643173543783292932, guid: e938c9da05988ab4dad2bef786b407f4, type: 3}
-  turretMaterial: {fileID: 2100000, guid: 382817a7a846ab5498c53085e375e034, type: 2}
-  gunAngles: {x: 0, y: 0}
-  gunMountPos: {x: 0, y: 0, z: 0}
-  muzzlePos: []
+  prefabOfTurret: {fileID: 0}
+  turretRotationSpeed: 0
+  modifications:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

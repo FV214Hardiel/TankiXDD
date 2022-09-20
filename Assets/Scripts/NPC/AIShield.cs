@@ -16,12 +16,12 @@ public class AIShield : Shield
         eh = GetComponent<EntityHandler>();
         eh.shield = this;
 
-        baseSP = eh.tankCard.baseSP;
+        baseSP = eh.hullCard.baseSP;
         maxSP = baseSP;
         currentSP = maxSP;
 
-        rechargeRate = eh.tankCard.shieldRechargeRate;
-        rechargeDelay = eh.tankCard.shieldRechargeDelay;
+        rechargeRate = eh.hullCard.shieldRechargeRate;
+        rechargeDelay = eh.hullCard.shieldRechargeDelay;
 
         sounds = transform.Find("Sounds");
         takingHitSound = sounds.Find("TakingHitSoundShield").GetComponent<AudioSource>();

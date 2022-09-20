@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 135fe180a756d094fa3142e6b27875b0, type: 3}
-  m_Name: HunterM0
+  m_Name: Hunter
   m_EditorClassIdentifier: 
   hullName: Hunter
   hullTier: M0
@@ -21,3 +21,5 @@ MonoBehaviour:
   baseSP: 300
   shieldRechargeRate: 50
   shieldRechargeDelay: 2
+  modifications:
+  - {fileID: 0}

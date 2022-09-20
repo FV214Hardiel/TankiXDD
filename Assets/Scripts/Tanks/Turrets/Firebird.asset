@@ -10,9 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a855e5fc56132674fbaf91304076cb45, type: 3}
-  m_Name: RailgunM0
+  m_Name: Firebird
   m_EditorClassIdentifier: 
-  gunName: Railgun M0
+  gunName: Firebird
   dmg: 100
-  prefabOfTurret: {fileID: 6283641191232944706, guid: a38d9525b0abfcb4d90d7e0fc6d9b36a, type: 3}
-  turretRotation: 1
+  prefabOfTurret: {fileID: 1302740351698336380, guid: b9e8a7dd635c42b47b2c309dd9a37077, type: 3}
+  turretRotationSpeed: 0
+  modifications:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

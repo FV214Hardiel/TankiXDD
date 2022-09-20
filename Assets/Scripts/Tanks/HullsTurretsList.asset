@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: HullsTurretsList
   m_EditorClassIdentifier: 
   allHulls:
-  - {fileID: 6241842525950719699, guid: f980f7ea6069ebe41840fa0f077dd49e, type: 3}
+  - {fileID: 11400000, guid: 33ea55048071ec24686bb836f9d5dce3, type: 2}
   allTurrets:
-  - {fileID: 6283641191232944706, guid: a38d9525b0abfcb4d90d7e0fc6d9b36a, type: 3}
-  - {fileID: 286798274692133482, guid: c5063c474e230124b9817cfe783d5281, type: 3}
+  - {fileID: 11400000, guid: aa46699136c8c7146a6d08fe79abaade, type: 2}
+  - {fileID: 11400000, guid: e85f8d3877507c5418dbfc9e41b00f9c, type: 2}
+  - {fileID: 11400000, guid: 96b5ba0a49cc07147a8b4dd7c8ecd43e, type: 2}
+  - {fileID: 11400000, guid: adc15052f538f614a91faefd273f8c19, type: 2}
+  - {fileID: 11400000, guid: 381919c3018173941a44e49859a45c26, type: 2}

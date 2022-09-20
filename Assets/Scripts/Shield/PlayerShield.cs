@@ -16,7 +16,7 @@ public class PlayerShield : Shield
 
         
 
-        baseSP = eh.tankCard.baseSP;
+        baseSP = eh.hullCard.baseSP;
         maxSP = baseSP;
         currentSP = maxSP;
 
@@ -27,8 +27,8 @@ public class PlayerShield : Shield
         sb.enabled = true;
         sb.shield = this;
 
-        rechargeRate = eh.tankCard.shieldRechargeRate;
-        rechargeDelay = eh.tankCard.shieldRechargeDelay;
+        rechargeRate = eh.hullCard.shieldRechargeRate;
+        rechargeDelay = eh.hullCard.shieldRechargeDelay;
 
         sounds = transform.Find("Sounds");
         takingHitSound = sounds.Find("TakingHitSoundShield").GetComponent<AudioSource>();

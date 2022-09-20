@@ -10,9 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a855e5fc56132674fbaf91304076cb45, type: 3}
-  m_Name: VulcanM0
+  m_Name: Vulcan
   m_EditorClassIdentifier: 
   gunName: M65B Vulcan
-  dmg: 5
   prefabOfTurret: {fileID: 3091681938102966070, guid: f5d3533b60e487b4a86308ffc97ba82b, type: 3}
-  turretRotationSpeed: 1
+  modifications:
+  - {fileID: 11400000, guid: 60e002f5ceaeca5458517211a986e7f5, type: 2}
+  - {fileID: 11400000, guid: f55c4bf7bcb68264ab045ffe0f01c9c1, type: 2}
+  - {fileID: 11400000, guid: 0e2848c3e328f2a49a3c9e418f1558a2, type: 2}
+  - {fileID: 11400000, guid: 1ba600f9387d1414592ffef8a4a09a56, type: 2}

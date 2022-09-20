@@ -4,17 +4,17 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public static Player instance;
-    public static event Action playerIsChanged;
-
-    public TankHull tankhull;
-    public TankTurret tankTurret;
+    public static event Action playerIsChanged;    
 
     public static GameObject PlayerHull;
     public static GameObject PlayerTurret;
     public static GameObject PlayerGun;
+
     public static Collider PlayerHullColl;
     public static Collider PlayerTurretColl;
+
     public static Camera PlayerCamera;
+
     public static string PlayerName;
     
     void OnEnable()
@@ -26,8 +26,8 @@ public class Player : MonoBehaviour
 
         GameObject spawnPoint = GameObject.Find("PlayerSpawnLocation");
 
-        GameObject tunk = tankhull.CreatePlayerTank(spawnPoint.transform.position, spawnPoint.transform.rotation);
-        tankTurret.CreatePlayerGun(tunk, PlayerName);
+        AllHullsTurrets.CreatePlayerTank(spawnPoint.transform.position, spawnPoint.transform.rotation, 
+            GameInfoSaver.instance.chosenHull, GameInfoSaver.instance.hullTier, GameInfoSaver.instance.chosenTurret, GameInfoSaver.instance.turretTier);
 
 
     }

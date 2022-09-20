@@ -26,7 +26,7 @@ public class HealthEnemy : Health
     {
         GetComponent<EntityHandler>().health = this;
 
-        baseHP = GetComponent<EntityHandler>().tankCard.baseHP; // Getting Base Health from tank card
+        baseHP = GetComponent<EntityHandler>().hullCard.baseHP; // Getting Base Health from tank card
         maxHP = baseHP;
         HP = maxHP;
         Alive = true;

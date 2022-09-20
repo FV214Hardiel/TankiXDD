@@ -10,9 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a855e5fc56132674fbaf91304076cb45, type: 3}
-  m_Name: TwinsM0
+  m_Name: Smoky
   m_EditorClassIdentifier: 
-  gunName: Twins M0
-  dmg: 6
-  prefabOfTurret: {fileID: 7939966477284449060, guid: 7175b6150fb1b38418006fd9c5f1078e, type: 3}
-  turretRotationSpeed: 1
+  gunName: Smoky
+  dmg: 10
+  prefabOfTurret: {fileID: 286798274692133482, guid: c5063c474e230124b9817cfe783d5281, type: 3}
+  turretRotationSpeed: 0
+  modifications:
+  - {fileID: 0}

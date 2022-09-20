@@ -13,14 +13,9 @@ public class scr3 : MonoBehaviour
     void Start()
     {
 
-        
-        lm = lyaerMask;
 
-        thisColl = GetComponent<Collider>();
-        RaycastHit hit;
-        Physics.Raycast(transform.position, transform.forward, out hit, 20f, lm, QueryTriggerInteraction.Collide);
-        Debug.Log(gameObject.name  + " hits " + hit.collider.gameObject.name);
         
+
     }
 
     // Update is called once per frame

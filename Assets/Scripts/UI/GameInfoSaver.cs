@@ -11,8 +11,12 @@ public class GameInfoSaver : MonoBehaviour
     public string enterName;
 
     public AllHullsTurrets tanksList;
+
     public TankHull chosenHull;
     public TankTurret chosenTurret;
+
+    public byte hullTier;
+    public byte turretTier;
 
     //public AbilityCard[] chosenAbilities;
     public List<AbilityCard> chosenAbilities;
@@ -35,6 +39,7 @@ public class GameInfoSaver : MonoBehaviour
         GameObject lh = GameObject.Find("LevelHandler");
         if (lh != null)
         {
+
             lh.GetComponent<Player>().enabled = true;
         }
         DontDestroyOnLoad(gameObject);

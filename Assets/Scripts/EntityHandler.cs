@@ -5,8 +5,12 @@ using UnityEngine;
 
 public class EntityHandler : MonoBehaviour
 {
-    public TankHull tankCard;
+    public TankHull hullCard;
+    public HullMod hullMod;
+
     public TankTurret turretCard;
+    public TurretMod turretMod;    
+
     public Move moveScript;
 
     public Health health;
