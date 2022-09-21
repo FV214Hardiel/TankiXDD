@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Smoky
   m_EditorClassIdentifier: 
   gunName: Smoky
-  dmg: 10
   prefabOfTurret: {fileID: 286798274692133482, guid: c5063c474e230124b9817cfe783d5281, type: 3}
-  turretRotationSpeed: 0
   modifications:
-  - {fileID: 0}
+  - {fileID: 11400000, guid: fcbd2497966b7af4f9b6b33ee0383f58, type: 2}
+  - {fileID: 11400000, guid: 7f6ddb1363a20aa40bba00582ff6a046, type: 2}
+  - {fileID: 11400000, guid: cafa8eedae5189542abd9232b93121f0, type: 2}
+  - {fileID: 11400000, guid: 738f169cedebe8747b0474af4bab5b1f, type: 2}

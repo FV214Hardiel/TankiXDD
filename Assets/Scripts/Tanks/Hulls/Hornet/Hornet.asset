@@ -10,11 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 135fe180a756d094fa3142e6b27875b0, type: 3}
-  m_Name: TitanM1
+  m_Name: Hornet
   m_EditorClassIdentifier: 
-  hullName: Titan
-  hullTier: M1
-  prefabOfHull: {fileID: 762698576338350277, guid: 8ac5367434dfa774ca8b187d3d6bbfe9, type: 3}
-  baseHP: 200
-  hullSpeed: 18
+  hullName: Hornet
+  prefabOfHull: {fileID: 0}
+  baseHP: 120
+  hullSpeed: 24
   hullRotation: 1
+  baseSP: 0
+  shieldRechargeRate: 0
+  shieldRechargeDelay: 0
+  modifications:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

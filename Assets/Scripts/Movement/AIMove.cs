@@ -8,7 +8,6 @@ public class AIMove : Move
 
     
     public Vector3 patrolPoint;
-    public Vector3 goal;
 
     NavMeshAgent agent;
     //Ray lineOfSight;
@@ -35,7 +34,7 @@ public class AIMove : Move
     Vector3 relPos;
     Quaternion InnerRotQ;
 
-    //[SerializeField] float maxSpeed;
+    [SerializeField] float maxSpeed;
 
    
 
@@ -44,9 +43,10 @@ public class AIMove : Move
     void Start()
     {
         maxBlindChaseDuration = 2;
-        //maxSpeed = 5;
+        //maxSpeed = 10;
 
         agent = GetComponent<NavMeshAgent>();
+        agent.speed = maxSpeed;
 
         engineAudio = GetComponent<AudioSource>();
 

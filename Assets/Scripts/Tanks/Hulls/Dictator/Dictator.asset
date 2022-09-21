@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 135fe180a756d094fa3142e6b27875b0, type: 3}
+  m_Name: Dictator
+  m_EditorClassIdentifier: 
+  hullName: Dictator
+  prefabOfHull: {fileID: 3287245049808975158, guid: 693429f58e7ced146a27f3cf4f948f90, type: 3}
+  baseHP: 170
+  hullSpeed: 19
+  hullRotation: 0
+  baseSP: 0
+  shieldRechargeRate: 0
+  shieldRechargeDelay: 0
+  modifications:
+  - {fileID: 11400000, guid: 6d79c4ded1ef515419769af0dd4e26fd, type: 2}
+  - {fileID: 11400000, guid: fd3f6a81dfe4ffc4a903a4c7322ad516, type: 2}
+  - {fileID: 11400000, guid: 208ff9092729df246b44bc89705fb82d, type: 2}
+  - {fileID: 11400000, guid: 3cfce2330dc50b14cb480d84b6b8dc82, type: 2}

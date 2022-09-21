@@ -13,13 +13,15 @@ MonoBehaviour:
   m_Name: Hunter
   m_EditorClassIdentifier: 
   hullName: Hunter
-  hullTier: M0
   prefabOfHull: {fileID: 6241842525950719699, guid: f980f7ea6069ebe41840fa0f077dd49e, type: 3}
   baseHP: 280
   hullSpeed: 10
-  hullRotation: 1
+  hullRotation: 50
   baseSP: 300
   shieldRechargeRate: 50
   shieldRechargeDelay: 2
   modifications:
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 43b26780395ff324d81b6d838274d776, type: 2}
+  - {fileID: 11400000, guid: c39af45fc9c15d547a3b7aa78d3fe7ca, type: 2}
+  - {fileID: 11400000, guid: 353ebde93f98ff54cb148483ed9cfa16, type: 2}
+  - {fileID: 11400000, guid: 6a77c563662d56d4d815138a9cfa69a3, type: 2}

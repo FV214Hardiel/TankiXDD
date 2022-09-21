@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 135fe180a756d094fa3142e6b27875b0, type: 3}
+  m_Name: Viking
+  m_EditorClassIdentifier: 
+  hullName: Viking
+  prefabOfHull: {fileID: 5424178672194485764, guid: 3b9c54ccfd9995542b5b09030bb9a2ee, type: 3}
+  baseHP: 200
+  hullSpeed: 26
+  hullRotation: 1
+  baseSP: 0
+  shieldRechargeRate: 0
+  shieldRechargeDelay: 0
+  modifications:
+  - {fileID: 11400000, guid: 0616f5d6fa467384bb086a83ffc62558, type: 2}
+  - {fileID: 11400000, guid: 4931e94283e44f5449884a1a15390c6a, type: 2}
+  - {fileID: 11400000, guid: 6aedf5c33470be948aeb58e348916b7e, type: 2}
+  - {fileID: 11400000, guid: 2da0f81d39ad5db4ebe0abdc11e92dca, type: 2}

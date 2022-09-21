@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Railgun
   m_EditorClassIdentifier: 
   gunName: Railgun
-  dmg: 100
   prefabOfTurret: {fileID: 6283641191232944706, guid: a38d9525b0abfcb4d90d7e0fc6d9b36a, type: 3}
-  turretRotationSpeed: 0
   modifications:
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 0e08cf1d50611b24dafefd3b86991d45, type: 2}
+  - {fileID: 11400000, guid: c955b8714fac2184c98b9726c46f51bd, type: 2}
+  - {fileID: 11400000, guid: e7f4f436c033c794ea68c0d86021ea89, type: 2}
+  - {fileID: 11400000, guid: 598f507dbc0764a40b37fc21440372c3, type: 2}

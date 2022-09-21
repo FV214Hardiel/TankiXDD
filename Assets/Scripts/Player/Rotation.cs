@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class Rotation : MonoBehaviour
 {
-    public Transform Target;
-    public float RotSpeed;
+    EntityHandler eh;
+
+    Transform target;
+    float rotSpeed;
+
     Vector3 relPosH;
     Vector3 relPosV;
     Quaternion InnerRotQH;
@@ -13,104 +16,29 @@ public class Rotation : MonoBehaviour
     float TargetPos;
     public Vector2 minmax;
 
-    public GameObject gun;
+    GameObject gun;
 
 
     private void Start()
     {
-        Target = GameObject.Find("Poinet").transform;
+        eh = GetComponentInParent<EntityHandler>();
+        rotSpeed = eh.turretMod.turretRotationSpeed;
+
+        target = GameObject.Find("Poinet").transform;
+        gun = transform.Find("barrel").gameObject;
     }
 
-    void FixedUpdate()
-    {   
-
-
-        relPosH = Vector3.ProjectOnPlane((Target.position - transform.position), transform.up);
+    void Update()
+    {           
+        relPosH = Vector3.ProjectOnPlane((target.position - transform.position), transform.up); //Projecting on Y plane a vector between camera pointer and turret center
         InnerRotQH = Quaternion.LookRotation(relPosH, transform.up);        
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, InnerRotQH, RotSpeed);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, InnerRotQH, rotSpeed * Time.deltaTime); //Rotating turret on Y axis 
 
-        relPosV = Vector3.ProjectOnPlane((Target.position - gun.transform.position), gun.transform.right);       
+        relPosV = Vector3.ProjectOnPlane((target.position - gun.transform.position), gun.transform.right);  //Projecting on X plane a vector between pointer and gun center     
         TargetPos = Vector3.SignedAngle(relPosV, transform.forward, -gun.transform.right);
-        TargetPos = Mathf.Clamp(TargetPos, minmax.x, minmax.y);
+        TargetPos = Mathf.Clamp(TargetPos, minmax.x, minmax.y); //Clamping targeting angles
         gun.transform.localEulerAngles = new Vector3(TargetPos, 0, 0);
-
-        
-
     }
-
-
-    /* Старый раздельный поворот (отдельно башня, отдельно пушка)
-    void FixedUpdate()
-    {
-        relPos = Vector3.ProjectOnPlane((Target.position - transform.position), transform.up);
-        InnerRotQ = Quaternion.LookRotation(relPos, transform.up);
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, InnerRotQ, RotSpeed);
-    }
-    */
+    
 }
 
-/* void Start()
- {
-       Поворот с помощью клавиатуры
-
-      hinge = gameObject.GetComponent<HingeJoint>();
-      hingeSpring = hinge.spring;
-      Debug.Log(hingeSpring.spring);
-      hingeSpring.spring = 300;
-      hingeSpring.targetPosition = 0;
-      hinge.spring = hingeSpring;
-
-      Поворот камерой, первая версия
-
-     hinge = gameObject.GetComponent<HingeJoint>();
-     hingeSpring = hinge.spring;
-     hingeSpring.spring = 300;
-     hingeSpring.damper = 120;
-     hingeSpring.targetPosition = PlayerCamera.transform.rotation.y;
-     hinge.spring = hingeSpring;
-
-
-
- }
-
-
-void FixedUpdate()
-{
-
-transform.rotation = Quaternion.RotateTowards(transform.rotation, Pointer.rotation, 0.5f);
-
-/* Поворот клавиатурой
-
-Rot = Input.GetAxis("TurretRot");
-hingeSpring.targetPosition += Rot;
-if (hingeSpring.targetPosition > 180)
-{
-    hingeSpring.targetPosition = hingeSpring.targetPosition - 360;
-}
-if (hingeSpring.targetPosition <= -180)
-{
-    hingeSpring.targetPosition = hingeSpring.targetPosition + 360;
-}
-hinge.spring = hingeSpring;
-
-
- Поворот мышкой, первая версия
-
-hingeSpring.targetPosition = PlayerCamera.transform.localEulerAngles.y - HullBody.transform.localEulerAngles.y;
-if (hingeSpring.targetPosition > 180)
-{
-    hingeSpring.targetPosition = hingeSpring.targetPosition - 360;
-}
-if (hingeSpring.targetPosition <= -180)
-{
-    hingeSpring.targetPosition = hingeSpring.targetPosition + 360;
-}
-hinge.spring = hingeSpring;
-
-
-
-
-
-}
-
-*/

@@ -7,8 +7,7 @@ public class HealthEnemy : Health
 {
    
     
-    public Collider[] Debris;
-    public Material BurntTankText;
+    public Collider[] Debris;   
 
     //AIMove moveScript;
     //AIShooting shotScript;
@@ -26,7 +25,7 @@ public class HealthEnemy : Health
     {
         GetComponent<EntityHandler>().health = this;
 
-        baseHP = GetComponent<EntityHandler>().hullCard.baseHP; // Getting Base Health from tank card
+        baseHP = GetComponent<EntityHandler>().hullMod.baseHP; // Getting Base Health from tank card
         maxHP = baseHP;
         HP = maxHP;
         Alive = true;
@@ -82,8 +81,7 @@ public class HealthEnemy : Health
 
     public override void OverDamage(float overdmg, GameObject source)
     {
-        Debug.Log("OverdamagePlayer");
-
+       
         HP -= overdmg;
 
         HP = Mathf.Clamp(HP, 0, maxHP);
@@ -103,13 +101,7 @@ public class HealthEnemy : Health
         GetComponent<EntityHandler>().Die();
 
         agent.enabled = false;
-        //moveScript.enabled = false;
-
-        //HingeJoint hinge = Turret.GetComponent<HingeJoint>();
-        //Destroy(hinge);
-        //hinge = Gun.GetComponent<HingeJoint>();
-        //Destroy(hinge);
-
+        
         Destroy(Instantiate(ExpPref, transform), 9);
 
         scrs = GetComponentsInChildren<MonoBehaviour>();

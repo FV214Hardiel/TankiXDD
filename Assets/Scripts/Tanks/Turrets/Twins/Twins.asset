@@ -13,11 +13,9 @@ MonoBehaviour:
   m_Name: Twins
   m_EditorClassIdentifier: 
   gunName: Twins
-  dmg: 6
   prefabOfTurret: {fileID: 7939966477284449060, guid: 7175b6150fb1b38418006fd9c5f1078e, type: 3}
-  turretRotationSpeed: 1
   modifications:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: b5b40929a0caab74684892b65a16d198, type: 2}
+  - {fileID: 11400000, guid: 622436cedf0f146499598b19ea9be704, type: 2}
+  - {fileID: 11400000, guid: b8afbdd1590807c47a5aa1346dd0bbce, type: 2}
+  - {fileID: 11400000, guid: b60215862f175214ba8176ff7e38f030, type: 2}

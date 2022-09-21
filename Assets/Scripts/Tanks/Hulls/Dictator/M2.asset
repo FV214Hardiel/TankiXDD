@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44e2041781d068f4baa5093af507b96a, type: 3}
+  m_Name: M2
+  m_EditorClassIdentifier: 
+  tier: 2
+  baseHP: 300
+  hullSpeed: 15
+  hullRotation: 40
+  baseSP: 250
+  shieldRechargeRate: 30
+  shieldRechargeDelay: 6
+  lightmap: {fileID: 2800000, guid: 99fa4ea5880f4e548b67dec841b76549, type: 3}
+  detailsmap: {fileID: 2800000, guid: 3c5eec545d9f1bd47a40f65acef17858, type: 3}

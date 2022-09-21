@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 4980938522530382645}
   - component: {fileID: 6102962902739307274}
   - component: {fileID: 893356684044580481}
+  - component: {fileID: 5931847297143463599}
   m_Layer: 0
   m_Name: barrel
   m_TagString: Untagged
@@ -66,7 +67,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 18b365feef605c84697d364a6fe42d78, type: 2}
+  - {fileID: 2100000, guid: cbc2ecefa35eee2418c390610d6b9449, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -131,6 +132,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   source: {fileID: 0}
+  damage: 10
   shotLight: {fileID: 732549502865159939, guid: 5430cbcf0a797bd4a9c40a89e8cfd577, type: 3}
   cm: {r: 0.90588236, g: 0.26666668, b: 0.18431373, a: 0}
   shotDurF: 0.4
@@ -150,6 +152,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49cf2a827e3620e44ad1c2fe9f6d1c87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5931847297143463599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6180493610794603404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64d0b2863a755454ebe8e66f77c3027e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  source: {fileID: 0}
+  damage: 10
+  hitLight: {fileID: 0}
+  shotDurF: 0
+  chargDurF: 0
+  weapRange: 0
+  delayBetweenShots: 0
 --- !u!1 &6283641191232944706
 GameObject:
   m_ObjectHideFlags: 0
@@ -216,7 +237,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 18b365feef605c84697d364a6fe42d78, type: 2}
+  - {fileID: 2100000, guid: cbc2ecefa35eee2418c390610d6b9449, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -292,10 +313,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8813a62ccfe410940b3bd83bee8101a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Target: {fileID: 0}
-  RotSpeed: 1
   minmax: {x: -10, y: 10}
-  gun: {fileID: 6180493610794603404}
 --- !u!1 &8367982130494899857
 GameObject:
   m_ObjectHideFlags: 0
@@ -434,7 +452,7 @@ LineRenderer:
   m_SortingOrder: 0
   m_Positions:
   - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 59.82}
+  - {x: 0, y: 0, z: 1.82}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1

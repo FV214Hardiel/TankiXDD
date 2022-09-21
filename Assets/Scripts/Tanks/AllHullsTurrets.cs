@@ -31,8 +31,7 @@ public class AllHullsTurrets : ScriptableObject
         tunk.GetComponent<PlayerMove>().enabled = true;
 
         //Enabling Abilities        
-        tunk.GetComponent<AbilityHandler>().enabled = true;
-
+        tunk.AddComponent<AbilityHandler>();
 
         tunk.GetComponent<Rigidbody>().interpolation = RigidbodyInterpolation.Interpolate;
 

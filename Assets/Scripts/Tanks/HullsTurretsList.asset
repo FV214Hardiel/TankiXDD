@@ -14,6 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   allHulls:
   - {fileID: 11400000, guid: 33ea55048071ec24686bb836f9d5dce3, type: 2}
+  - {fileID: 11400000, guid: bec5a487a989fd64eb50686dced13a63, type: 2}
+  - {fileID: 11400000, guid: 6ae095d1428ad2c45ade4ebcde8f8a9f, type: 2}
+  - {fileID: 11400000, guid: a539c60280a1b64478d9168c207d1670, type: 2}
   allTurrets:
   - {fileID: 11400000, guid: aa46699136c8c7146a6d08fe79abaade, type: 2}
   - {fileID: 11400000, guid: e85f8d3877507c5418dbfc9e41b00f9c, type: 2}

@@ -6,10 +6,8 @@ public class HealthPlayer : Health
 
    
     public Collider[] Debris;
-    public Material BurntTankText;
-
-    public HealthBarPlayer hb;
     
+    public HealthBarPlayer hb;    
     
     MonoBehaviour[] scrs;
 
@@ -21,7 +19,7 @@ public class HealthPlayer : Health
     private void OnEnable()
     {
         
-        baseHP = GetComponent<EntityHandler>().hullCard.baseHP; // Getting Base Health from tank card
+        baseHP = GetComponent<EntityHandler>().hullMod.baseHP; // Getting Base Health from tank card
         GetComponent<EntityHandler>().health = this;
        
         maxHP = baseHP;
@@ -91,6 +89,8 @@ public class HealthPlayer : Health
 
     public override void Dying(GameObject killer)
     {
+        GetComponent<EntityHandler>().Die();
+
         Destroy(Instantiate(ExpPref, transform), 9);
 
         //trying disable all scripts
@@ -99,10 +99,8 @@ public class HealthPlayer : Health
         foreach (MonoBehaviour mono in scrs)
         {
             mono.enabled = false;
-            //Destroy(mono);
-
+            
         }
-
        
 
         //debris go boom
@@ -114,11 +112,7 @@ public class HealthPlayer : Health
 
         }
 
-        //paint it black
-        Hull.GetComponent<Renderer>().material = BurntTankText;
-        Turret.GetComponent<Renderer>().material = BurntTankText;
-        Gun.GetComponent<Renderer>().material = BurntTankText;
-
+       
         //grabity and non kinematic for all rb
         HullRB.useGravity = true;
         TurretRB.useGravity = true;

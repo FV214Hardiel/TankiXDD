@@ -13,7 +13,7 @@ public class AbilityHandler : MonoBehaviour
 
         int slotCount = 0;
         //Debug.Log(abilitiesList[0]);
-        foreach (AbilityCard _ability in abilitiesList)
+        foreach (AbilityCard _ability in GameInfoSaver.instance.chosenAbilities)
         {
             if (_ability != null)
             {

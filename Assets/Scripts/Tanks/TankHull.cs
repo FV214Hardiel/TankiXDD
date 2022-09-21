@@ -7,7 +7,7 @@ using UnityEngine.AI;
 public class TankHull : ScriptableObject
 {
     public string hullName;
-    public string hullTier;
+    
     public GameObject prefabOfHull;
 
     public float baseHP;

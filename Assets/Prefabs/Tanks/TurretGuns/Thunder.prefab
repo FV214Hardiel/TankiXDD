@@ -66,7 +66,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 382817a7a846ab5498c53085e375e034, type: 2}
+  - {fileID: 2100000, guid: 0925fa46852a20342852973103bdf5df, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -142,10 +142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8813a62ccfe410940b3bd83bee8101a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Target: {fileID: 0}
-  RotSpeed: 1
   minmax: {x: 0, y: 0}
-  gun: {fileID: 0}
 --- !u!1 &7981689114248223582
 GameObject:
   m_ObjectHideFlags: 0
@@ -193,6 +190,7 @@ GameObject:
   - component: {fileID: 4341423743240293165}
   - component: {fileID: 3689837469094919854}
   - component: {fileID: 4570149966750535368}
+  - component: {fileID: 6633574672537723429}
   m_Layer: 0
   m_Name: barrel
   m_TagString: Untagged
@@ -208,7 +206,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8608694163460753105}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.425, z: 1.276}
+  m_LocalPosition: {x: 0, y: 0.388, z: 1.125}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -244,7 +242,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 382817a7a846ab5498c53085e375e034, type: 2}
+  - {fileID: 2100000, guid: 0925fa46852a20342852973103bdf5df, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -339,7 +337,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8608694163460753105}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 517eca24da8d08e42b497c8b06c5e5a4, type: 3}
   m_Name: 
@@ -356,3 +354,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49cf2a827e3620e44ad1c2fe9f6d1c87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6633574672537723429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8608694163460753105}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5440b6b5531ae1644af2b466bcd3a072, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  source: {fileID: 0}
+  damage: 0
