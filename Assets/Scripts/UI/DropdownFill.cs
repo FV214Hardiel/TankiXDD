@@ -9,25 +9,33 @@ public class DropdownFill : MonoBehaviour
     public TMP_Dropdown hullsDropdown;
     public TMP_Dropdown gunsDropdown;
     public TMP_Dropdown abilitiesDropdown;
+    public TMP_Dropdown skinsDropdown;
 
     // Start is called before the first frame update
     void Start()
     {
-        List<string> tanksList = new();
+        List<string> list = new();
         foreach (TankHull item in GameInfoSaver.instance.tanksList.allHulls)
         {
-            tanksList.Add(item.hullName);
+            list.Add(item.hullName);
         }
-        hullsDropdown.AddOptions(tanksList);
-        tanksList.Clear();
+        hullsDropdown.AddOptions(list);
+        list.Clear();
 
         
         foreach (TankTurret item in GameInfoSaver.instance.tanksList.allTurrets)
         {
-            tanksList.Add(item.gunName);
+            list.Add(item.gunName);
         }
-        gunsDropdown.AddOptions(tanksList);
-        tanksList.Clear();
+        gunsDropdown.AddOptions(list);
+        list.Clear();
+
+        foreach (Texture2D item in GameInfoSaver.instance.skins.unlockedSkins)
+        {
+            list.Add(item.name);
+        }
+        skinsDropdown.AddOptions(list);
+        list.Clear();
     }
 
     // Update is called once per frame
