@@ -9,7 +9,11 @@ public class EntityHandler : MonoBehaviour
     public HullMod hullMod;
 
     public TankTurret turretCard;
-    public TurretMod turretMod;    
+    public TurretMod turretMod;
+
+    public bool isSkin;
+    public Texture2D skinTexture;
+    Color baseColor;
 
     public Move moveScript;
 
@@ -34,22 +38,23 @@ public class EntityHandler : MonoBehaviour
 
     void OnEnable()
     {
-        
-        hitMarker = GameObject.Find("HitSFX").GetComponent<AudioSource>();        
+        baseColor = new Color(0.63f, 0.63f, 0.63f);
+              
 
         //Mesh Renderers
         meshRenderers = new();        
         meshRenderers.Add(GetComponent<MeshRenderer>());
 
-        abilities = new();        
+           
 
-        effh = gameObject.AddComponent<EffectsHandler>();       
+              
 
 
     }
 
     private void Update()
     {
+        
         //Out of combat timer
         outOfDamage += Time.deltaTime;
 
@@ -87,17 +92,44 @@ public class EntityHandler : MonoBehaviour
         
         isPlayer = false;
         gameObject.layer = LayerMask.NameToLayer("EnemyTeamRed");
+        effh = gameObject.AddComponent<EffectsHandler>();
 
     }
 
     //Setting some specific values for Player Tank
     public void PlayerTankSetup()
     {
-        
+        hitMarker = GameObject.Find("HitSFX").GetComponent<AudioSource>();
         isPlayer = true;
         gameObject.layer = LayerMask.NameToLayer("PlayerTeamGreen");
-        
-        
+        abilities = new();
+        effh = gameObject.AddComponent<EffectsHandler>();
+
+
+    }
+
+    public void DecorativeSetup()
+    {
+        isPlayer = false;
+        isDead = true;
+
+        foreach (MeshRenderer item in meshRenderers) //Changing shader
+        {
+            item.material.SetColor("_TankColor", baseColor);
+            if (skinTexture != null)
+            {                               
+                isSkin = true;
+                item.material.SetFloat("_isSkin", 1.0f);
+                item.material.SetTexture("_Skin", skinTexture);
+            }
+            else
+            {
+                isSkin = false;
+                item.material.SetFloat("_isSkin", 0.0f);                
+            }
+            
+        }
+        this.enabled = false;
     }
 
     public void Die()
