@@ -10,7 +10,11 @@ public class AllHullsTurrets : ScriptableObject
     public TankHull[] allHulls;
     public TankTurret[] allTurrets;
 
-    public static GameObject CreatePlayerTank(Vector3 spawnPosition, Quaternion spawnRotation, TankHull chosenHull, byte hullTier, TankTurret chosenTurret, byte turretTier)
+    public TankHull[] unlockedHulls;
+    public TankTurret[] unlockedTurrets;
+
+    public static GameObject CreatePlayerTank(Vector3 spawnPosition, Quaternion spawnRotation, TankHull chosenHull, byte hullTier, 
+        TankTurret chosenTurret, byte turretTier)
     {
         GameObject tunk = Instantiate(chosenHull.prefabOfHull);
         tunk.name = "PlayerHull";
@@ -75,7 +79,8 @@ public class AllHullsTurrets : ScriptableObject
         return tunk;
     }
 
-    public static GameObject CreateEnemyTank(Vector3 spawnPosition, Quaternion spawnRotation, TankHull chosenHull, byte hullTier, TankTurret chosenTurret, byte turretTier)
+    public static GameObject CreateEnemyTank(Vector3 spawnPosition, Quaternion spawnRotation, TankHull chosenHull, byte hullTier, 
+        TankTurret chosenTurret, byte turretTier)
     {
         GameObject tunk = Instantiate(chosenHull.prefabOfHull); //instantiate корпус
 
@@ -128,4 +133,41 @@ public class AllHullsTurrets : ScriptableObject
 
         return tunk;
     }
+
+    public static GameObject CreateDecorative(Transform parent, TankHull chosenHull, byte hullTier, TankTurret chosenTurret, byte turretTier, Texture2D skin)
+    {
+        GameObject tunk = Instantiate(chosenHull.prefabOfHull);
+        tunk.transform.SetParent(parent);
+        //tunk.transform.SetPositionAndRotation(parent.position, Quaternion.Euler(parent.rotation.eulerAngles.x, parent.rotation.eulerAngles.y, parent.rotation.eulerAngles.z));
+        tunk.transform.SetPositionAndRotation(parent.position, parent.rotation);
+        tunk.transform.localEulerAngles = new Vector3(0, 90, 0);
+        Debug.Log(parent.rotation.eulerAngles.y);
+        tunk.GetComponent<Rigidbody>().useGravity = false;
+
+        GameObject turret = Instantiate(chosenTurret.prefabOfTurret);
+        GameObject gun = turret.GetComponentInChildren<Gun>().gameObject;
+
+        turret.transform.SetParent(tunk.transform); //Making created hull parent to turret       
+        turret.transform.position = tunk.transform.Find("mount").position; //Mounting turret to hull
+        turret.transform.rotation = tunk.transform.rotation;
+
+        tunk.transform.localScale = 60 * Vector3.one;
+        tunk.AddComponent<DecorativeRotation>().rotationSpeed = 50;
+
+        EntityHandler eh = tunk.AddComponent<EntityHandler>();
+        eh.meshRenderers.Add(turret.GetComponent<MeshRenderer>());
+        eh.meshRenderers.Add(gun.GetComponent<MeshRenderer>());
+        eh.hullCard = chosenHull;
+        eh.hullMod = chosenHull.modifications[hullTier];
+        eh.turretCard = chosenTurret;
+        eh.turretMod = chosenTurret.modifications[turretTier];
+        eh.skinTexture = skin;
+        
+        eh.DecorativeSetup();
+
+
+        return tunk;
+
+    }
+
 }
