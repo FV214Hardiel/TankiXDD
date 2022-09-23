@@ -38,17 +38,11 @@ public class EntityHandler : MonoBehaviour
 
     void OnEnable()
     {
-        baseColor = new Color(0.63f, 0.63f, 0.63f);
-              
+        baseColor = new Color(0.63f, 0.63f, 0.63f);              
 
         //Mesh Renderers
         meshRenderers = new();        
         meshRenderers.Add(GetComponent<MeshRenderer>());
-
-           
-
-              
-
 
     }
 
@@ -98,7 +92,19 @@ public class EntityHandler : MonoBehaviour
 
     //Setting some specific values for Player Tank
     public void PlayerTankSetup()
-    {
+    {        
+        if (GameInfoSaver.instance.chosenSkin != null)
+        {
+            isSkin = true;
+            skinTexture = GameInfoSaver.instance.chosenSkin;
+            foreach (MeshRenderer item in meshRenderers)
+            {
+                isSkin = true;
+                item.material.SetFloat("_isSkin", 1.0f);
+                item.material.SetTexture("_Skin", skinTexture);
+            }
+
+        }
         hitMarker = GameObject.Find("HitSFX").GetComponent<AudioSource>();
         isPlayer = true;
         gameObject.layer = LayerMask.NameToLayer("PlayerTeamGreen");
@@ -108,8 +114,13 @@ public class EntityHandler : MonoBehaviour
 
     }
 
+    //Setting some specific values for decorative tank
     public void DecorativeSetup()
     {
+        foreach (Transform item in GetComponentsInChildren<Transform>(true))
+        {
+            item.gameObject.layer = LayerMask.NameToLayer("UI");
+        }
         isPlayer = false;
         isDead = true;
 
