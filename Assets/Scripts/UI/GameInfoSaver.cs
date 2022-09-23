@@ -9,22 +9,26 @@ public class GameInfoSaver : MonoBehaviour
 
     public static string playerName;
     public string enterName;
+    [Space]
+    public LevelsList levels;
 
+    [Space]
     public AllHullsTurrets tanksList;
     public SkinsList skins;
     public AbilitiesList abilitiesList;
     
 
     public Texture2D chosenSkin;
-
+    [Space]
     public TankHull chosenHull;
     public TankTurret chosenTurret;
 
     public byte hullTier;
     public byte turretTier;
 
-    
+    [Space]
     public List<AbilityCard> chosenAbilities;
+
 
     void Awake()
     {

@@ -5,9 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class MaunMenu : MonoBehaviour
 {
-    public void PlayGame()
+    public static void PlayGame(int index)
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(index);
         //Debug.Log(ObjectiveHandler.ObjectivesBaseCount);
     }
 

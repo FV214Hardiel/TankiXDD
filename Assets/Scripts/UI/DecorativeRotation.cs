@@ -7,8 +7,7 @@ public class DecorativeRotation : MonoBehaviour
     public float rotationSpeed;
     void Start()
     {
-        Debug.Log(Vector3.up);
-        Debug.Log(transform.up);
+        
     }
 
    
