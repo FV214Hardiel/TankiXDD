@@ -7,20 +7,28 @@ using TMPro;
 public class TankSelectionMenu : MonoBehaviour
 {
     public TMP_Dropdown hullsDropdown;
-    public TMP_Dropdown gunsDropdown;
-    public TMP_Dropdown abilitiesDropdown;
+    public TMP_Dropdown gunsDropdown;    
+    public List<TMP_Dropdown> abilitiesDropdowns;
     public TMP_Dropdown skinsDropdown;
+
 
     public Transform tankPreview;
     public TankHull hullPreview;
     public TankTurret turretPreview;
     public Texture2D skinPreview;
+    public static List<int> abilitiesValues;
 
     GameObject createdPreview;
 
     // Start is called before the first frame update
     void Start()
     {
+        abilitiesValues = new();
+        foreach (TMP_Dropdown item in abilitiesDropdowns)
+        {
+            abilitiesValues.Add(item.value);
+        }
+
         hullPreview = GameInfoSaver.instance.tanksList.unlockedHulls[0];
         turretPreview = GameInfoSaver.instance.tanksList.unlockedTurrets[0];
         skinPreview = GameInfoSaver.instance.skins.unlockedSkins[0];
@@ -51,6 +59,24 @@ public class TankSelectionMenu : MonoBehaviour
             
         }
         skinsDropdown.AddOptions(list);
+        list.Clear();
+
+        foreach (AbilityCard item in GameInfoSaver.instance.abilitiesList.unlockedAbilities)
+        {
+            if (item == null)
+            {
+                list.Add("No ability");
+            }
+            else
+            {
+                list.Add(item.abilityName);
+            }
+        }
+        foreach (TMP_Dropdown item in abilitiesDropdowns)
+        {
+            item.AddOptions(list);
+        }
+        
         list.Clear();
 
         createdPreview = AllHullsTurrets.CreateDecorative(tankPreview, hullPreview, 0, turretPreview, 0, skinPreview);
