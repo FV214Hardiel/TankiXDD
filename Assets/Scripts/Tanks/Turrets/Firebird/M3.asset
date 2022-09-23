@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cea6ab12b33340b43974f5cb74b6a6b2, type: 3}
+  m_Name: M3
+  m_EditorClassIdentifier: 
+  tier: 3
+  damage: 15
+  delayBetweenShots: 0.1
+  reloadTime: 0
+  attackRange: 50
+  turretRotationSpeed: 50
+  lightmap: {fileID: 2800000, guid: f3c5b18214fb6424399a5293934d03b9, type: 3}
+  detailsmap: {fileID: 2800000, guid: 5290918a046a51242bbfcaafed8aac1d, type: 3}
