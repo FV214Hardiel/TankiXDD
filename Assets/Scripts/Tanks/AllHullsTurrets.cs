@@ -24,7 +24,7 @@ public class AllHullsTurrets : ScriptableObject
         EntityHandler eh = tunk.AddComponent<EntityHandler>();
         eh.hullCard = chosenHull;
         eh.hullMod = chosenHull.modifications[hullTier];
-        eh.PlayerTankSetup();
+        
 
         //Enabling Shield and Health
         //tunk.GetComponent<Shield>().enabled = true;
@@ -71,7 +71,7 @@ public class AllHullsTurrets : ScriptableObject
         eh.turretCard = chosenTurret;
         eh.turretMod = chosenTurret.modifications[turretTier];
 
-
+        eh.PlayerTankSetup();
 
         //Making record to Player class about changed turret
         Player.instance.ChangePlayerTurret(turret);
@@ -140,8 +140,7 @@ public class AllHullsTurrets : ScriptableObject
         tunk.transform.SetParent(parent);
         //tunk.transform.SetPositionAndRotation(parent.position, Quaternion.Euler(parent.rotation.eulerAngles.x, parent.rotation.eulerAngles.y, parent.rotation.eulerAngles.z));
         tunk.transform.SetPositionAndRotation(parent.position, parent.rotation);
-        tunk.transform.localEulerAngles = new Vector3(0, 90, 0);
-        Debug.Log(parent.rotation.eulerAngles.y);
+        tunk.transform.localEulerAngles = new Vector3(0, 90, 0);       
         tunk.GetComponent<Rigidbody>().useGravity = false;
 
         GameObject turret = Instantiate(chosenTurret.prefabOfTurret);
