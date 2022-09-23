@@ -17,8 +17,7 @@ public class MissileStrike : AbilityBase
     public GameObject Missile;
     Vector3 target;
     public Transform pointer;
-
-    float remCD;    
+    
     public float spawnHeight = 100;
     
     void Start()
@@ -63,7 +62,7 @@ public class MissileStrike : AbilityBase
                 {
                     state = AbilityState.cooldown;
                     Launch();
-                    remCD = abilityCooldown;
+                    remainingCooldown = abilityCooldown;
                     groundArea.SetActive(false);
                 }
                 if (Input.GetKeyDown(abilityCancel))
@@ -74,10 +73,10 @@ public class MissileStrike : AbilityBase
 
                 break;
             case AbilityState.cooldown:
-                if (remCD > 0)
+                if (remainingCooldown > 0)
                 {
-                    remCD -= Time.deltaTime;
-                    abilityDisplay.localScale = new Vector3(1, remCD / abilityCooldown, 1);
+                    remainingCooldown -= Time.deltaTime;
+                    abilityDisplay.localScale = new Vector3(1, remainingCooldown / abilityCooldown, 1);
                 }
                 else
                 {
@@ -88,7 +87,7 @@ public class MissileStrike : AbilityBase
     }
     public float GetCD()
     {
-        return remCD;
+        return remainingCooldown;
     }
     public void Launch()
     {

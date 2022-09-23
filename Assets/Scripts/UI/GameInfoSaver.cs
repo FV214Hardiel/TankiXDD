@@ -12,6 +12,8 @@ public class GameInfoSaver : MonoBehaviour
 
     public AllHullsTurrets tanksList;
     public SkinsList skins;
+    public AbilitiesList abilitiesList;
+    
 
     public Texture2D chosenSkin;
 

@@ -7,6 +7,7 @@ public class AbilityBase : MonoBehaviour
 {
     //Card
     public AbilityCard card;
+
     //Stats
     protected string abilityKey;
     protected float abilityArea;   
@@ -15,12 +16,16 @@ public class AbilityBase : MonoBehaviour
     protected float abilityCooldown;
     protected float abilityPower;
     protected float abilityDuration;
+
     //UI
     protected Sprite abilityIcon;
     public int abilitySlot;
     protected UIAbilityHandler abilityUI;
     public RectTransform abilityDisplay;
     public RectTransform outline;
+
+    //
+    protected float remainingCooldown;
     
     public void GetStats()
     {
