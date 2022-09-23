@@ -20,6 +20,8 @@ public class TankHull : ScriptableObject
 
     public List<HullMod> modifications;
 
+    public List<AudioClip> voiceover;
+
 
     //public GameObject CreateEnemyTank(Vector3 spawnPosition, Quaternion spawnRotation)
     //{

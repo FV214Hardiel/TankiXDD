@@ -151,7 +151,7 @@ public class AllHullsTurrets : ScriptableObject
         turret.transform.rotation = tunk.transform.rotation;
 
         tunk.transform.localScale = 60 * Vector3.one;
-        tunk.AddComponent<DecorativeRotation>().rotationSpeed = 50;
+        tunk.AddComponent<DecorativeRotation>().rotationSpeed = 30;
 
         EntityHandler eh = tunk.AddComponent<EntityHandler>();
         eh.meshRenderers.Add(turret.GetComponent<MeshRenderer>());

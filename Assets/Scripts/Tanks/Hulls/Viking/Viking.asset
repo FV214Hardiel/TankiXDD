@@ -25,3 +25,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4931e94283e44f5449884a1a15390c6a, type: 2}
   - {fileID: 11400000, guid: 6aedf5c33470be948aeb58e348916b7e, type: 2}
   - {fileID: 11400000, guid: 2da0f81d39ad5db4ebe0abdc11e92dca, type: 2}
+  voiceover:
+  - {fileID: 8300000, guid: e552bc9712571c246bc9ec970d449151, type: 3}
+  - {fileID: 8300000, guid: ddf8a0dd7b727f84bae3e24ec55973a9, type: 3}
+  - {fileID: 8300000, guid: f0b2d59f941fa3c4481808599020a18f, type: 3}
+  - {fileID: 8300000, guid: 7d5051ccd27236047a7b29824c5cf883, type: 3}
+  - {fileID: 8300000, guid: a74c910024ca7bb4c87e073a6018f44b, type: 3}
+  - {fileID: 8300000, guid: 95e3965831df59c4f8b95ab942575727, type: 3}
+  - {fileID: 8300000, guid: fa72170dc33e50c43b7556e32cf5164d, type: 3}
+  - {fileID: 8300000, guid: 98a3bff83b1b0d141996c8b5ae5d688b, type: 3}
