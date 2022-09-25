@@ -142,10 +142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8813a62ccfe410940b3bd83bee8101a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Target: {fileID: 0}
-  RotSpeed: 1
   minmax: {x: -10, y: 10}
-  gun: {fileID: 4089932773475674261}
 --- !u!1 &1639345895809729728
 GameObject:
   m_ObjectHideFlags: 0
@@ -193,7 +190,6 @@ GameObject:
   - component: {fileID: 5797800950937683440}
   - component: {fileID: 4983400906300002292}
   - component: {fileID: 1639010579079659847}
-  - component: {fileID: 8505756066851389040}
   - component: {fileID: 3129276443089738098}
   m_Layer: 0
   m_Name: barrel
@@ -354,19 +350,6 @@ MonoBehaviour:
   prefabOfShot: {fileID: 0}
   shotEffect: {fileID: 8145522921419673881}
   hitEffect: {fileID: 3748262256023914457}
---- !u!114 &8505756066851389040
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4089932773475674261}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 561ced25ceb3085449203f541efb25ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  groundTarget: {fileID: 0}
 --- !u!82 &3129276443089738098
 AudioSource:
   m_ObjectHideFlags: 0

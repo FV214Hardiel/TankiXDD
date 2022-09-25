@@ -173,10 +173,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8813a62ccfe410940b3bd83bee8101a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Target: {fileID: 0}
-  RotSpeed: 1
   minmax: {x: -10, y: 10}
-  gun: {fileID: 2967017560543666307}
 --- !u!1 &2967017560543666307
 GameObject:
   m_ObjectHideFlags: 0
@@ -193,7 +190,6 @@ GameObject:
   - component: {fileID: 4367804129768659205}
   - component: {fileID: 6052034561358946327}
   - component: {fileID: 6784220450071641281}
-  - component: {fileID: 7347084381769038447}
   - component: {fileID: 1335496587194043802}
   m_Layer: 0
   m_Name: barrel
@@ -343,19 +339,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   source: {fileID: 0}
   damage: 0
---- !u!114 &7347084381769038447
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2967017560543666307}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 561ced25ceb3085449203f541efb25ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  groundTarget: {fileID: 0}
 --- !u!82 &1335496587194043802
 AudioSource:
   m_ObjectHideFlags: 0
