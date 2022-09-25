@@ -87,6 +87,7 @@ public class EntityHandler : MonoBehaviour
         isPlayer = false;
         gameObject.layer = LayerMask.NameToLayer("EnemyTeamRed");
         effh = gameObject.AddComponent<EffectsHandler>();
+        hitMarker = GameObject.Find("HitSFX").GetComponent<AudioSource>();
 
     }
 
@@ -105,7 +106,18 @@ public class EntityHandler : MonoBehaviour
             }
 
         }
-        hitMarker = GameObject.Find("HitSFX").GetComponent<AudioSource>();
+        else
+        {
+            foreach (MeshRenderer item in meshRenderers)
+            {
+                isSkin = false;
+                item.material.SetFloat("_isSkin", 0.0f);
+                item.material.SetColor("_TankColor", baseColor);
+
+            }
+            
+        }
+                
         isPlayer = true;
         gameObject.layer = LayerMask.NameToLayer("PlayerTeamGreen");
         abilities = new();

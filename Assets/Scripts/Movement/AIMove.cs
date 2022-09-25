@@ -125,7 +125,7 @@ public class AIMove : Move
                     }
 
                     Physics.Linecast(transform.position, target.position, out hit);
-                    Debug.Log(hit.collider);
+                    //Debug.Log(hit.collider);
                     if (hit.collider.gameObject == target.gameObject) //if no intersection
                     {   
                         if (hit.distance > (areaOfVision+2)) //If enemy ran away

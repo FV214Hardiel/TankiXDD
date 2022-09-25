@@ -62,7 +62,7 @@ public class AllHullsTurrets : ScriptableObject
         //Enabling Player scripts and deleting AI scripts
         turret.GetComponentInChildren<Rotation>().enabled = true;
 
-        gun.GetComponentInChildren<GunTarget>().enabled = true;
+        gun.AddComponent<GunTarget>();
         gun.GetComponentInChildren<PlayerShooting>().enabled = true;
         Destroy(gun.GetComponentInChildren<AIShooting>());
 

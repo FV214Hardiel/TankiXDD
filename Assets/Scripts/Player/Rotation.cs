@@ -22,17 +22,17 @@ public class Rotation : MonoBehaviour
     private void Start()
     {
         eh = GetComponentInParent<EntityHandler>();
-        rotSpeed = eh.turretMod.turretRotationSpeed;
+        rotSpeed = eh.turretMod.turretRotationSpeed * Time.fixedDeltaTime;
 
         target = GameObject.Find("Poinet").transform;
         gun = transform.Find("barrel").gameObject;
     }
 
-    void Update()
+    void FixedUpdate()
     {           
         relPosH = Vector3.ProjectOnPlane((target.position - transform.position), transform.up); //Projecting on Y plane a vector between camera pointer and turret center
         InnerRotQH = Quaternion.LookRotation(relPosH, transform.up);        
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, InnerRotQH, rotSpeed * Time.deltaTime); //Rotating turret on Y axis 
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, InnerRotQH, rotSpeed); //Rotating turret on Y axis 
 
         relPosV = Vector3.ProjectOnPlane((target.position - gun.transform.position), gun.transform.right);  //Projecting on X plane a vector between pointer and gun center     
         TargetPos = Vector3.SignedAngle(relPosV, transform.forward, -gun.transform.right);
