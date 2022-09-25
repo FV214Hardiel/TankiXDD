@@ -13,16 +13,24 @@ MonoBehaviour:
   m_Name: Wasp
   m_EditorClassIdentifier: 
   hullName: Wasp
-  hullTier: M0
+  prefabOfHull: {fileID: 5120222304445047940, guid: 1c1425d083bdd424f8f2a5cf2452d121, type: 3}
   baseHP: 90
   hullSpeed: 25
   hullRotation: 1
-  hullMesh: {fileID: 0}
-  hullMaterial: {fileID: 0}
-  mountPos: {x: 0, y: 0, z: 0}
-  explPoint: {x: 0, y: 0, z: 0}
-  cameraPos: {x: 0, y: 0, z: 0}
-  navMeshOffset: 0
-  hullMass: 5
-  hullDrag: 0
-  acc: 2
+  baseSP: 0
+  shieldRechargeRate: 0
+  shieldRechargeDelay: 0
+  modifications:
+  - {fileID: 11400000, guid: da07aa85f5f410543afad8facea7ad1a, type: 2}
+  - {fileID: 11400000, guid: ca30991fc91417c408f64cb06e3f6f09, type: 2}
+  - {fileID: 11400000, guid: c74031181b4ffe84eaf551bd39ea5462, type: 2}
+  - {fileID: 11400000, guid: 6096900bb81e44d4884a8a2e7165b159, type: 2}
+  voiceover:
+  - {fileID: 8300000, guid: 2042b9c06ed5ca04085eeab44510e0f1, type: 3}
+  - {fileID: 8300000, guid: f19320e53ae7340458dc22f0a1a1f8e3, type: 3}
+  - {fileID: 8300000, guid: f4eed0dd7207eda4ea463d340c5a9e10, type: 3}
+  - {fileID: 8300000, guid: 9368a2e5dac4f5649a3b3541da93725a, type: 3}
+  - {fileID: 8300000, guid: c58e8fe0e80e3a24e8df0daebdff9062, type: 3}
+  - {fileID: 8300000, guid: eda96e3ae69c30a4a9e133e9bdf01670, type: 3}
+  - {fileID: 8300000, guid: c5d09b0df572ad045bb3b4839822ad08, type: 3}
+  - {fileID: 8300000, guid: 10db1d244626e354baf800a2d86d4b0b, type: 3}

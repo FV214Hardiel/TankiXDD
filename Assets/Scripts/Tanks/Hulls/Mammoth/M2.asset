@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 44e2041781d068f4baa5093af507b96a, type: 3}
-  m_Name: M0
+  m_Name: M2
   m_EditorClassIdentifier: 
-  tier: 0
-  baseHP: 150
-  hullSpeed: 20
-  hullRotation: 60
-  baseSP: 200
+  tier: 2
+  baseHP: 340
+  hullSpeed: 10
+  hullRotation: 45
+  baseSP: 300
   shieldRechargeRate: 50
   shieldRechargeDelay: 6
-  lightmap: {fileID: 2800000, guid: 3a57e901effad364d84b647af95b03ed, type: 3}
-  detailsmap: {fileID: 2800000, guid: eae5e8e144ad1cf469093caa3b279afd, type: 3}
+  lightmap: {fileID: 2800000, guid: 0f48a7536425cf04992d239622c22941, type: 3}
+  detailsmap: {fileID: 2800000, guid: e91c90158f8092f408b54f5c58491e4a, type: 3}

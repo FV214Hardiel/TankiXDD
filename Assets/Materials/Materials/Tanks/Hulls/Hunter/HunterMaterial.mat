@@ -110,12 +110,12 @@ Material:
     - _ZWrite: 1
     - _isDead: 0
     - _isShieldUp: 0
-    - _isSkin: 1
+    - _isSkin: 0
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _ShieldColor: {r: 0, g: 0.19607843, b: 0.50980395, a: 1}
-    - _TankColor: {r: 0.4716981, g: 0.4716981, b: 0.4716981, a: 1}
+    - _TankColor: {r: 0.4738341, g: 0.62895316, b: 0.8301887, a: 1}
     - _Test: {r: 0.8113208, g: 0.24875402, b: 0.24875402, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &8789249660793699324

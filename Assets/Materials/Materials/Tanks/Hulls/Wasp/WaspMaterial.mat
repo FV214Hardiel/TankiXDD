@@ -1,18 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-5868266681041629580
-MonoBehaviour:
-  m_ObjectHideFlags: 11
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 639247ca83abc874e893eb93af2b5e44, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  version: 0
 --- !u!21 &2100000
 Material:
   serializedVersion: 6
@@ -20,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: HornetMaterial
+  m_Name: WaspMaterial
   m_Shader: {fileID: -6465566751694194690, guid: 029702eddc88dac4eacc762cf9428e1d, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -33,11 +20,11 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _Details:
-        m_Texture: {fileID: 2800000, guid: aceba32cac97082499bcba54aff1fd53, type: 3}
+        m_Texture: {fileID: 2800000, guid: eae5e8e144ad1cf469093caa3b279afd, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Lightmap:
-        m_Texture: {fileID: 2800000, guid: 963ff24f9ec467e4184e631969b42c0d, type: 3}
+        m_Texture: {fileID: 2800000, guid: 3a57e901effad364d84b647af95b03ed, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SampleTexture2D_898092def8724ce8b0031db7403b5edb_Texture_1:
@@ -57,5 +44,18 @@ Material:
     - _isSkin: 0
     m_Colors:
     - _ShieldColor: {r: 0, g: 0.19447425, b: 0.50980395, a: 0}
-    - _TankColor: {r: 0.8207547, g: 0.37988627, b: 0.31359026, a: 1}
+    - _TankColor: {r: 0.29690933, g: 0.46226418, b: 0.27256143, a: 1}
   m_BuildTextureStacks: []
+--- !u!114 &3338319415215324340
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 639247ca83abc874e893eb93af2b5e44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 0

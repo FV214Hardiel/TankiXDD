@@ -19,5 +19,5 @@ MonoBehaviour:
   baseSP: 200
   shieldRechargeRate: 50
   shieldRechargeDelay: 6
-  lightmap: {fileID: 0}
-  detailsmap: {fileID: 0}
+  lightmap: {fileID: 2800000, guid: 963ff24f9ec467e4184e631969b42c0d, type: 3}
+  detailsmap: {fileID: 2800000, guid: aceba32cac97082499bcba54aff1fd53, type: 3}

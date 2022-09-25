@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: M0
   m_EditorClassIdentifier: 
   tier: 0
-  baseHP: 150
-  hullSpeed: 20
-  hullRotation: 60
-  baseSP: 200
+  baseHP: 300
+  hullSpeed: 10
+  hullRotation: 45
+  baseSP: 300
   shieldRechargeRate: 50
   shieldRechargeDelay: 6
-  lightmap: {fileID: 2800000, guid: 3a57e901effad364d84b647af95b03ed, type: 3}
-  detailsmap: {fileID: 2800000, guid: eae5e8e144ad1cf469093caa3b279afd, type: 3}
+  lightmap: {fileID: 2800000, guid: 08b81d98fdaf9464ea67817d24542429, type: 3}
+  detailsmap: {fileID: 2800000, guid: d9a2695970611874484c095770d5301b, type: 3}

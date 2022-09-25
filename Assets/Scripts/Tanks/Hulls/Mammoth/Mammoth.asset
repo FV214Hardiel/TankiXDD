@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 135fe180a756d094fa3142e6b27875b0, type: 3}
+  m_Name: Mammoth
+  m_EditorClassIdentifier: 
+  hullName: Mammoth
+  prefabOfHull: {fileID: 3403523147743754075, guid: cb6e0ceeb79a3bf41af9d7e7e9602eb9, type: 3}
+  baseHP: 250
+  hullSpeed: 15
+  hullRotation: 1
+  baseSP: 200
+  shieldRechargeRate: 20
+  shieldRechargeDelay: 10
+  modifications:
+  - {fileID: 11400000, guid: 0f3273d105b6621458166c0aa4c9bb4d, type: 2}
+  - {fileID: 11400000, guid: b0aa695f07605c44aa123b9e5e1c17da, type: 2}
+  - {fileID: 11400000, guid: 46b6b06bdeb90224693289a3808ab397, type: 2}
+  - {fileID: 11400000, guid: 93bac6ace3af82546b37ef5482ab37fe, type: 2}
+  voiceover:
+  - {fileID: 8300000, guid: 9af0c9860e0a79146bb19e423a826c90, type: 3}
+  - {fileID: 8300000, guid: 8297ad1019a997f42b181295e146c3de, type: 3}
+  - {fileID: 8300000, guid: 09c114d0841f95b4fb7471b52ff7bbc3, type: 3}
+  - {fileID: 8300000, guid: 6c190f768ef1b294281423a40289e031, type: 3}
+  - {fileID: 8300000, guid: 15b6e3f8d7488f6419fad92382d83080, type: 3}
