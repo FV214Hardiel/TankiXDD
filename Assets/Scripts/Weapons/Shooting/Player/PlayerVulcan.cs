@@ -134,11 +134,11 @@ public class PlayerVulcan : PlayerShooting
                 }
             }
 
-            VulcanTrail.Create(prefabOfShot, muzzle.position, hit.point); //Shot VFX if hit
+            WeaponTrail.Create(prefabOfShot, muzzle.position, hit.point); //Shot VFX if hit
         }
         else
         {                     
-            VulcanTrail.Create(prefabOfShot, muzzle.position, muzzle.position+shotVector*weapRange); //Shot VFX if no hit
+            WeaponTrail.Create(prefabOfShot, muzzle.position, muzzle.position+shotVector*weapRange); //Shot VFX if no hit
         }
         
         //Increasing Attack Speed

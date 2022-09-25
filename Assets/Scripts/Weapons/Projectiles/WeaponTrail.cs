@@ -2,20 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class VulcanTrail : MonoBehaviour
+public class WeaponTrail : MonoBehaviour
 {
     public float timeOfLife;
     LineRenderer lr;
-    Color bColor;
-    Color eColor;
+    
+    Color endColor;
+    Color startColor;
     Color c;
 
     // Start is called before the first frame update
     void Start()
     {
         lr = GetComponent<LineRenderer>();
-        //bColor = lr.startColor;
-        eColor = lr.endColor;
+        startColor = lr.startColor;
+        endColor = lr.endColor;
         
 
         Destroy(gameObject, timeOfLife);
@@ -24,12 +25,13 @@ public class VulcanTrail : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-        //bColor.a -= Time.deltaTime / timeOfLife;
-        eColor.a -= Time.deltaTime / timeOfLife;
+    {        
+        startColor.a -= Time.deltaTime / timeOfLife;
+        endColor.a -= Time.deltaTime / timeOfLife;
 
-        //lr.startColor = bColor;
-        lr.endColor = eColor;
+        
+        lr.endColor = endColor;
+        lr.startColor = startColor;
     }
 
     public static void Create(GameObject prefab, Vector3 origin, Vector3 end)
