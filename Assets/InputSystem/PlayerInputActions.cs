@@ -193,6 +193,74 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Test"",
+            ""id"": ""60388193-2bca-422c-9d2d-e3ba19dc3008"",
+            ""actions"": [
+                {
+                    ""name"": ""Action1"",
+                    ""type"": ""Button"",
+                    ""id"": ""103d5f67-983d-4cf2-a967-280fc7a6ef97"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Action2"",
+                    ""type"": ""Button"",
+                    ""id"": ""0db36421-fbf1-4184-992b-315e22cfe0f5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Load"",
+                    ""type"": ""Button"",
+                    ""id"": ""3d29b425-6352-407a-8fb0-9a8265f26c05"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""855107b2-5d93-4cab-865c-c4e46c92115a"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Action1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d573a74b-5828-4078-89a5-4b66085c09ad"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Action2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b525b1af-82c7-4a4f-ac38-60fa47055ff7"",
+                    ""path"": ""<Keyboard>/l"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Load"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -206,6 +274,11 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_PauseMenu = asset.FindActionMap("PauseMenu", throwIfNotFound: true);
         m_PauseMenu_Newaction = m_PauseMenu.FindAction("New action", throwIfNotFound: true);
         m_PauseMenu_ExitPause = m_PauseMenu.FindAction("ExitPause", throwIfNotFound: true);
+        // Test
+        m_Test = asset.FindActionMap("Test", throwIfNotFound: true);
+        m_Test_Action1 = m_Test.FindAction("Action1", throwIfNotFound: true);
+        m_Test_Action2 = m_Test.FindAction("Action2", throwIfNotFound: true);
+        m_Test_Load = m_Test.FindAction("Load", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -351,6 +424,55 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         }
     }
     public PauseMenuActions @PauseMenu => new PauseMenuActions(this);
+
+    // Test
+    private readonly InputActionMap m_Test;
+    private ITestActions m_TestActionsCallbackInterface;
+    private readonly InputAction m_Test_Action1;
+    private readonly InputAction m_Test_Action2;
+    private readonly InputAction m_Test_Load;
+    public struct TestActions
+    {
+        private @PlayerInputActions m_Wrapper;
+        public TestActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Action1 => m_Wrapper.m_Test_Action1;
+        public InputAction @Action2 => m_Wrapper.m_Test_Action2;
+        public InputAction @Load => m_Wrapper.m_Test_Load;
+        public InputActionMap Get() { return m_Wrapper.m_Test; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(TestActions set) { return set.Get(); }
+        public void SetCallbacks(ITestActions instance)
+        {
+            if (m_Wrapper.m_TestActionsCallbackInterface != null)
+            {
+                @Action1.started -= m_Wrapper.m_TestActionsCallbackInterface.OnAction1;
+                @Action1.performed -= m_Wrapper.m_TestActionsCallbackInterface.OnAction1;
+                @Action1.canceled -= m_Wrapper.m_TestActionsCallbackInterface.OnAction1;
+                @Action2.started -= m_Wrapper.m_TestActionsCallbackInterface.OnAction2;
+                @Action2.performed -= m_Wrapper.m_TestActionsCallbackInterface.OnAction2;
+                @Action2.canceled -= m_Wrapper.m_TestActionsCallbackInterface.OnAction2;
+                @Load.started -= m_Wrapper.m_TestActionsCallbackInterface.OnLoad;
+                @Load.performed -= m_Wrapper.m_TestActionsCallbackInterface.OnLoad;
+                @Load.canceled -= m_Wrapper.m_TestActionsCallbackInterface.OnLoad;
+            }
+            m_Wrapper.m_TestActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Action1.started += instance.OnAction1;
+                @Action1.performed += instance.OnAction1;
+                @Action1.canceled += instance.OnAction1;
+                @Action2.started += instance.OnAction2;
+                @Action2.performed += instance.OnAction2;
+                @Action2.canceled += instance.OnAction2;
+                @Load.started += instance.OnLoad;
+                @Load.performed += instance.OnLoad;
+                @Load.canceled += instance.OnLoad;
+            }
+        }
+    }
+    public TestActions @Test => new TestActions(this);
     public interface IPlayerTankControlActions
     {
         void OnFire(InputAction.CallbackContext context);
@@ -361,5 +483,11 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     {
         void OnNewaction(InputAction.CallbackContext context);
         void OnExitPause(InputAction.CallbackContext context);
+    }
+    public interface ITestActions
+    {
+        void OnAction1(InputAction.CallbackContext context);
+        void OnAction2(InputAction.CallbackContext context);
+        void OnLoad(InputAction.CallbackContext context);
     }
 }
