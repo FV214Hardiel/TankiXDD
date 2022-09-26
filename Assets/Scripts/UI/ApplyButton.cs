@@ -20,23 +20,17 @@ public class ApplyButton : MonoBehaviour
 
     public GameObject levelSelection;
     public GameObject tankSelection;
-
-
-
-    private void Start()
-    {
-       
-    }
+           
 
     public void ApplyClicked()
     {
         //Debug.Log(GameInfoSaver.instance.chosenHull);
         //Debug.Log(GameInfoSaver.instance.tanksList.allHulls[hullsDropdown.value]);
-        GameInfoSaver.instance.chosenHull = GameInfoSaver.instance.tanksList.allHulls[hullsDropdown.value];
-        Debug.Log("ApplyClickedHull + " + GameInfoSaver.instance.chosenHull);
-        GameInfoSaver.instance.chosenTurret = GameInfoSaver.instance.tanksList.allTurrets[gunsDropdown.value];
-        Debug.Log("ApplyClickedTurret + " + GameInfoSaver.instance.chosenTurret);
-        GameInfoSaver.instance.chosenSkin = GameInfoSaver.instance.skins.unlockedSkins[skinsDropdown.value];
+        GameInfoSaver.instance.chosenHull = GameInfoSaver.instance.tanksList.unlockedHulls[hullsDropdown.value];
+       // Debug.Log("ApplyClickedHull + " + GameInfoSaver.instance.chosenHull);
+        GameInfoSaver.instance.chosenTurret = GameInfoSaver.instance.tanksList.unlockedTurrets[gunsDropdown.value];
+       // Debug.Log("ApplyClickedTurret + " + GameInfoSaver.instance.chosenTurret);
+        GameInfoSaver.instance.chosenSkin = GameInfoSaver.instance.skinsList.unlockedSkins[skinsDropdown.value];
 
         StartCoroutine(FlashEffect(0.2f, 0.1f));
     }
@@ -44,7 +38,7 @@ public class ApplyButton : MonoBehaviour
     IEnumerator FlashEffect(float flashDur, float maxAlpha)
     {
         Color currColor;
-        GetComponent<Button>().interactable = false;
+        GetComponentInParent<CanvasGroup>().blocksRaycasts = false;
         voiceAudio.clip = RandomAudioClip(GameInfoSaver.instance.chosenHull.voiceover);
         voiceAudio.Play();
         //float halfDur = flashDur / 2;
@@ -72,8 +66,8 @@ public class ApplyButton : MonoBehaviour
         flash.color = currColor;
 
         yield return new WaitForSeconds(0.4f);
-        Debug.Log("Flash");
-        GetComponent<Button>().interactable = true;
+        
+        GetComponentInParent<CanvasGroup>().blocksRaycasts = true;
 
         levelSelection.SetActive(true);
         tankSelection.SetActive(false);

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelSelection : MonoBehaviour
 {
@@ -9,7 +10,7 @@ public class LevelSelection : MonoBehaviour
     void Start()
     {
         List<string> list = new();
-        foreach (string item in GameInfoSaver.instance.levels.unlockedLevels)
+        foreach (string item in GameInfoSaver.instance.levelsList.unlockedLevels)
         {
             list.Add(item);
         }
@@ -19,8 +20,9 @@ public class LevelSelection : MonoBehaviour
 
     public void LoadScene()
     {
-        int index = GameInfoSaver.instance.levels.allLevelsDict[levelsDropdown.options[levelsDropdown.value].text];
-        Debug.Log(index);
+        int index = GameInfoSaver.instance.levelsList.allLevelsDict[levelsDropdown.options[levelsDropdown.value].text];
+        //Debug.Log(index);
+        SceneManager.LoadScene(index);
         //MaunMenu.PlayGame()
     }
 }

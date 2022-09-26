@@ -7,11 +7,96 @@ using UnityEngine.AI;
 public class AllHullsTurrets : ScriptableObject
 {
    
-    public TankHull[] allHulls;
-    public TankTurret[] allTurrets;
+    public List<TankHull> allHulls;
+    public List<TankTurret> allTurrets;
 
-    public TankHull[] unlockedHulls;
-    public TankTurret[] unlockedTurrets;
+    public List<TankHull> unlockedHulls;
+    public List<TankTurret> unlockedTurrets;
+
+
+    //private void OnEnable()
+    //{
+    //    PlayerPrefs.DeleteKey("uHulls");
+    //    PlayerPrefs.DeleteKey("uTurrets");
+    //}
+    public void LoadHulls()
+    {
+        //Load hulls
+
+        string[] uHulls; //empty string array
+
+        if (PlayerPrefs.HasKey("uHulls") && PlayerPrefsX.GetStringArray("uHulls").Length != 0) //checking Key for existing and non-emptiness
+        {
+            uHulls = PlayerPrefsX.GetStringArray("uHulls"); //getting array from PlayerPrefs
+            unlockedHulls = new();
+            foreach (string item in uHulls) 
+            {
+                unlockedHulls.Add(allHulls.Find(x => x.hullName == item)); //for each existing string finding and adding hull in 'unlocked' list
+            }
+        }
+        else //if no save file then create and save
+        {
+            SaveHulls();
+        }
+        
+    }
+
+    public void LoadTurrets()
+    {        
+        string[] uTurrets; //empty string array
+
+        if (PlayerPrefs.HasKey("uTurrets") && PlayerPrefsX.GetStringArray("uTurrets").Length != 0)
+        {
+            uTurrets = PlayerPrefsX.GetStringArray("uTurrets");
+            unlockedTurrets = new();
+            foreach (string item in uTurrets)
+            {
+                unlockedTurrets.Add(allTurrets.Find(x => x.gunName == item));
+            }
+        }
+        else //if no save file then create and save
+        {
+            SaveTurrets();
+        }
+    }
+
+    public void SaveHulls()
+    {
+        //Save hulls
+
+        List<string> textNames = new(); //buffer list for storing temp values
+
+        foreach (TankHull item in unlockedHulls)  //getting items from existing 'unlocked' list
+        {
+            if (item != null)
+            {
+                textNames.Add(item.hullName); //adding items to buffer
+            }
+
+        }
+
+        PlayerPrefsX.SetStringArray("uHulls", textNames.ToArray()); //saving buffer in PlayerPrefs
+        
+    }
+
+    public void SaveTurrets()
+    {
+        //Save turrets
+
+        List<string> textNames = new(); //buffer list for storing temp values
+
+        foreach (TankTurret item in unlockedTurrets) //getting items from existing 'unlocked' list
+        {
+            if (item != null)
+            {
+                textNames.Add(item.gunName); //adding items to buffer
+            }
+
+        }
+
+        PlayerPrefsX.SetStringArray("uTurrets", textNames.ToArray()); //saving buffer in PlayerPrefs
+    }
+
 
     public static GameObject CreatePlayerTank(Vector3 spawnPosition, Quaternion spawnRotation, TankHull chosenHull, byte hullTier, 
         TankTurret chosenTurret, byte turretTier)
@@ -51,8 +136,7 @@ public class AllHullsTurrets : ScriptableObject
         GameObject gun = turret.GetComponentInChildren<Gun>().gameObject;
 
         turret.transform.SetParent(tunk.transform); //Making created hull parent to turret             
-        turret.transform.position = tunk.transform.Find("mount").position; //Mounting turret to hull
-        turret.transform.rotation = tunk.transform.rotation;
+        turret.transform.SetPositionAndRotation(tunk.transform.Find("mount").position, tunk.transform.rotation); //Mounting turret to hull
 
         //Handling the Handler, putting turret meshes to mesh list 
         eh.meshRenderers.Add(turret.GetComponent<MeshRenderer>());
@@ -111,8 +195,7 @@ public class AllHullsTurrets : ScriptableObject
         GameObject gun = turret.GetComponentInChildren<Gun>().gameObject;
 
         turret.transform.SetParent(tunk.transform); //Making created hull parent to turret       
-        turret.transform.position = tunk.transform.Find("mount").position; //Mounting turret to hull
-        turret.transform.rotation = tunk.transform.rotation;
+        turret.transform.SetPositionAndRotation(tunk.transform.Find("mount").position, tunk.transform.rotation); //Mounting turret to hull
 
 
         //Handling the Handler, putting turret meshes to mesh list        
@@ -147,8 +230,7 @@ public class AllHullsTurrets : ScriptableObject
         GameObject gun = turret.GetComponentInChildren<Gun>().gameObject;
 
         turret.transform.SetParent(tunk.transform); //Making created hull parent to turret       
-        turret.transform.position = tunk.transform.Find("mount").position; //Mounting turret to hull
-        turret.transform.rotation = tunk.transform.rotation;
+        turret.transform.SetPositionAndRotation(tunk.transform.Find("mount").position, tunk.transform.rotation); //Mounting turret to hull
 
         tunk.transform.localScale = 60 * Vector3.one;
         tunk.AddComponent<DecorativeRotation>().rotationSpeed = 30;

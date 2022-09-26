@@ -13,12 +13,10 @@ MonoBehaviour:
   m_Name: Skins
   m_EditorClassIdentifier: 
   allSkins:
-  - {fileID: 0}
   - {fileID: 2800000, guid: 1650840a0538ed44cad6238ba5294640, type: 3}
   - {fileID: 2800000, guid: 034859ab0878b304aa0b51a8c83bb0f8, type: 3}
   - {fileID: 2800000, guid: f61b4bea73e56c94c9416aa16077ddd3, type: 3}
   - {fileID: 2800000, guid: 242065159159dfe43b15c243824a5feb, type: 3}
   unlockedSkins:
   - {fileID: 0}
-  - {fileID: 2800000, guid: 242065159159dfe43b15c243824a5feb, type: 3}
   - {fileID: 2800000, guid: 034859ab0878b304aa0b51a8c83bb0f8, type: 3}

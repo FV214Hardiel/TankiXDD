@@ -31,7 +31,7 @@ public class TankSelectionMenu : MonoBehaviour
 
         hullPreview = GameInfoSaver.instance.tanksList.unlockedHulls[0];
         turretPreview = GameInfoSaver.instance.tanksList.unlockedTurrets[0];
-        skinPreview = GameInfoSaver.instance.skins.unlockedSkins[0];
+        skinPreview = GameInfoSaver.instance.skinsList.unlockedSkins[0];
 
         List<string> list = new();
         foreach (TankHull item in GameInfoSaver.instance.tanksList.unlockedHulls)
@@ -49,7 +49,7 @@ public class TankSelectionMenu : MonoBehaviour
         gunsDropdown.AddOptions(list);
         list.Clear();
 
-        foreach (Texture2D item in GameInfoSaver.instance.skins.unlockedSkins)
+        foreach (Texture2D item in GameInfoSaver.instance.skinsList.unlockedSkins)
         {
             if (item == null)
             {
@@ -75,18 +75,14 @@ public class TankSelectionMenu : MonoBehaviour
         foreach (TMP_Dropdown item in abilitiesDropdowns)
         {
             item.AddOptions(list);
+            item.value = 0;
         }
         
         list.Clear();
 
         createdPreview = AllHullsTurrets.CreateDecorative(tankPreview, hullPreview, 0, turretPreview, 0, skinPreview);
     }
-
-    // Update is called once per frame
-    void Update()
-    {
         
-    }
 
     public void ChangeHull(int index)
     {
@@ -105,7 +101,7 @@ public class TankSelectionMenu : MonoBehaviour
     public void ChangeSkin(int index)
     {
         Destroy(createdPreview);
-        skinPreview = GameInfoSaver.instance.skins.unlockedSkins[index];
+        skinPreview = GameInfoSaver.instance.skinsList.unlockedSkins[index];
         createdPreview = AllHullsTurrets.CreateDecorative(tankPreview, hullPreview, 0, turretPreview, 0, skinPreview);
     }
 }
