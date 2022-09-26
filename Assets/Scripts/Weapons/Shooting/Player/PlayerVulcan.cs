@@ -122,8 +122,8 @@ public class PlayerVulcan : PlayerShooting
         shotSound.Play();
         shotEffect.Play();
 
-        RaycastHit hit;
-        if (Physics.Raycast(muzzle.position, shotVector, out hit, weapRange))
+        
+        if (Physics.Raycast(muzzle.position, shotVector, out RaycastHit hit, weapRange))
         {
             EntityHandler eh = hit.collider.GetComponentInParent<EntityHandler>(false);
             if (eh != null)

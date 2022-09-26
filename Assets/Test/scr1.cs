@@ -5,60 +5,16 @@ using UnityEditor;
 using UnityEngine.InputSystem;
 
 
+#pragma warning disable IDE1006 // Naming Styles
 public class scr1 : MonoBehaviour
+#pragma warning restore IDE1006 // Naming Styles
 {
-    public float angle;
-    float ratioMultiplier;
-    Vector3 vector;
+    //public float angle;
+    //float ratioMultiplier;
+    //Vector3 vector;
     
-    List<float> angles;
-    int index;
-    public GameObject gameObject111;
-    private void Start()
-    {
-        angles = new List<float>();
-        for (int _ = 0; _ < 20; _++)
-        {
-            angles.Add(Random.Range(2, 356));
-        }
-        //transform.position = Random.insideUnitCircle * 2;
-        vector = transform.forward*10;
-        index = 0;
-
-        //From given accuracy calculating final tan of vector
-        angle = angle * Mathf.Deg2Rad;
-        ratioMultiplier = Mathf.Atan(angle);
-        
-        
-    }
-
-    void FixedUpdate()
-    {
-        
-        //Debug.Log(angles[index]);
-        
-
-
-       
-    }
+   
     
-    void Update()
-    {
-        
-        Debug.DrawRay(transform.position, vector, Color.red);
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            //Making velocity vector as sum of forward + up dispersion 
-            vector = transform.forward + Quaternion.AngleAxis(angles[index], transform.forward) * transform.up * ratioMultiplier;
-            vector = vector.normalized * 10;
-
-            index++;
-            if (index >= angles.Count) index = 0;
-
-            
-            scr3.Create(gameObject111, transform.position, vector, gameObject.name);
-        }
-    }
 
     
    

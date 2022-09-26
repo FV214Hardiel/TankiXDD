@@ -78,8 +78,8 @@ public class PlayerRailgun : PlayerShooting
 
         shotSound.Play();
 
-        RaycastHit hit;
-        if (Physics.Raycast(muzzle.position, muzzle.forward, out hit, weapRange))
+        
+        if (Physics.Raycast(muzzle.position, muzzle.forward, out RaycastHit hit, weapRange))
         {
             Debug.Log(hit.collider);
             EntityHandler eh = hit.collider.GetComponentInParent<EntityHandler>(false);

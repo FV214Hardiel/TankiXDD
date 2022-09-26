@@ -21,7 +21,7 @@ public class EntityHandler : MonoBehaviour
     public Shield shield;
     public EffectsHandler effh;
 
-    float baseArmor;
+    //float baseArmor;
     public float armor;
 
     

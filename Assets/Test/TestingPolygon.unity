@@ -6856,9 +6856,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8be0962874abedb44b44d4696338f329, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lyaerMask:
-    serializedVersion: 2
-    m_Bits: 2147483647
+  index: 0
+  textString: 
+  allTests: []
+  unlockedTests: []
+  unlockedIndex: 
+  loadedString: []
 --- !u!1 &1790308810
 GameObject:
   m_ObjectHideFlags: 0
@@ -6987,9 +6990,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8be0962874abedb44b44d4696338f329, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lyaerMask:
-    serializedVersion: 2
-    m_Bits: 2147483647
+  index: 0
+  textString: 
+  allTests: []
+  unlockedTests: []
+  unlockedIndex: 
+  loadedString: []
 --- !u!1 &1834878850
 GameObject:
   m_ObjectHideFlags: 0
@@ -8165,7 +8171,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   angle: 0
-  gameObject111: {fileID: 0}
 --- !u!54 &1904300799
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -8195,6 +8200,7 @@ GameObject:
   - component: {fileID: 1957882572}
   - component: {fileID: 1957882571}
   - component: {fileID: 1957882575}
+  - component: {fileID: 1957882576}
   m_Layer: 4
   m_Name: Capsule
   m_TagString: Untagged
@@ -8295,9 +8301,118 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8be0962874abedb44b44d4696338f329, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lyaerMask:
-    serializedVersion: 2
-    m_Bits: 0
+  index: 0
+  textString: 
+  allTests:
+  - Alpha
+  - Bravo
+  - Charlie
+  - Delta
+  - Echo
+  - Foxtrot
+  - Omega
+  unlockedTests:
+  - 44
+  unlockedIndex: 00000000060000000500000003000000
+  loadedString: []
+--- !u!114 &1957882576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1957882570}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 74962e42529f34545810b1bc033bb0a5, type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 4412e1be-975d-4396-b96f-7e7f8dd035bb
+    m_ActionName: PlayerTankControl/Fire[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: fd979ce2-078b-4c48-b907-4e2db2a28816
+    m_ActionName: PlayerTankControl/Movement[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 7bd4280e-f75f-47b0-bae7-ea75ec4f53bb
+    m_ActionName: PlayerTankControl/Pause[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ed550914-bf7b-4a4b-85db-530d976edc5e
+    m_ActionName: PauseMenu/New action
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b62c5aa9-c541-4fc1-b89d-337afc720ddd
+    m_ActionName: PauseMenu/ExitPause[/Keyboard/tab,/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1957882575}
+        m_TargetAssemblyTypeName: scr3, Assembly-CSharp
+        m_MethodName: Test
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 103d5f67-983d-4cf2-a967-280fc7a6ef97
+    m_ActionName: Test/Action1[/Keyboard/a]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1957882575}
+        m_TargetAssemblyTypeName: scr3, Assembly-CSharp
+        m_MethodName: Save
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 0db36421-fbf1-4184-992b-315e22cfe0f5
+    m_ActionName: Test/Action2[/Keyboard/s]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1957882575}
+        m_TargetAssemblyTypeName: scr3, Assembly-CSharp
+        m_MethodName: Load
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 3d29b425-6352-407a-8fb0-9a8265f26c05
+    m_ActionName: Test/Load[/Keyboard/l]
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Test
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1 &2068439853
 GameObject:
   m_ObjectHideFlags: 0
