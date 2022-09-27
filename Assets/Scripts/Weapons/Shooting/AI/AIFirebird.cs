@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class AIFirebird : AIShooting
 {
+    AIMove ai;
+    bool isTargetLocked;
+
+    Ray lineOfFire;
+    RaycastHit hit;
+    LayerMask enemyMask;
     // Start is called before the first frame update
     void Start()
     {

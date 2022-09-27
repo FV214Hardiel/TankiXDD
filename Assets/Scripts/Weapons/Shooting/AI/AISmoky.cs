@@ -18,6 +18,11 @@ public class AISmoky : AIShooting
     int index;       
 
     AIMove ai;
+    bool isTargetLocked;
+
+    Ray lineOfFire;
+    RaycastHit hit;
+    LayerMask enemyMask;
 
     AudioSource shotSound;
     public GameObject prefabOfShot;
@@ -32,15 +37,33 @@ public class AISmoky : AIShooting
         muzzle = transform.Find("muzzle");
 
         ai = gameObject.GetComponentInParent<AIMove>();
+        enemyMask = ai.enemyLayers;
 
         shotSound = GetComponent<AudioSource>();        
 
         remainingDelay = 0;
 
+        StartCoroutine(CustomUpdate(0.3f));
+
     }
 
-    // Update is called once per frame
-    void Update()
+    public IEnumerator CustomUpdate(float timeDelta)
+    {
+        while (true)
+        {
+            if (ai.AIState == AIMove.AIEnum.Attack)
+            {
+                lineOfFire = new Ray(muzzle.position, muzzle.forward);
+                isTargetLocked = Physics.Raycast(lineOfFire, out hit, weapRange, enemyMask);
+            }
+            
+            
+
+            yield return new WaitForSeconds(timeDelta);
+        }
+    }
+
+ void Update()
     {
         if (GameHandler.GameIsPaused) return; //Checking pause
 
@@ -50,7 +73,7 @@ public class AISmoky : AIShooting
             return;
         }
         
-        if (ai.AIState == AIMove.AIEnum.Attack) //Shot
+        if (isTargetLocked) //Shot
         {            
             Shot(muzzle.forward);
         }

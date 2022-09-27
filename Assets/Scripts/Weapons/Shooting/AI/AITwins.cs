@@ -16,7 +16,6 @@ public class AITwins : AIShooting
 
     bool shotFromRight;
 
-
     float debuffPower;
     float debuffDuration;
     GameObject ShellFired;
@@ -27,17 +26,24 @@ public class AITwins : AIShooting
 
     AudioSource shotSound;
 
+    AIMove ai;
+    bool isTargetLocked;
+
     Ray lineOfFire;
     RaycastHit hit;
+    LayerMask enemyMask;
 
 
 
     void Start()
     {
+
+
         debuffPower = 3;
         debuffDuration = 10;
 
         source = GetComponentInParent<EntityHandler>().gameObject;
+        ai = gameObject.GetComponentInParent<AIMove>();
 
         shotSound = GetComponent<AudioSource>();
 
@@ -56,13 +62,18 @@ public class AITwins : AIShooting
     void Update()
     {
         if (GameHandler.GameIsPaused) return;
-        remainingDelay -= Time.deltaTime;
+        if (remainingDelay > 0)
+        {
+            remainingDelay -= Time.deltaTime;
+            return;
+        }
+        
 
         lineOfFire = new Ray(muzzleL.position, muzzleL.forward);
 
-        Physics.Raycast(lineOfFire, out hit);
+        //Physics.Raycast(lineOfFire, out hit, );
 
-        if ((hit.collider == Player.PlayerHullColl || hit.collider == Player.PlayerTurretColl) && remainingDelay <= 0)
+        if (ai.AIState == AIMove.AIEnum.Attack)
         {
             remainingDelay = delayBetweenShots;
             if (shotFromRight)
