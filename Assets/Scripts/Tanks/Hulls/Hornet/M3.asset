@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44e2041781d068f4baa5093af507b96a, type: 3}
   m_Name: M3
   m_EditorClassIdentifier: 
-  tier: 0
+  tier: 3
   baseHP: 150
   hullSpeed: 25
   hullRotation: 50

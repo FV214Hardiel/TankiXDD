@@ -17,9 +17,9 @@ MonoBehaviour:
   baseHP: 200
   hullSpeed: 18
   hullRotation: 1
-  baseSP: 0
-  shieldRechargeRate: 0
-  shieldRechargeDelay: 0
+  baseSP: 100
+  shieldRechargeRate: 20
+  shieldRechargeDelay: 4
   modifications:
   - {fileID: 11400000, guid: c62a19d010f91c34d998cb0eb55782f6, type: 2}
   - {fileID: 11400000, guid: e61e5b0d2b3e8b1489ef11e985a74749, type: 2}
