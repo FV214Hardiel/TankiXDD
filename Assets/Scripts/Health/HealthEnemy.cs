@@ -105,7 +105,7 @@ public class HealthEnemy : Health
         Destroy(Instantiate(ExpPref, transform), 9);
 
         scrs = GetComponentsInChildren<MonoBehaviour>();
-        Debug.Log(scrs);
+        //Debug.Log(scrs);
         foreach (MonoBehaviour mono in scrs)
         {
             mono.enabled = false;
