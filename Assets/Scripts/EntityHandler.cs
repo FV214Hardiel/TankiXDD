@@ -13,7 +13,10 @@ public class EntityHandler : MonoBehaviour
 
     public bool isSkin;
     public Texture2D skinTexture;
-    Color baseColor;
+
+    Color basePlayerColor;
+    Color baseEnemyColor;
+
 
     public Move moveScript;
 
@@ -38,11 +41,16 @@ public class EntityHandler : MonoBehaviour
 
     void OnEnable()
     {
-        baseColor = new Color(0.63f, 0.63f, 0.63f);              
+        basePlayerColor = new Color(0.38f, 0.45f, 0.39f);
+        
+        baseEnemyColor = new Color(0.82f, 0.38f, 0.31f);              
 
         //Mesh Renderers
         meshRenderers = new();        
         meshRenderers.Add(GetComponent<MeshRenderer>());
+
+        
+
 
     }
 
@@ -82,46 +90,54 @@ public class EntityHandler : MonoBehaviour
 
     //Setting some specific values for AI Tank
     public void AITankSetup()
-    {
-        
+    {        
         isPlayer = false;
-        gameObject.layer = LayerMask.NameToLayer("EnemyTeamRed");
-        effh = gameObject.AddComponent<EffectsHandler>();
-        hitMarker = GameObject.Find("HitSFX").GetComponent<AudioSource>();
 
+        foreach (MeshRenderer item in meshRenderers)
+        {
+            item.material.SetFloat("_isSkin", 0.0f);
+            item.material.SetColor("_TankColor", baseEnemyColor);
+            
+            item.gameObject.layer = LayerMask.NameToLayer("EnemyTeamRed");
+        }
+
+           
+        effh = gameObject.AddComponent<EffectsHandler>();
+
+        hitMarker = GameObject.Find("HitSFX").GetComponent<AudioSource>();
     }
 
     //Setting some specific values for Player Tank
     public void PlayerTankSetup()
-    {        
+    {
+        isPlayer = true;
+
         if (GameInfoSaver.instance.chosenSkin != null)
         {
             isSkin = true;
             skinTexture = GameInfoSaver.instance.chosenSkin;
-            foreach (MeshRenderer item in meshRenderers)
+        }
+
+        foreach (MeshRenderer item in meshRenderers)
+        {
+            if (isSkin)
             {
-                isSkin = true;
                 item.material.SetFloat("_isSkin", 1.0f);
                 item.material.SetTexture("_Skin", skinTexture);
             }
-
-        }
-        else
-        {
-            foreach (MeshRenderer item in meshRenderers)
+            else
             {
-                isSkin = false;
                 item.material.SetFloat("_isSkin", 0.0f);
-                item.material.SetColor("_TankColor", baseColor);
-
+                item.material.SetColor("_TankColor", basePlayerColor);
             }
-            
+            item.gameObject.layer = LayerMask.NameToLayer("PlayerTeamGreen");
         }
-                
-        isPlayer = true;
-        gameObject.layer = LayerMask.NameToLayer("PlayerTeamGreen");
+
+        
         abilities = new();
         effh = gameObject.AddComponent<EffectsHandler>();
+
+        hitMarker = GameObject.Find("HitSFX").GetComponent<AudioSource>();
 
 
     }
@@ -138,7 +154,7 @@ public class EntityHandler : MonoBehaviour
 
         foreach (MeshRenderer item in meshRenderers) //Changing shader
         {
-            item.material.SetColor("_TankColor", baseColor);
+            item.material.SetColor("_TankColor", basePlayerColor);
             if (skinTexture != null)
             {                               
                 isSkin = true;
