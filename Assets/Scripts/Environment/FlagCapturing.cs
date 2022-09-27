@@ -51,7 +51,7 @@ public class FlagCapturing : MonoBehaviour
             {
                 capturingProgress = Mathf.Clamp(capturingProgress, 0, 100);
                 progressBarCanvas.SetActive(false);
-                Debug.Log("false");
+                
                 captureCompleteSound.Play();
                 isCaptured = true;                
                 enabled = false;
@@ -71,9 +71,10 @@ public class FlagCapturing : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other == Player.PlayerHullColl)
+        //print(other.name);
+        if (other.gameObject.layer == Player.PlayerHullColl.gameObject.layer)
         {
-
+           
             if (Vector3.Distance(transform.position, other.transform.position) < captureRange && !isCaptured)
             {
                 progressBarCanvas.SetActive(true);
