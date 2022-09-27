@@ -28,24 +28,24 @@ public class SkinsList : ScriptableObject
             }
         }
         else
-        {            
-            List<string> textNames = new();
-            
-            foreach (Texture2D item in unlockedSkins)
-            {
-                if (item != null)
-                {
-                    textNames.Add(item.name);
-                }
-                
-            }
-
-            PlayerPrefsX.SetStringArray("uSkins", textNames.ToArray());
+        {
+            Save();
         }
     }
 
     public void Save()
     {
+        List<string> textNames = new();
 
+        foreach (Texture2D item in unlockedSkins)
+        {
+            if (item != null)
+            {
+                textNames.Add(item.name);
+            }
+
+        }
+
+        PlayerPrefsX.SetStringArray("uSkins", textNames.ToArray());
     }
 }
