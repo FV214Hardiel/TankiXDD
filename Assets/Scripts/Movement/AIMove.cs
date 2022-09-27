@@ -36,6 +36,8 @@ public class AIMove : Move
 
     [SerializeField] float maxSpeed;
 
+    public LayerMask ignoringLayers;
+
    
 
     
@@ -56,6 +58,9 @@ public class AIMove : Move
         AIState = AIEnum.Patrol;
         agent.SetDestination(patrolPoint);
 
+        
+
+
         StartCoroutine(CustomUpdate(1));
 
     }
@@ -63,6 +68,7 @@ public class AIMove : Move
     private void OnDisable()
     {
         StopAllCoroutines();
+        engineAudio.enabled = false;
     }
 
 
@@ -76,14 +82,12 @@ public class AIMove : Move
                 Patrol();
                 break;
             case AIEnum.Chase:
-                relPos = Vector3.ProjectOnPlane((target.transform.position - turret.transform.position), transform.up);
-                InnerRotQ = Quaternion.LookRotation(relPos, transform.up);
-                turret.transform.rotation = Quaternion.RotateTowards(turret.transform.rotation, InnerRotQ, Time.deltaTime * 50);
+                Chase();
+                
                 break;
             case AIEnum.Attack:
-                relPos = Vector3.ProjectOnPlane((target.transform.position - turret.transform.position), transform.up);
-                InnerRotQ = Quaternion.LookRotation(relPos, transform.up);
-                turret.transform.rotation = Quaternion.RotateTowards(turret.transform.rotation, InnerRotQ, Time.deltaTime * 50);
+
+                Attack();
                 break;
         }
     }
@@ -92,106 +96,28 @@ public class AIMove : Move
     {
         while (true)
         {
-            Debug.Log(AIState);
+            //Debug.Log(AIState);
             chaseTimer -= timeDelta; //decreasing chase timer
             switch (AIState)
             {
                 case AIEnum.Patrol:
-                    target = SearchForEnemies();
-                    if (target != null) //if an enemy is near and visible then start chasing or attacking
-                    {
-                        if (Vector3.Distance(transform.position, target.position) < (attackRange - 3)) //if enemy in range of attack then attack
-                        {
-                            AIState = AIEnum.Attack;
-                            //isTargetLocked = true;
-                        }
-                        else //if not just chase
-                        {
-                            AIState = AIEnum.Chase;
-                            chaseTimer = maxBlindChaseDuration;
-                        }
-                    }
+
+                    PatrolCustomUpdate();
+                    
                     break;
 
 
                 case AIEnum.Chase:
-                    newTarget = SearchForEnemies(); //if a new enemy is found then switch on the new target
-                    if (newTarget != null && newTarget != target)
-                    {
-                        
-                        target = newTarget;
-                        agent.SetDestination(target.position);
-                        break;
-                    }
 
-                    Physics.Linecast(transform.position, target.position, out hit);
-                    //Debug.Log(hit.collider);
-                    if (hit.collider.gameObject == target.gameObject) //if no intersection
-                    {   
-                        if (hit.distance > (areaOfVision+2)) //If enemy ran away
-                        {   
-                            if (chaseTimer <= 0) //if timer ran out then forget the target
-                            {
-                                target = null;
-                                AIState = AIEnum.Patrol;
-                                agent.SetDestination(patrolPoint);
-                            }
-                            //if timer didnt run out then continue to last targets position
-                        }
-                        else //if enemy in vision and in range refresh position
-                        {
-                            chaseTimer = maxBlindChaseDuration;
-                            agent.SetDestination(target.position);
-                            if (Vector3.Distance(transform.position, target.position) < (attackRange - 3)) //if enemy in range of attack
-                            {
-                                AIState = AIEnum.Attack;
-                                //isTargetLocked = true;
-                            }
-                        }
-                    }
-                    else //if there is something between NPC and target
-                    {
-                        if (Vector3.Distance(transform.position, target.position) < areaOfVision / 2) //if target isnt visible but close enough then continue chase
-                        {
-                            chaseTimer = maxBlindChaseDuration;
-                            agent.SetDestination(target.position);
-                        }
-                        else
-                        {
-                            if (chaseTimer <= 0) //if timer ran out then forget the target
-                            {
-                                target = null;
-                                AIState = AIEnum.Patrol;
-                                agent.SetDestination(patrolPoint);
-                            }
-                        }
-                        
+                    ChaseCustomUpdate();
 
-                    }
                     break;
 
 
                 case AIEnum.Attack:
-                    //if target isnt visible OR out of range then chase
-                    Physics.Linecast(transform.position, target.position, out hit);
-                    if (hit.collider.gameObject != target.gameObject || Vector3.Distance(transform.position, target.position) < (attackRange + 3))
-                    {
-                        newTarget = SearchForEnemies(); //if a new enemy is found then switch on the new target
-                        if (newTarget != null) 
-                        {
-                            target = newTarget;
-                            agent.SetDestination(target.position);
-                            
-                        }
-                        else 
-                        {
-                            
-                            agent.SetDestination(target.position);
-                        }
-                        chaseTimer = maxBlindChaseDuration;
-                        AIState = AIEnum.Chase;
-                    }
-                                            
+
+                    AttackCustomUpdate();
+
                     break;
             }
 
@@ -204,14 +130,14 @@ public class AIMove : Move
     {        
         //Searching all colliders in range
         Collider[] colliders = Physics.OverlapSphere(transform.position, areaOfVision, enemyLayers);
+
         
-        //
         Transform newTarget = null;
         float distance = areaOfVision + 10;
         
          foreach (Collider item in colliders)
             {
-                if (Physics.Linecast(transform.position, item.transform.position, out RaycastHit hit)) //Checking direct vision
+                if (Physics.Linecast(transform.position, item.transform.position, out RaycastHit hit, ~ignoringLayers)) //Checking direct vision
                 {
                     if (hit.collider.gameObject == item.gameObject) //If only intersection is with target
                     {
@@ -238,28 +164,128 @@ public class AIMove : Move
 
     void PatrolCustomUpdate()
     {
-        SearchForEnemies();
+        
+        target = SearchForEnemies();
+        if (target != null) //if an enemy is near and visible then start chasing or attacking
+        {
+            if (Vector3.Distance(transform.position, target.position) < (attackRange - 3)) //if enemy in range of attack then attack
+            {
+                AIState = AIEnum.Attack;
+                agent.speed = maxSpeed / 3;
+                engineAudio.pitch = 0.6f;
+                //isTargetLocked = true;
+            }
+            else //if not just chase
+            {
+                AIState = AIEnum.Chase;
+                agent.speed = maxSpeed;
+                engineAudio.pitch = 1;
+                chaseTimer = maxBlindChaseDuration;
+            }
+        }
     }
 
     void Chase()
     {
-        
+        relPos = Vector3.ProjectOnPlane((target.transform.position - turret.transform.position), transform.up);
+        InnerRotQ = Quaternion.LookRotation(relPos, transform.up);
+        turret.transform.rotation = Quaternion.RotateTowards(turret.transform.rotation, InnerRotQ, Time.deltaTime * 50);
     }
 
     void ChaseCustomUpdate()
     {
+        newTarget = SearchForEnemies(); //if a new enemy is found then switch on the new target
+        if (newTarget != null && newTarget != target)
+        {
+            target = newTarget;
+            agent.SetDestination(target.position);
+            return;
+        }
 
+        Physics.Linecast(transform.position, target.position, out hit, ~ignoringLayers);
+       
+        if (hit.collider.gameObject == target.gameObject) //if no intersection
+        {
+            if (hit.distance > (areaOfVision + 2)) //If enemy ran away
+            {
+                if (chaseTimer <= 0) //if timer ran out then forget the target
+                {
+                    target = null;
+                    AIState = AIEnum.Patrol;
+                    agent.SetDestination(patrolPoint);
+                    agent.speed = maxSpeed / 2;
+                    engineAudio.pitch = 0.8f;
+                }
+                //if timer didnt run out then continue to last targets position
+            }
+            else //if enemy in vision and in range refresh position
+            {
+                chaseTimer = maxBlindChaseDuration;
+                agent.SetDestination(target.position);
+                if (Vector3.Distance(transform.position, target.position) < (attackRange - 3)) //if enemy in range of attack
+                {
+                    AIState = AIEnum.Attack;
+                    agent.speed = maxSpeed / 3;
+                    engineAudio.pitch = 0.6f;
+                    //isTargetLocked = true;
+                }
+            }
+        }
+        else //if there is something between NPC and target
+        {
+            if (Vector3.Distance(transform.position, target.position) < areaOfVision / 2) //if target isnt visible but close enough then continue chase
+            {
+                chaseTimer = maxBlindChaseDuration;
+                agent.SetDestination(target.position);
+            }
+            else
+            {
+                if (chaseTimer <= 0) //if timer ran out then forget the target
+                {
+                    target = null;
+                    AIState = AIEnum.Patrol;
+                    agent.SetDestination(patrolPoint);
+                    agent.speed = maxSpeed / 2;
+                    engineAudio.pitch = 0.8f;
+                }
+            }
+
+
+        }
     }
 
     void Attack()
     {
-        
+        relPos = Vector3.ProjectOnPlane((target.transform.position - turret.transform.position), transform.up);
+        InnerRotQ = Quaternion.LookRotation(relPos, transform.up);
+        turret.transform.rotation = Quaternion.RotateTowards(turret.transform.rotation, InnerRotQ, Time.deltaTime * 50);
 
     }
     void AttackCustomUpdate()
     {
 
+        //if target isnt visible OR out of range then chase
+        Physics.Linecast(transform.position, target.position, out hit, ~enemyLayers);
+        //print(hit.collider);
+        
+        if (hit.collider != null || Vector3.Distance(transform.position, target.position) > (attackRange + 3))
+        {
+            newTarget = SearchForEnemies(); //if a new enemy is found then switch on the new target
+            if (newTarget != null)
+            {
+                target = newTarget;
+                agent.SetDestination(target.position);
 
+            }
+            else
+            {
+                agent.SetDestination(target.position);
+            }
+            chaseTimer = maxBlindChaseDuration;
+            AIState = AIEnum.Chase;
+            agent.speed = maxSpeed;
+            engineAudio.pitch = 1;
+        }
     }
 
 
