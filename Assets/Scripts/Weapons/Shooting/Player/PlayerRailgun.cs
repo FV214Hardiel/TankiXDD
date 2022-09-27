@@ -85,8 +85,7 @@ public class PlayerRailgun : PlayerShooting
             EntityHandler eh = hit.collider.GetComponentInParent<EntityHandler>(false);
             if (eh != null)
             {
-                Debug.Log(eh);
-                Debug.Log(source);
+                
                 if (!eh.isDead) //Checking if target is alive and wasnt already hit by this shot
                 {
                     eh.DealDamage(damage, source);
