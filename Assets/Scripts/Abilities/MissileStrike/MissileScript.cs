@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MissileCollideScript : MonoBehaviour
+public class MissileScript : MonoBehaviour
 {
     public GameObject Explosion;
     GameObject Source;
@@ -11,11 +11,13 @@ public class MissileCollideScript : MonoBehaviour
     Rigidbody rb;
     Vector3 Target;
     public float speed;
-    ParticleSystem exlosSize;
+    //ParticleSystem exlosSize;
     
-    // Start is called before the first frame update
+    
     void Start()
     {
+        transform.LookAt(Target, Vector3.up);
+
         rb = GetComponent<Rigidbody>();
         rb.velocity = (Target - transform.position).normalized * speed;
     }
@@ -25,37 +27,29 @@ public class MissileCollideScript : MonoBehaviour
     // Update is called once per frame
     void OnCollisionEnter(Collision other)
     {
-
         EXPLOSON111();
-        //Debug.Log(other);
     }
+        
 
-    public void MissileStats(float dmg, float aoe, Vector3 targetpos, GameObject source)
+    public static void LaunchMissile(GameObject missilePrefab, Vector3 target, float dmg, float aoe, GameObject source)
     {
-        Damage = dmg;
-        Area = aoe;
-        Target = targetpos;
-        Source = source;
-    } 
+        MissileScript newMissile = Instantiate(missilePrefab, target + Vector3.up * 120, Quaternion.identity).GetComponent<MissileScript>();
+        newMissile.Damage = dmg;
+        newMissile.Area = aoe;
+        newMissile.Source = source;
+        newMissile.Target = target;
+
+        
+
+    }
     void EXPLOSON111()
     {
         Collider[] colliders = Physics.OverlapSphere(transform.position, Area);
         foreach (Collider nearby in colliders)
-        {
-            //Debug.Log(nearby);
-
-            //if (nearby.GetComponent<Health>())
-            //{
-            //    nearby.GetComponent<Health>().TakingDMG(Damage, Source);
-
-            //    //Debug.Log(nearby.ToString() + " " + Damage.ToString());
-            //}
-
+        {            
             if (nearby.GetComponent<EntityHandler>())
             {
                 nearby.GetComponent<EntityHandler>().DealDamage(Damage, Source);
-
-                //Debug.Log(nearby.ToString() + " " + Damage.ToString());
             }
         }
         GameObject explosFX = Instantiate(Explosion, transform.position, transform.rotation);

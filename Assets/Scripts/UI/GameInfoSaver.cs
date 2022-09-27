@@ -34,8 +34,7 @@ public class GameInfoSaver : MonoBehaviour
 
     void Awake()
     {
-
-       
+               
         //Debug.Log(enterName);
         //playerName = enterName;
         //Debug.Log(playerName);
@@ -44,15 +43,9 @@ public class GameInfoSaver : MonoBehaviour
             Destroy(gameObject);
         }
         else
-        {
-           
+        {           
             instance = this;
-            tanksList.LoadHulls();
-            tanksList.LoadTurrets();
-
-            skinsList.Load();
-            
-            abilitiesList.Load();
+            Load();
         }
 
         GameObject lh = GameObject.Find("LevelHandler");
@@ -65,6 +58,16 @@ public class GameInfoSaver : MonoBehaviour
 
     }
 
+    private void OnDisable()
+    {
+        SaveGame();
+    }
+
+    private void OnApplicationQuit()
+    {
+        SaveGame();
+    }
+
     public void SetCurrency(ushort money)
     {
         Currency += money;
@@ -74,6 +77,48 @@ public class GameInfoSaver : MonoBehaviour
     public void Test()
     {
         SetCurrency(15);
+    }
+
+    void Load()
+    {
+        LoadCurrency();
+
+        tanksList.LoadHulls();
+        tanksList.LoadTurrets();
+
+        skinsList.Load();
+
+        abilitiesList.Load();
+    }
+    public void SaveGame()
+    {
+        SaveCurrency();
+
+        tanksList.SaveHulls();
+        tanksList.SaveTurrets();
+
+        skinsList.Save();
+
+        abilitiesList.Save();
+    }
+
+    void LoadCurrency()
+    {
+        //int uMoney;
+
+        if (PlayerPrefs.HasKey("uMoney"))
+        {
+            SetCurrency((ushort)PlayerPrefs.GetInt("uMoney"));
+        }
+        else
+        {
+            SaveCurrency();
+        }
+    }
+
+    void SaveCurrency()
+    {
+        PlayerPrefs.SetInt("uMoney", Currency);
     }
    
 }

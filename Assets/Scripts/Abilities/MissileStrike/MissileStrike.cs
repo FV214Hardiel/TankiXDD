@@ -61,7 +61,8 @@ public class MissileStrike : AbilityBase
                 if (Input.GetButtonDown(abilityKey))
                 {
                     state = AbilityState.cooldown;
-                    Launch();
+                    //Launch();
+                    MissileScript.LaunchMissile(Missile, target, abilityDamage, abilityArea, gameObject);
                     remainingCooldown = abilityCooldown;
                     groundArea.SetActive(false);
                 }
@@ -91,16 +92,16 @@ public class MissileStrike : AbilityBase
     }
     public void Launch()
     {
-       GameObject newMissile = Instantiate(Missile, target + Vector3.up  * spawnHeight, transform.rotation);
-       newMissile.transform.LookAt(target, Vector3.up);
-       newMissile.GetComponent<MissileCollideScript>().MissileStats(abilityDamage, abilityArea, target, Player.PlayerHull);
+       //GameObject newMissile = Instantiate(Missile, target + Vector3.up  * spawnHeight, transform.rotation);
+       //newMissile.transform.LookAt(target, Vector3.up);
+       //newMissile.GetComponent<MissileCollideScript>().MissileStats(abilityDamage, abilityArea, target, Player.PlayerHull);
 
     }
     
     Vector3 Aim(float range)
     {
         Vector3 direction = pointer.transform.position - transform.position;
-        Ray aimRay = new Ray(transform.position, direction);
+        Ray aimRay = new(transform.position, direction);
        
         if (Physics.Raycast(aimRay, out RaycastHit hit2, maxDistance: range))
             {

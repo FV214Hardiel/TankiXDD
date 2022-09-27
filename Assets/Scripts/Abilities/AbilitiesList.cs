@@ -28,18 +28,23 @@ public class AbilitiesList : ScriptableObject
         }
         else
         {
-            List<string> textNames = new();
+            Save();
+        }
+    }
 
-            foreach (AbilityCard item in unlockedAbilities)
+    public void Save()
+    {
+        List<string> textNames = new();
+
+        foreach (AbilityCard item in unlockedAbilities)
+        {
+            if (item != null)
             {
-                if (item != null)
-                {
-                    textNames.Add(item.name);
-                }
-
+                textNames.Add(item.name);
             }
 
-            PlayerPrefsX.SetStringArray("uAbilities", textNames.ToArray());
         }
+
+        PlayerPrefsX.SetStringArray("uAbilities", textNames.ToArray());
     }
 }
