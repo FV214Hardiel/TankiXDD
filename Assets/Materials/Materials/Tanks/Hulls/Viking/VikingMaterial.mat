@@ -44,7 +44,7 @@ Material:
     - _isSkin: 0
     m_Colors:
     - _ShieldColor: {r: 0, g: 0.19447425, b: 0.50980395, a: 0}
-    - _TankColor: {r: 0.30041832, g: 0.4056604, b: 0.3111149, a: 1}
+    - _TankColor: {r: 0.38661444, g: 0.4528302, b: 0.391708, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &5930270538989867249
 MonoBehaviour:

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerMove : Move
 {
@@ -16,14 +17,30 @@ public class PlayerMove : Move
     [SerializeField] float TurnSpeed;
     public float maxSpeed;
     float EngineSoundInput;
-    
+
+    public WheelCollider[] wheels;
+
+    bool isOnGround;
+
+    PlayerInput playerInput;
+    PlayerInputActions playerInputActions;
+
     private void Start()
     {
         TurnSpeed *= Time.fixedDeltaTime;
 
         rb = GetComponent<Rigidbody>();
+        rb.sleepThreshold = 0.2f;
 
         engineAudio = GetComponent<AudioSource>();
+
+        playerInputActions = new();
+        playerInputActions.PlayerTankControl.Enable();
+        playerInputActions.PlayerTankControl.Movement.started += AddTorque;
+        playerInputActions.PlayerTankControl.Movement.canceled += ZeroTorque;
+        
+
+        StartCoroutine(CustomUpdate(0.2f));
 
     }
     private void Update()
@@ -55,8 +72,29 @@ public class PlayerMove : Move
 
     }
 
+    public IEnumerator CustomUpdate(float timeDelta)
+    {
+        while (true)
+        {
+            foreach (WheelCollider item in wheels)
+            { 
+                if (item.isGrounded)
+                {
+                    isOnGround = true;
+                    break;
+                }
+                isOnGround = false;
+                
+            }
+            yield return new WaitForSeconds(timeDelta);
+        }
+
+    }
+
     void FixedUpdate()
     {
+        if (!isOnGround) return;
+
         rb.AddForce(PlayerMoveInput * Speed * transform.forward, ForceMode.Acceleration);
                 
         transform.Rotate(0f, PlayerRotInput * TurnSpeed, 0f);
@@ -71,6 +109,29 @@ public class PlayerMove : Move
     public override void SetMaxSpeed(float multiplier)
     {
         Speed *= multiplier;
+    }
+
+    void AddTorque(InputAction.CallbackContext callback)
+    {
+        
+
+        foreach (WheelCollider item in wheels)
+        {
+            item.wheelDampingRate = 1;
+            item.motorTorque = 0.0001f;
+            item.brakeTorque = 0;
+        }
+    }
+
+    void ZeroTorque(InputAction.CallbackContext callback)
+    {
+        
+        foreach (WheelCollider item in wheels)
+        {
+            item.wheelDampingRate = 6;
+            item.motorTorque = 0;
+            item.brakeTorque = 40;
+        }
     }
 
 }
