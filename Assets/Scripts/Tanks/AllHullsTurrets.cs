@@ -174,7 +174,7 @@ public class AllHullsTurrets : ScriptableObject
         EntityHandler eh = tunk.AddComponent<EntityHandler>();
         eh.hullCard = chosenHull;
         eh.hullMod = chosenHull.modifications[hullTier];
-        eh.AITankSetup();
+       
 
 
         //Enabling Shield and Health
@@ -213,6 +213,8 @@ public class AllHullsTurrets : ScriptableObject
         //Putting stats card in EH
         eh.turretCard = chosenTurret;
         eh.turretMod = chosenTurret.modifications[turretTier];
+
+        eh.AITankSetup();
 
         return tunk;
     }
