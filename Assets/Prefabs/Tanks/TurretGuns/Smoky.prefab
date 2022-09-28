@@ -188,9 +188,9 @@ GameObject:
   - component: {fileID: 6868446136987720011}
   - component: {fileID: 1650082506813670955}
   - component: {fileID: 5797800950937683440}
-  - component: {fileID: 4983400906300002292}
-  - component: {fileID: 1639010579079659847}
   - component: {fileID: 3129276443089738098}
+  - component: {fileID: 1639010579079659847}
+  - component: {fileID: 4983400906300002292}
   m_Layer: 0
   m_Name: barrel
   m_TagString: Untagged
@@ -308,48 +308,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49cf2a827e3620e44ad1c2fe9f6d1c87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &4983400906300002292
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4089932773475674261}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d86611d6ca09df2448335860f9ae964e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  source: {fileID: 0}
-  damage: 5
-  delayBetweenShots: 1.2
-  muzzle: {fileID: 0}
-  weapRange: 50
-  angle: 0
-  prefabOfShot: {fileID: 0}
-  shotEffect: {fileID: 8145522921419673881}
-  hitEffect: {fileID: 3748262256023914457}
---- !u!114 &1639010579079659847
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4089932773475674261}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44a750476664ad8468db253e4272d4eb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  source: {fileID: 0}
-  damage: 25
-  delayBetweenShots: 0.8
-  muzzle: {fileID: 0}
-  weapRange: 50
-  angle: 0
-  prefabOfShot: {fileID: 0}
-  shotEffect: {fileID: 8145522921419673881}
-  hitEffect: {fileID: 3748262256023914457}
 --- !u!82 &3129276443089738098
 AudioSource:
   m_ObjectHideFlags: 0
@@ -446,6 +404,48 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1639010579079659847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4089932773475674261}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44a750476664ad8468db253e4272d4eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  source: {fileID: 0}
+  damage: 25
+  delayBetweenShots: 0.8
+  muzzle: {fileID: 0}
+  weapRange: 50
+  angle: 0
+  prefabOfShot: {fileID: 0}
+  shotEffect: {fileID: 8145522921419673881}
+  hitEffect: {fileID: 3748262256023914457}
+--- !u!114 &4983400906300002292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4089932773475674261}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d86611d6ca09df2448335860f9ae964e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  source: {fileID: 0}
+  damage: 5
+  delayBetweenShots: 1.2
+  muzzle: {fileID: 0}
+  weapRange: 50
+  angle: 0
+  prefabOfShot: {fileID: 0}
+  shotEffect: {fileID: 8145522921419673881}
+  hitEffect: {fileID: 3748262256023914457}
 --- !u!1 &4910863825254915517
 GameObject:
   m_ObjectHideFlags: 0
