@@ -59,9 +59,7 @@ public class PlayerRailgun : PlayerShooting
         inputValue = inputActions.PlayerTankControl.Fire.ReadValue<float>();
 
         if (inputValue > 0) //Shot
-        {
-
-            //Shot(shotVector);
+        {                       
             StartCoroutine(Shot());
         }
     }
