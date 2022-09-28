@@ -20,12 +20,13 @@ public class PlayerFirebird : PlayerShooting
 
     AudioSource shotSound;
 
-    PlayerInputActions inputActions;
-    float inputValue;
-
     public float weapRange;
     public float projectileSpeed;
     float timeOfLife;
+
+    PlayerInputActions inputActions;
+    float inputValue;
+
     private void Start()
     {
         source = GetComponentInParent<EntityHandler>().gameObject;
