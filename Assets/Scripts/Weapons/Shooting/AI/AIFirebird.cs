@@ -18,11 +18,11 @@ public class AIFirebird : AIShooting
     public float delayBetweenShots;
     float remainingDelay;
 
+    AudioSource shotSound;
+
     public float weapRange;
     public float projectileSpeed;
     float timeOfLife;
-
-    AudioSource shotSound;
 
     AIMove ai;
     bool isTargetLocked;
@@ -72,6 +72,10 @@ public class AIFirebird : AIShooting
             {
                 lineOfFire = new Ray(muzzle.position, muzzle.forward);
                 isTargetLocked = Physics.Raycast(lineOfFire, weapRange, enemyMask);
+            }
+            else
+            {
+                isTargetLocked = false;
             }
 
             yield return new WaitForSeconds(timeDelta);

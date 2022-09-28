@@ -67,6 +67,10 @@ public class AITwins : AIShooting
                 lineOfFire = new Ray(muzzleL.position, muzzleL.forward);
                 isTargetLocked = Physics.Raycast(lineOfFire, weapRange, enemyMask);
             }
+            else
+            {
+                isTargetLocked = false;
+            }
 
             yield return new WaitForSeconds(timeDelta);
         }

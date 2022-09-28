@@ -57,6 +57,10 @@ public class AIRailgun : AIShooting
                 lineOfFire = new Ray(muzzle.position, muzzle.forward);
                 isTargetLocked = Physics.Raycast(lineOfFire, out hit, weapRange, enemyMask);
             }
+            else
+            {
+                isTargetLocked = false;
+            }
 
 
             yield return new WaitForSeconds(timeDelta);
