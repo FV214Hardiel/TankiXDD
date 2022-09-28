@@ -159,7 +159,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6180493610794603404}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0.026176924, y: 0, z: 0, w: 0.99965733}
   m_LocalPosition: {x: 0, y: 0.4, z: 1.26}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -169,7 +169,7 @@ Transform:
   - {fileID: 5709019135223417271}
   m_Father: {fileID: 2475450324862382203}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 3, y: 0, z: 0}
 --- !u!33 &8813493675092156185
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -263,14 +263,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   source: {fileID: 0}
-  damage: 10
-  shotLight: {fileID: 732549502865159939, guid: 5430cbcf0a797bd4a9c40a89e8cfd577, type: 3}
-  cm: {r: 0.90588236, g: 0.26666668, b: 0.18431373, a: 0}
-  shotDurF: 0.4
-  chargDurF: 0.9
-  weapRange: 40
-  Damage: 1
-  reloadTime: 2
+  damage: 30
+  weapRange: 50
+  delayBetweenShots: 2
+  chargeDuration: 0.8
+  prefabOfShot: {fileID: 213642979737029707, guid: 0afeceafc47c0ff4b86059f6309b3749, type: 3}
 --- !u!114 &893356684044580481
 MonoBehaviour:
   m_ObjectHideFlags: 0
