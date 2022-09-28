@@ -55,15 +55,13 @@ public class AISmoky : AIShooting
             {
                 lineOfFire = new Ray(muzzle.position, muzzle.forward);
                 isTargetLocked = Physics.Raycast(lineOfFire, out hit, weapRange, enemyMask);
-            }
-            
-            
+            }               
 
             yield return new WaitForSeconds(timeDelta);
         }
     }
 
- void Update()
+    void Update()
     {
         if (GameHandler.GameIsPaused) return; //Checking pause
 

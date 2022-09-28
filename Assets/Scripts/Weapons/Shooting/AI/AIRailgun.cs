@@ -44,6 +44,8 @@ public class AIRailgun : AIShooting
         chargeLight = transform.Find("muzzleFlash").GetComponent<ParticleSystem>();
 
         remainingDelay = 0;
+
+        StartCoroutine(CustomUpdate(0.3f));
     }
 
     public IEnumerator CustomUpdate(float timeDelta)
@@ -65,7 +67,6 @@ public class AIRailgun : AIShooting
     {
         if (GameHandler.GameIsPaused) return; //Checking pause
 
-
         if (remainingDelay > 0) //Decreasing delay timer  
         {
             remainingDelay -= Time.deltaTime;
@@ -73,8 +74,7 @@ public class AIRailgun : AIShooting
         }
 
         if (isTargetLocked) //Shot
-        {
-                        
+        {                        
             StartCoroutine(Shot());
         }
     }

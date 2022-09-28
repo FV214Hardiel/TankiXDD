@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class AITwins : AIShooting
-
 {
-    public GameObject shellPref;
-   
+    public GameObject shellPref;   
 
     public float delayBetweenShots;
     float remainingDelay;
@@ -18,7 +16,6 @@ public class AITwins : AIShooting
 
     float debuffPower;
     float debuffDuration;
-    GameObject ShellFired;
 
     public float weapRange;
     public float projectileSpeed;
@@ -38,12 +35,12 @@ public class AITwins : AIShooting
     void Start()
     {
 
-
-        debuffPower = 3;
-        debuffDuration = 10;
-
         source = GetComponentInParent<EntityHandler>().gameObject;
+        muzzleL = transform.Find("muzzleL");
+        muzzleR = transform.Find("muzzleR");
+
         ai = gameObject.GetComponentInParent<AIMove>();
+        enemyMask = ai.enemyLayers;
 
         shotSound = GetComponent<AudioSource>();
 
@@ -52,30 +49,41 @@ public class AITwins : AIShooting
         remainingDelay = 0;
         shotFromRight = true;
 
-        muzzleL = transform.Find("muzzleL");
-        muzzleR = transform.Find("muzzleR");
+
+        debuffPower = 3;
+        debuffDuration = 10;
+
+        StartCoroutine(CustomUpdate(0.3f));
 
 
     }
 
+    public IEnumerator CustomUpdate(float timeDelta)
+    {
+        while (true)
+        {
+            if (ai.AIState == AIMove.AIEnum.Attack)
+            {
+                lineOfFire = new Ray(muzzleL.position, muzzleL.forward);
+                isTargetLocked = Physics.Raycast(lineOfFire, weapRange, enemyMask);
+            }
+
+            yield return new WaitForSeconds(timeDelta);
+        }
+    }
 
     void Update()
     {
-        if (GameHandler.GameIsPaused) return;
-        if (remainingDelay > 0)
+        if (GameHandler.GameIsPaused) return; //Checking pause
+
+        if (remainingDelay > 0) //Checking and decreasing weapon CD
         {
             remainingDelay -= Time.deltaTime;
             return;
-        }
-        
+        }        
 
-        lineOfFire = new Ray(muzzleL.position, muzzleL.forward);
-
-        //Physics.Raycast(lineOfFire, out hit, );
-
-        if (ai.AIState == AIMove.AIEnum.Attack)
-        {
-            remainingDelay = delayBetweenShots;
+        if (isTargetLocked) //Shot
+        {            
             if (shotFromRight)
             {
                 TwinsShell.CreateShot(shellPref, muzzleR.position, muzzleR.forward * projectileSpeed, source, damage, new TwinsDamageStacks(debuffPower, debuffDuration), timeOfLife);
@@ -89,11 +97,9 @@ public class AITwins : AIShooting
                 shotSound.Play();
             }
 
-
-
+            remainingDelay = delayBetweenShots;
 
         }
-
     }
 }
 
