@@ -143,6 +143,7 @@ public class HealthEnemy : Health
         Debug.Log(killer.name + " killed " + gameObject.name);
         EnemyDestroyed?.Invoke();
 
+        Destroy(gameObject, 8);
         enabled = false;
     }
 
