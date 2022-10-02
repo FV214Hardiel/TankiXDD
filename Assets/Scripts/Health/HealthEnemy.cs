@@ -15,10 +15,14 @@ public class HealthEnemy : Health
     NavMeshAgent agent;
     Slider enemyHealthBar;
 
+    float takenDamageSum;
+
     Transform sounds;
     
 
     Transform damagePopupPrefab;
+
+    Camera mainCamera;
 
     public event Action EnemyDestroyed;
     void Start()
@@ -48,6 +52,7 @@ public class HealthEnemy : Health
         Destroy(transform.Find("mount").gameObject);
 
         damagePopupPrefab = Resources.Load<Transform>("DamageNumbersPopup");
+        mainCamera = Camera.main;
 
         ExplosionPoint = transform.Find("ExplosionPoint");
 
@@ -59,7 +64,8 @@ public class HealthEnemy : Health
         Debris = transform.Find("debris").gameObject.GetComponentsInChildren<Collider>(true);
     }
 
-    
+   
+
     public override void TakingDMG(float damage, EntityHandler source)
     {
         takingHitSound.Play();
@@ -68,8 +74,14 @@ public class HealthEnemy : Health
 
         HP = Mathf.Clamp(HP, 0, maxHP);
         enemyHealthBar.value = HP;
+        if (takenDamageSum == 0)
+        {
+            StartCoroutine(AccumulateDMG());
 
-        DamageNumbersPopup.Create(damagePopupPrefab, transform.position + Vector3.up * 2, transform.right, damage, Color.red);
+        }
+        takenDamageSum += damage;
+        //DamageNumbersPopup.Create(damagePopupPrefab, transform.position + Vector3.up * 2, mainCamera.transform.right, damage, Color.red);
+        //print(takenDamageSum);
 
         if (HP <= 0 && Alive)
         {
@@ -77,6 +89,14 @@ public class HealthEnemy : Health
         }
     }
 
+    System.Collections.IEnumerator AccumulateDMG()
+    {
+        yield return new WaitForEndOfFrame();
+
+        DamageNumbersPopup.Create(damagePopupPrefab, transform.position + Vector3.up * 2, mainCamera.transform.right, takenDamageSum, Color.red);
+        takenDamageSum = 0;
+
+    }
     public override void OverDamage(float overdmg, EntityHandler source)
     {
        
@@ -85,7 +105,7 @@ public class HealthEnemy : Health
         HP = Mathf.Clamp(HP, 0, maxHP);
         enemyHealthBar.value = HP;
 
-        //DamageNumbersPopup.Create(damagePopupPrefab, transform.position + Vector3.up * 2, overdmg, Color.red);
+        DamageNumbersPopup.Create(damagePopupPrefab, transform.position + Vector3.up * 2, mainCamera.transform.right, overdmg, Color.red);
 
         if (HP <= 0 && Alive)
         {

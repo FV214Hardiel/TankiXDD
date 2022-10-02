@@ -17,7 +17,7 @@ public class DamageNumbersPopup : MonoBehaviour
     {
         int disperse = Random.Range(0, 21);
         disperse -= 10;
-        Transform DamageNumbersObject = Instantiate(damagePopupPrefab, position + right * disperse/10, Camera.main.transform.rotation);
+        Transform DamageNumbersObject = Instantiate(damagePopupPrefab, position + right * disperse/5, Camera.main.transform.rotation);
         TextMeshPro textMesh = DamageNumbersObject.GetComponent<TextMeshPro>();
         textMesh.text = Mathf.Floor(numbers).ToString();
         textMesh.renderer.material.SetColor("_OutlineColor", colour);
@@ -25,7 +25,7 @@ public class DamageNumbersPopup : MonoBehaviour
     }
     void OnEnable()
     {
-        speed = 6;
+        speed = 10;
         //main = Camera.main; 
         //textMesh = transform.GetComponent<TextMeshPro>();
     }

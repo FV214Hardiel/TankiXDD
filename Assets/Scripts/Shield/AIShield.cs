@@ -5,11 +5,13 @@ using UnityEngine;
 public class AIShield : Shield
 {
     Transform damagePopupPrefab;
+    Camera mainCamera;
 
-    // Start is called before the first frame update
+    float takenDamageSum;
     void OnEnable()
     {
         damagePopupPrefab = Resources.Load<Transform>("DamageNumbersPopup");
+        mainCamera = Camera.main;
 
         materialPropertyBlock = new();
 
@@ -38,6 +40,7 @@ public class AIShield : Shield
     // Update is called once per frame
     void Update()
     {
+       
         if (eh.outOfDamage > rechargeDelay && !isRecharging && currentSP < maxSP)
         {
             StartShieldRecharge();
@@ -55,14 +58,22 @@ public class AIShield : Shield
         }
     }
 
+  
+
     public override void TakingDMG(float damage, EntityHandler source)
     {
         takingHitSound.Play();
         StopShieldRecharge();
-        eh.outOfDamage = 0;
 
+        if (takenDamageSum == 0)
+        {
+            StartCoroutine(AccumulateDMG());
+
+        }
+        takenDamageSum += damage;
+        
         currentSP -= damage;
-        DamageNumbersPopup.Create(damagePopupPrefab, transform.position + Vector3.up * 2, transform.right, damage, Color.blue);
+        
 
         if (currentSP <= 0)
         {
@@ -82,8 +93,15 @@ public class AIShield : Shield
         takingEMPSound.Play();
         StopShieldRecharge();
 
+
+        if (takenDamageSum == 0)
+        {
+            StartCoroutine(AccumulateDMG());
+
+        }
+        takenDamageSum += damage;
         currentSP -= damage;
-        DamageNumbersPopup.Create(damagePopupPrefab, transform.position + Vector3.up * 2, transform.right, damage, Color.blue);
+        
         if (currentSP <= 0)
         {
             shieldBrokenSound.Play();
@@ -98,7 +116,14 @@ public class AIShield : Shield
 
     }
 
+    IEnumerator AccumulateDMG()
+    {
+        yield return new WaitForEndOfFrame();
 
+        DamageNumbersPopup.Create(damagePopupPrefab, transform.position + Vector3.up * 2, mainCamera.transform.right, takenDamageSum, Color.blue);
+        takenDamageSum = 0;
+
+    }
 
     public override void StartShieldRecharge()
     {
