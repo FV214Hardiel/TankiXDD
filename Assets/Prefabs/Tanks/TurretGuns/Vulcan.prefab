@@ -188,9 +188,9 @@ GameObject:
   - component: {fileID: 7680952018692619049}
   - component: {fileID: 6329882453341558154}
   - component: {fileID: 8056601841826284229}
-  - component: {fileID: 747276780676662882}
   - component: {fileID: 4123427404285388355}
   - component: {fileID: 2198169983641076118}
+  - component: {fileID: 5345222602628698355}
   m_Layer: 0
   m_Name: barrel
   m_TagString: Untagged
@@ -308,7 +308,50 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49cf2a827e3620e44ad1c2fe9f6d1c87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!82 &747276780676662882
+--- !u!114 &4123427404285388355
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7608405950613823925}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 891e7cb8300ccc94d997d112b512d2f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  source: {fileID: 0}
+  weapRange: 100
+  damage: 10
+  angle: 1
+  delayBetweenShots: 0.7
+  stacks: 0
+  stackDuration: 0.1
+  prefabOfShot: {fileID: 213642979737029707, guid: a637a2b478991544987eba82a15b5501, type: 3}
+  shotEffect: {fileID: 1257985659733158540}
+--- !u!114 &2198169983641076118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7608405950613823925}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e00885c11913284896353126db2ec8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  source: {fileID: 0}
+  damage: 5
+  delayBetweenShots: 0.8
+  stacks: 0
+  stackDuration: 0.1
+  muzzle: {fileID: 0}
+  weapRange: 50
+  angle: 1
+  prefabOfShot: {fileID: 213642979737029707, guid: a637a2b478991544987eba82a15b5501, type: 3}
+  shotEffect: {fileID: 1257985659733158540}
+--- !u!82 &5345222602628698355
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -320,18 +363,18 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 56dd0f061d50088428ed67cb030b3e2e, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.7
   m_Pitch: 1
   Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 125
+  Priority: 128
   DopplerLevel: 0
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 100
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 2
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -341,20 +384,20 @@ AudioSource:
     - serializedVersion: 3
       time: 0
       value: 1
-      inSlope: 0
-      outSlope: 0
+      inSlope: -3.47192
+      outSlope: -3.47192
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.33333334
+      outWeight: 0.07949904
     - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
+      time: 0.9958191
+      value: 0.006149292
+      inSlope: -0.15567717
+      outSlope: -0.15567717
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
+      inWeight: 0.75313455
       outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -404,50 +447,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &4123427404285388355
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7608405950613823925}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 891e7cb8300ccc94d997d112b512d2f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  source: {fileID: 0}
-  damage: 10
-  delayBetweenShots: 0.7
-  stacks: 0
-  stackDuration: 0.1
-  muzzle: {fileID: 0}
-  weapRange: 100
-  angle: 1
-  prefabOfShot: {fileID: 213642979737029707, guid: a637a2b478991544987eba82a15b5501, type: 3}
-  shotEffect: {fileID: 1257985659733158540}
---- !u!114 &2198169983641076118
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7608405950613823925}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e00885c11913284896353126db2ec8e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  source: {fileID: 0}
-  damage: 5
-  delayBetweenShots: 0.8
-  stacks: 0
-  stackDuration: 0.1
-  muzzle: {fileID: 0}
-  weapRange: 50
-  angle: 1
-  prefabOfShot: {fileID: 213642979737029707, guid: a637a2b478991544987eba82a15b5501, type: 3}
-  shotEffect: {fileID: 1257985659733158540}
 --- !u!1 &7974660697151280597
 GameObject:
   m_ObjectHideFlags: 0
@@ -5327,7 +5326,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5581035332867894969}
-  - component: {fileID: 5110622328001653056}
+  - component: {fileID: 8360144878641368797}
   m_Layer: 0
   m_Name: ChargesSound
   m_TagString: Untagged
@@ -5350,7 +5349,7 @@ Transform:
   m_Father: {fileID: 1669517555785806758}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!82 &5110622328001653056
+--- !u!82 &8360144878641368797
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5362,18 +5361,18 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 6f8ed4f363cbb424d8c6a2b525af1865, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.786
-  m_Pitch: 0
+  m_Volume: 0.4
+  m_Pitch: 1
   Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
-  DopplerLevel: 1
+  DopplerLevel: 0
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 100
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 2
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -5383,20 +5382,20 @@ AudioSource:
     - serializedVersion: 3
       time: 0
       value: 1
-      inSlope: 0
-      outSlope: 0
+      inSlope: -3.47192
+      outSlope: -3.47192
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.33333334
+      outWeight: 0.07949904
     - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
+      time: 0.9958191
+      value: 0.006149292
+      inSlope: -0.15567717
+      outSlope: -0.15567717
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
+      inWeight: 0.75313455
       outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2

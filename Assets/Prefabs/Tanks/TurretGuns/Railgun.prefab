@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5709019135223417271}
-  - component: {fileID: 953759719547868504}
+  - component: {fileID: 5302114509185383218}
   m_Layer: 0
   m_Name: ChargeSound
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Father: {fileID: 561768924636978478}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!82 &953759719547868504
+--- !u!82 &5302114509185383218
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -44,7 +44,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: cb4078896881b31409e27223d7448946, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.7
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -53,9 +53,9 @@ AudioSource:
   Priority: 128
   DopplerLevel: 0
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 100
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 2
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -65,20 +65,20 @@ AudioSource:
     - serializedVersion: 3
       time: 0
       value: 1
-      inSlope: 0
-      outSlope: 0
+      inSlope: -3.47192
+      outSlope: -3.47192
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.33333334
+      outWeight: 0.07949904
     - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
+      time: 0.9958191
+      value: 0.006149292
+      inSlope: -0.15567717
+      outSlope: -0.15567717
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
+      inWeight: 0.75313455
       outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -144,7 +144,7 @@ GameObject:
   - component: {fileID: 6102962902739307274}
   - component: {fileID: 893356684044580481}
   - component: {fileID: 5931847297143463599}
-  - component: {fileID: 3954258214426147292}
+  - component: {fileID: 3379037883804154634}
   m_Layer: 0
   m_Name: barrel
   m_TagString: Untagged
@@ -293,12 +293,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   source: {fileID: 0}
-  damage: 200
   weapRange: 70
+  damage: 400
+  angle: 0
   delayBetweenShots: 2
   chargeDuration: 0.8
   prefabOfShot: {fileID: 213642979737029707, guid: 0afeceafc47c0ff4b86059f6309b3749, type: 3}
---- !u!82 &3954258214426147292
+--- !u!82 &3379037883804154634
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -310,7 +311,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: ae86a8b89a648d34eafb6cdf38b05310, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.7
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -319,9 +320,9 @@ AudioSource:
   Priority: 128
   DopplerLevel: 0
   MinDistance: 1
-  MaxDistance: 80
+  MaxDistance: 100
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 2
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -331,20 +332,20 @@ AudioSource:
     - serializedVersion: 3
       time: 0
       value: 1
-      inSlope: 0
-      outSlope: 0
+      inSlope: -3.47192
+      outSlope: -3.47192
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.33333334
+      outWeight: 0.07949904
     - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
+      time: 0.9958191
+      value: 0.006149292
+      inSlope: -0.15567717
+      outSlope: -0.15567717
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
+      inWeight: 0.75313455
       outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2

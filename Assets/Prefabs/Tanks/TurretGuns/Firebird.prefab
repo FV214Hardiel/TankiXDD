@@ -190,7 +190,7 @@ GameObject:
   - component: {fileID: 4367804129768659205}
   - component: {fileID: 6052034561358946327}
   - component: {fileID: 6784220450071641281}
-  - component: {fileID: 1335496587194043802}
+  - component: {fileID: 4443009148935543413}
   m_Layer: 0
   m_Name: barrel
   m_TagString: Untagged
@@ -319,11 +319,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   source: {fileID: 0}
+  weapRange: 50
   damage: 10
   angle: 4
-  prefab: {fileID: 8537647364723216535, guid: 80977d32d624fed40a4b2fb700a28f5a, type: 3}
   delayBetweenShots: 0.1
-  weapRange: 50
+  prefab: {fileID: 8537647364723216535, guid: 80977d32d624fed40a4b2fb700a28f5a, type: 3}
   projectileSpeed: 25
 --- !u!114 &6784220450071641281
 MonoBehaviour:
@@ -344,7 +344,7 @@ MonoBehaviour:
   delayBetweenShots: 0.2
   weapRange: 40
   projectileSpeed: 30
---- !u!82 &1335496587194043802
+--- !u!82 &4443009148935543413
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -356,18 +356,18 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 853da6c03ba1df04a89d8852a9bfec51, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.3
+  m_Volume: 0.6
   m_Pitch: 1
   Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
-  DopplerLevel: 1
+  DopplerLevel: 0
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 100
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 2
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -377,20 +377,20 @@ AudioSource:
     - serializedVersion: 3
       time: 0
       value: 1
-      inSlope: 0
-      outSlope: 0
+      inSlope: -3.47192
+      outSlope: -3.47192
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.33333334
+      outWeight: 0.07949904
     - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
+      time: 0.9958191
+      value: 0.006149292
+      inSlope: -0.15567717
+      outSlope: -0.15567717
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
+      inWeight: 0.75313455
       outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
