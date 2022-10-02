@@ -6,7 +6,7 @@ public class TwinsShell : MonoBehaviour
 {
     [SerializeField] float timeOfLife;
 
-    public GameObject source;
+    public EntityHandler source;
     public float expForce;
     public float expRadius;
     public float damage;
@@ -14,11 +14,7 @@ public class TwinsShell : MonoBehaviour
     public Effect debuff;
 
     GameObject alreadyHit;
-    private void OnEnable()
-    {
-        //Destroying shot after expiring its ToL
-        Destroy(gameObject, timeOfLife);
-    }
+    
     private void OnTriggerEnter(Collider other)
     {
 
@@ -27,7 +23,7 @@ public class TwinsShell : MonoBehaviour
         if (eh != null)
         {
 
-            if (eh.gameObject == source) //Collision with player (after the shot for example)
+            if (eh == source) //Collision with player (after the shot for example)
                 return;
 
             if (eh.gameObject != alreadyHit && !eh.isDead) //Checking if target is alive and wasnt already hit by this shot
@@ -62,7 +58,7 @@ public class TwinsShell : MonoBehaviour
     }
 
     //Creating the shot prefab 
-    public static void CreateShot(GameObject prefab, Vector3 pos, Vector3 velocityVector, GameObject source, float dmg, Effect debuff, float tol)
+    public static void CreateShot(GameObject prefab, Vector3 pos, Vector3 velocityVector, EntityHandler source, float dmg, Effect debuff, float tol)
     {
         GameObject go = Instantiate(prefab, pos, Camera.main.transform.rotation);
         go.GetComponent<Rigidbody>().velocity = velocityVector;

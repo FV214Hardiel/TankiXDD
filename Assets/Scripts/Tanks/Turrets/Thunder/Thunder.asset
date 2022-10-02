@@ -13,11 +13,9 @@ MonoBehaviour:
   m_Name: Thunder
   m_EditorClassIdentifier: 
   gunName: Thunder
-  dmg: 150
-  prefabOfTurret: {fileID: 0}
-  turretRotationSpeed: 0
+  prefabOfTurret: {fileID: 5494545519332580398, guid: 5daa90b195563cc4fbf02474ec427c94, type: 3}
   modifications:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: d83a6c9ac0f949548aea952a8600206a, type: 2}
+  - {fileID: 11400000, guid: 1eac19a49d78f2e479ff3f09fbdbed2e, type: 2}
+  - {fileID: 11400000, guid: 4b39fcd0ff60b0b4399424f8f364e8ce, type: 2}
+  - {fileID: 11400000, guid: 85384a4a2fda9b24a970034028817182, type: 2}
