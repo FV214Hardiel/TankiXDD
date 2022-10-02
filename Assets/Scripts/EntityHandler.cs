@@ -27,7 +27,11 @@ public class EntityHandler : MonoBehaviour
     //float baseArmor;
     public float armor;
 
-    
+    float empTenaciryMax;
+    public float empTenacity;
+
+    public LayerMask friendsMask;
+    public LayerMask enemiesMask;
 
     public List<Component> abilities;
 
@@ -41,6 +45,9 @@ public class EntityHandler : MonoBehaviour
 
     void OnEnable()
     {
+        empTenaciryMax = 100;
+        empTenacity = empTenaciryMax;
+
         basePlayerColor = new Color(0.38f, 0.45f, 0.39f);
         
         baseEnemyColor = new Color(0.82f, 0.38f, 0.31f);              
@@ -59,6 +66,12 @@ public class EntityHandler : MonoBehaviour
         
         //Out of combat timer
         outOfDamage += Time.deltaTime;
+        if (empTenacity < empTenaciryMax)
+        {
+            empTenacity += Time.deltaTime;
+
+        }
+        
 
         //Debug input
         //if (Input.GetKeyDown(KeyCode.Backspace))
@@ -67,7 +80,7 @@ public class EntityHandler : MonoBehaviour
         //}
     }
 
-    public void DealDamage(float dmg, GameObject source)
+    public void DealDamage(float dmg, EntityHandler source)
     {
         if (isDead)
         {
@@ -82,23 +95,60 @@ public class EntityHandler : MonoBehaviour
         {
             health.TakingDMG(dmg, source);
         }
-        if (source == Player.PlayerHull) //Playing hit sound only for player
+        if (source == Player.PlayerEH) //Playing hit sound only for player
         {
             hitMarker.Play();
         }
+    }
+
+    public void DealEMP(float dmg, EntityHandler source)
+    {
+        if (isDead)
+        {
+            return;
+        }
+        outOfDamage = 0; //On every attempt of dealing dmg timer resets
+
+        if (shield.currentSP > 0)
+        {
+            shield.TakingEMP(dmg, source);
+        }
+        else
+        {
+            LoseEMPTenacity(dmg, source);
+        }
+        
+
+        if (source == Player.PlayerEH) //Playing hit sound only for player
+        {
+            hitMarker.Play();
+        }
+    }
+
+    public void LoseEMPTenacity(float dmg, EntityHandler source)
+    {
+        empTenacity -= dmg;
+        if (empTenacity < 0)
+        {
+            print("Tank is stunned by " + source.name);
+        }
+
     }
 
     //Setting some specific values for AI Tank
     public void AITankSetup()
     {        
         isPlayer = false;
+        friendsMask = LayerMask.GetMask("EnemyTeamRed");
+        enemiesMask = LayerMask.GetMask("PlayerTeamGreen");
 
         foreach (MeshRenderer item in meshRenderers)
         {
             item.material.SetFloat("_isSkin", 0.0f);
-            item.material.SetColor("_TankColor", baseEnemyColor);
+            item.material.SetColor("_TankColor", baseEnemyColor);            
             
             item.gameObject.layer = LayerMask.NameToLayer("EnemyTeamRed");
+
         }
 
            
@@ -111,6 +161,9 @@ public class EntityHandler : MonoBehaviour
     public void PlayerTankSetup()
     {
         isPlayer = true;
+
+        friendsMask = LayerMask.GetMask("PlayerTeamGreen");
+        enemiesMask = LayerMask.GetMask("EnemyTeamRed");
 
         if (GameInfoSaver.instance.chosenSkin != null)
         {
@@ -130,14 +183,18 @@ public class EntityHandler : MonoBehaviour
                 item.material.SetFloat("_isSkin", 0.0f);
                 item.material.SetColor("_TankColor", basePlayerColor);
             }
-            item.gameObject.layer = LayerMask.NameToLayer("PlayerTeamGreen");
-        }
 
-        
+            item.gameObject.layer = LayerMask.NameToLayer("PlayerTeamGreen");
+
+        }
+        print(gameObject.layer);
+
         abilities = new();
         effh = gameObject.AddComponent<EffectsHandler>();
 
         hitMarker = GameObject.Find("HitSFX").GetComponent<AudioSource>();
+
+        Player.PlayerEH = this;
 
 
     }

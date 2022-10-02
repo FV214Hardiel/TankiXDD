@@ -32,6 +32,7 @@ public class PlayerShield : Shield
 
         sounds = transform.Find("Sounds");
         takingHitSound = sounds.Find("TakingHitSoundShield").GetComponent<AudioSource>();
+        //takingEMPSound = sounds.Find("TakingEMPSoundShield").GetComponent<AudioSource>();
         shieldBrokenSound = sounds.Find("ShieldDestroyed").GetComponent<AudioSource>();
         shieldRechargingSound = sounds.Find("ShieldRegenSound").GetComponent<AudioSource>();
     }
@@ -67,11 +68,11 @@ public class PlayerShield : Shield
         }
     }
 
-    public override void TakingDMG(float damage, GameObject source)
+    public override void TakingDMG(float damage, EntityHandler source)
     {
         takingHitSound.Play();
         StopShieldRecharge();
-        eh.outOfDamage = 0;
+        
 
         currentSP -= damage;
         if (currentSP <= 0)
@@ -88,7 +89,25 @@ public class PlayerShield : Shield
 
     }
 
-    
+    public override void TakingEMP(float damage, EntityHandler source)
+    {
+        takingHitSound.Play();
+        StopShieldRecharge();
+
+        currentSP -= damage;
+        if (currentSP <= 0)
+        {
+            shieldBrokenSound.Play();
+            DisableShieldShader();
+
+            eh.LoseEMPTenacity(0 - currentSP, source);
+
+            currentSP = 0;
+        }
+
+        sb.UpdateBar(currentSP);
+
+    }
 
     public override void StartShieldRecharge()
     {

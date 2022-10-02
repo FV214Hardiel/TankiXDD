@@ -18,6 +18,7 @@ public class Shield : MonoBehaviour
     protected Transform sounds;
 
     protected AudioSource takingHitSound;
+    protected AudioSource takingEMPSound;
     protected AudioSource shieldBrokenSound;
     protected AudioSource shieldRechargingSound;
 
@@ -36,7 +37,12 @@ public class Shield : MonoBehaviour
 
     }
 
-    public virtual void TakingDMG(float damage, GameObject source)
+    public virtual void TakingDMG(float damage, EntityHandler source)
+    {
+
+    }
+
+    public virtual void TakingEMP(float damage, EntityHandler source)
     {
 
     }
