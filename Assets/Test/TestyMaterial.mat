@@ -13,7 +13,7 @@ Material:
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 3000
+  m_CustomRenderQueue: 2000
   stringTagMap:
     RenderType: Transparent
   disabledShaderPasses: []
@@ -46,10 +46,10 @@ Material:
     - _BUILTIN_ZTest: 2
     - _BUILTIN_ZWrite: 0
     - _BUILTIN_ZWriteControl: 0
-    - _Thickness: 6.66
+    - _Thickness: 0
     m_Colors:
-    - _BaseColor: {r: 0.24056602, g: 0.5872643, b: 1, a: 1}
-    - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
+    - _BaseColor: {r: 0.16566482, g: 0, b: 0.59607846, a: 1}
+    - _OutlineColor: {r: 0.11320752, g: 0.11320752, b: 0.11320752, a: 1}
     - _TestyFrenel: {r: 0.754717, g: 0.48834625, b: 0, a: 0.6117647}
     - _TextColor: {r: 0.6037736, g: 0.16803133, b: 0.16803133, a: 1}
   m_BuildTextureStacks: []

@@ -5,7 +5,6 @@ using UnityEngine;
 public class scr4 : MonoBehaviour
 {
     Collider[] colliders;
-    public scr5 item;
 
     //public LayerMask lyaerMask;
     int lm;
@@ -13,15 +12,12 @@ public class scr4 : MonoBehaviour
     // RECEIVER
     void Start()
     {
-        scr5.isEvent += isReceived;
+        
         
 
     }
 
-    void isReceived(GameObject other)
-    {
-        print(gameObject.name + " has received signal from " + other.name);
-    }
+    
     
 
     //public IEnumerator CustomUpdate()
