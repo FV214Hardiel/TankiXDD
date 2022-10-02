@@ -42,7 +42,10 @@ public class AIFirebird : AIShooting
 
         timeOfLife = weapRange / projectileSpeed;
 
-        remainingDelay = 0;        
+        remainingDelay = 0;
+
+        source.TankStunned += OnStun;
+        source.TankAwaken += OnUnStun;
 
         StartCoroutine(CustomUpdate(0.3f));
 
@@ -64,6 +67,25 @@ public class AIFirebird : AIShooting
         index = 0;
     }
 
+    private void OnDestroy()
+    {
+        source.TankStunned -= OnStun;
+        source.TankAwaken -= OnUnStun;
+
+    }
+
+    protected override void OnStun()
+    {
+        base.OnStun();
+
+    }
+
+    protected override void OnUnStun()
+    {
+        base.OnUnStun();
+        StartCoroutine(CustomUpdate(1));
+
+    }
     public IEnumerator CustomUpdate(float timeDelta)
     {
         while (true)
@@ -85,7 +107,7 @@ public class AIFirebird : AIShooting
     // Update is called once per frame
     void Update()
     {
-        if (GameHandler.GameIsPaused) //Checking pause
+        if (GameHandler.GameIsPaused || isStunned) //Checking pause
         {
             shotSound.pitch = 0;
             return;

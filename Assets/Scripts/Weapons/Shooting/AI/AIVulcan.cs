@@ -67,7 +67,30 @@ public class AIVulcan : AIShooting
         stacks = 0;
         stackTimer = 0;
 
+        source.TankStunned += OnStun;
+        source.TankAwaken += OnUnStun;
+
         StartCoroutine(CustomUpdate(0.3f));
+    }
+
+    private void OnDestroy()
+    {
+        source.TankStunned -= OnStun;
+        source.TankAwaken -= OnUnStun;
+
+    }
+
+    protected override void OnStun()
+    {
+        base.OnStun();
+
+    }
+
+    protected override void OnUnStun()
+    {
+        base.OnUnStun();
+        StartCoroutine(CustomUpdate(1));
+
     }
 
     public IEnumerator CustomUpdate(float timeDelta)
@@ -91,7 +114,13 @@ public class AIVulcan : AIShooting
     // Update is called once per frame
     void Update()
     {
-        if (GameHandler.GameIsPaused) return; //Checking pause
+        if (GameHandler.GameIsPaused || isStunned) //Checking pause
+        {
+            stacks = 0;
+            return;
+        }
+
+ 
 
         chargeSound.pitch = stacks > 0 ? (0.4f + stacks * 0.03f) : 0;
 
