@@ -32,7 +32,7 @@ public class PlayerShield : Shield
 
         sounds = transform.Find("Sounds");
         takingHitSound = sounds.Find("TakingHitSoundShield").GetComponent<AudioSource>();
-        //takingEMPSound = sounds.Find("TakingEMPSoundShield").GetComponent<AudioSource>();
+        takingEMPSound = sounds.Find("TakingEMPSoundShield").GetComponent<AudioSource>();
         shieldBrokenSound = sounds.Find("ShieldDestroyed").GetComponent<AudioSource>();
         shieldRechargingSound = sounds.Find("ShieldRegenSound").GetComponent<AudioSource>();
     }
