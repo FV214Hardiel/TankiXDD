@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class scr5 : MonoBehaviour
 {
-    // Start is called before the first frame update
+    // FALLING CUBE EMITTER
+    public delegate void collided(GameObject x);
+    public static event collided isEvent;
     void Start()
     {
         
     }
 
     // Update is called once per frame
-    void Update()
+    private void OnCollisionEnter(Collision collision)
     {
-        
+        isEvent?.Invoke(gameObject);
     }
 }
