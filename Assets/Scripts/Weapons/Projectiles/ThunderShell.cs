@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ThunderShell : MonoBehaviour
 {
-    [SerializeField] float timeOfLife;
+    float timeOfLife;
     float timer;
 
     public EntityHandler source;
@@ -18,7 +18,7 @@ public class ThunderShell : MonoBehaviour
     public float pelletsAngle;
     public float pelletDamage;
 
-    
+    bool alreadyHit;
     
     Vector3 shotVector;
 
@@ -34,6 +34,7 @@ public class ThunderShell : MonoBehaviour
         timer = timeOfLife;
         rb = GetComponent<Rigidbody>();
         //explosion = transform.Find("Explosion");
+        alreadyHit = false;
     }
 
     private void Update()
@@ -48,9 +49,11 @@ public class ThunderShell : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<EntityHandler>())
+        if (alreadyHit) return;
+        if (other.GetComponentInParent<EntityHandler>())
         {
-            other.GetComponent<EntityHandler>().DealDamage(30, source);
+            other.GetComponentInParent<EntityHandler>().DealDamage(30, source);
+            alreadyHit = true;
         }
         Destroy(gameObject);
     }
@@ -92,7 +95,7 @@ public class ThunderShell : MonoBehaviour
             if (Physics.Raycast(transform.position, shotVector, out hit, pelletsDistance))
             {
 
-                print(hit.collider);
+                
                 WeaponTrail.Create(trail, transform.position, hit.point);
                 EntityHandler eh = hit.collider.GetComponentInParent<EntityHandler>(false);
                 if (eh != null)
@@ -124,9 +127,8 @@ public class ThunderShell : MonoBehaviour
         ThunderShell sht = go.GetComponent<ThunderShell>();
         sht.damage = dmg;
         sht.source = source;
-
-        //Destroying shot after expiring its ToL
-        Destroy(go, tol);
+        sht.timer = tol;
+        
     }
 
     Vector3 DisperseVector(Vector3 originalVector, float angle)
