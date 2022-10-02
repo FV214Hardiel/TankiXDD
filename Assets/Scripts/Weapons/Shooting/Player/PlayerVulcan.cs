@@ -4,38 +4,23 @@ using UnityEngine;
 
 public class PlayerVulcan : PlayerShooting
 {
-    public float delayBetweenShots;
-    float remainingDelay;
+    
 
     [SerializeField] byte stacks;
     public float stackDuration;
     float stackTimer;
-    float modifiedDelay;
+    float modifiedDelay;   
 
-    public Transform muzzle;
-
-    public float weapRange;
-
-    Vector3 shotVector;
-    public float angle;
-
-    List<ushort> disperseAngles;
-    List<float> disperseLengths;
-    int index;
-
-    AudioSource shotSound;
+    Vector3 shotVector;    
+    
     AudioSource chargeSound;
 
     public GameObject prefabOfShot;
     public ParticleSystem shotEffect;
 
-    PlayerInputActions inputActions;
-    float inputValue;
-    
-
     void Start()
     {
-        source = GetComponentInParent<EntityHandler>().gameObject;
+        source = GetComponentInParent<EntityHandler>();
         muzzle = transform.Find("muzzle");       
 
         inputActions = new();
@@ -96,32 +81,12 @@ public class PlayerVulcan : PlayerShooting
         
     }
 
-    Vector3 DisperseVector(Vector3 originalVector, float angle)
-    {
-        Vector3 vector = originalVector.normalized; //Original vector must be normalized
-
-        //Taking random values from pregenerated lists
-        ushort angleDis = disperseAngles[index];
-        float lenghtDis = disperseLengths[index];
-
-        index++;
-        if (index >= disperseAngles.Count) index = 0; //Cycling indexes
-
-        angle *= Mathf.Deg2Rad; //Angle from degrees to rads
-                
-        float ratioMultiplier = Mathf.Tan(angle); //Tangens of angle for ratio between Dispersion Leg and Base Leg       
-
-        //Adding UP vector multiplied by ratio and random value and rotated on random angle
-        vector += Quaternion.AngleAxis(angleDis, originalVector) * (lenghtDis * ratioMultiplier * muzzle.up); 
-
-        return vector.normalized;
-    }
+    
 
     void Shot(Vector3 shotVector)
     {        
         shotSound.Play();
         shotEffect.Play();
-
         
         if (Physics.Raycast(muzzle.position, shotVector, out RaycastHit hit, weapRange))
         {

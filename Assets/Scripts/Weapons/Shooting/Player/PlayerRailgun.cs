@@ -3,33 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerRailgun : PlayerShooting
-{
-    
-
-    Transform muzzle; 
-
-    public float weapRange;    
-
-    public float delayBetweenShots;
-    float remainingDelay;
-
-    PlayerInputActions inputActions;
-    float inputValue;
-
-
+{  
     ParticleSystem chargeLight;
     public float chargeDuration;
     AudioSource chargeSound;
 
     public GameObject prefabOfShot;
 
-    AudioSource shotSound;
-
 
 
     void Start()
     {
-        source = GetComponentInParent<EntityHandler>().gameObject;
+        source = GetComponentInParent<EntityHandler>();
         muzzle = transform.Find("muzzle");
 
         inputActions = new();

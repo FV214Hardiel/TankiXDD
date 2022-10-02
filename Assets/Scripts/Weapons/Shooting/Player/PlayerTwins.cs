@@ -4,50 +4,41 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerTwins : PlayerShooting
-
 {
     public GameObject shellPref;
-    
-
-    public float delayBetweenShots;
-    float remainingDelay;
 
     public Transform muzzleL;
     public Transform muzzleR;
-
     bool shotFromRight;
 
     float debuffPower;
     float debuffDuration;
 
-    AudioSource shotSound;
-
-    PlayerInputActions inputActions;
-    float inputValue;
-
-    public float weapRange;
     public float projectileSpeed;
     float timeOfLife;
 
     void Start()
     {
-        debuffPower = 3;
-        debuffDuration = 10;
-
-        source = GetComponentInParent<EntityHandler>().gameObject;
+        //Base setup for shooting
+        source = GetComponentInParent<EntityHandler>();
 
         timeOfLife = weapRange / projectileSpeed;
 
         shotSound = GetComponent<AudioSource>();
 
-        remainingDelay = 0;
+        remainingDelay = 0;        
+
+        inputActions = new();
+        if (!GameHandler.GameIsPaused) inputActions.PlayerTankControl.Enable();
+
+        //Specific setup
+        debuffPower = 3;
+        debuffDuration = 10;
+
         shotFromRight = true;
 
         muzzleL = transform.Find("muzzleL");
         muzzleR = transform.Find("muzzleR");
-
-        inputActions = new();
-        if (!GameHandler.GameIsPaused) inputActions.PlayerTankControl.Enable();
 
     }
 

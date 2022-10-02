@@ -3,34 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerSmoky : PlayerShooting
-{ 
-    public float delayBetweenShots;
-    float remainingDelay;    
-
-    public Transform muzzle;
-
-    public float weapRange;
-
-    
-    public float angle;
-
-    List<ushort> disperseAngles;
-    List<float> disperseLengths;
-    int index;
-
-    AudioSource shotSound;
-    AudioSource chargeSound;
-
-    public GameObject prefabOfShot;
+{           
     public ParticleSystem shotEffect;
     public ParticleSystem hitEffect;
-
-    PlayerInputActions inputActions;
-    float inputValue;
+    
 
     void Start()
     {
-        source = GetComponentInParent<EntityHandler>().gameObject;
+        source = GetComponentInParent<EntityHandler>();
         muzzle = transform.Find("muzzle");
 
         inputActions = new();
@@ -67,26 +47,7 @@ public class PlayerSmoky : PlayerShooting
         }
     }
 
-    Vector3 DisperseVector(Vector3 originalVector, float angle)
-    {
-        Vector3 vector = originalVector.normalized; //Original vector must be normalized
-
-        //Taking random values from pregenerated lists
-        ushort angleDis = disperseAngles[index];
-        float lenghtDis = disperseLengths[index];
-
-        index++;
-        if (index >= disperseAngles.Count) index = 0; //Cycling indexes
-
-        angle *= Mathf.Deg2Rad; //Angle from degrees to rads
-
-        float ratioMultiplier = Mathf.Tan(angle); //Tangens of angle for ratio between Dispersion Leg and Base Leg       
-
-        //Adding UP vector multiplied by ratio and random value and rotated on random angle
-        vector += Quaternion.AngleAxis(angleDis, originalVector) * (lenghtDis * ratioMultiplier * muzzle.up);
-
-        return vector.normalized;
-    }
+    
 
     void Shot(Vector3 shotVector)
     {
