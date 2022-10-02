@@ -26,8 +26,11 @@ public class EntityHandler : MonoBehaviour
 
     //float baseArmor;
     public float armor;
+    //List<Effect> receivingDamageEffects; 
+    public delegate float ReceivingDamageEffects(float x);
+    public ReceivingDamageEffects receivingDamageEffects;
 
-    float empTenaciryMax;
+    float empTenacityMax;
     public float empTenacity;
 
     public LayerMask friendsMask;
@@ -39,14 +42,19 @@ public class EntityHandler : MonoBehaviour
     public bool isPlayer;
 
     public bool isDead;
+    bool isStunned;
+
     AudioSource hitMarker;
 
     public List<MeshRenderer> meshRenderers;
 
-    void OnEnable()
+    public event System.Action TankStunned;
+    public event System.Action TankAwaken;
+
+    void Awake()
     {
-        empTenaciryMax = 100;
-        empTenacity = empTenaciryMax;
+        empTenacityMax = 100;
+        empTenacity = empTenacityMax;
 
         basePlayerColor = new Color(0.38f, 0.45f, 0.39f);
         
@@ -56,29 +64,46 @@ public class EntityHandler : MonoBehaviour
         meshRenderers = new();        
         meshRenderers.Add(GetComponent<MeshRenderer>());
 
-        
-
+        //ReceivingDamageEffects receivingDamageEffects = new();
 
     }
 
     private void Update()
     {
-        
-        //Out of combat timer
-        outOfDamage += Time.deltaTime;
-        if (empTenacity < empTenaciryMax)
-        {
-            empTenacity += Time.deltaTime;
 
+        
+        if (empTenacity < empTenacityMax)
+        {
+            empTenacity += 30*Time.deltaTime;
+
+            if (isStunned && empTenacity > 0)
+            {
+                UnStun();
+                
+            }
         }
         
 
+        if (isStunned) return;
+
+        //Out of combat timer
+        outOfDamage += Time.deltaTime;
+
         //Debug input
-        //if (Input.GetKeyDown(KeyCode.Backspace))
-        //{
-        //    AddEffect(new Regeneration(10, 10, gameObject));
-        //}
+        if (Input.GetKeyUp(KeyCode.Backspace))
+        {
+            print("test1");
+            effh.AddEffect(new PiecesDamageReduction(10));
+        }
+
+        if (Input.GetKeyUp(KeyCode.L))
+        {
+            print("test2");
+            effh.AddEffect(new HalfDamageReduction(10));
+        }
     }
+
+
 
     public void DealDamage(float dmg, EntityHandler source)
     {
@@ -87,13 +112,24 @@ public class EntityHandler : MonoBehaviour
             return;
         }
         outOfDamage = 0; //On every attempt of dealing dmg timer resets
+        
+        float newDmg = dmg; //Applying defence buffs and debuffs
+        if (receivingDamageEffects != null)
+        {
+            foreach (ReceivingDamageEffects item in receivingDamageEffects.GetInvocationList())
+            {
+                newDmg = item.Invoke(newDmg);
+            }
+        }
+
+
         if (shield.currentSP > 0)
         {
-            shield.TakingDMG(dmg, source);
+            shield.TakingDMG(newDmg, source);
         }
         else
         {
-            health.TakingDMG(dmg, source);
+            health.TakingDMG(newDmg, source);
         }
         if (source == Player.PlayerEH) //Playing hit sound only for player
         {
@@ -130,9 +166,30 @@ public class EntityHandler : MonoBehaviour
         empTenacity -= dmg;
         if (empTenacity < 0)
         {
-            print("Tank is stunned by " + source.name);
+            Stun();
         }
 
+    }
+
+    void Stun()
+    {
+        isStunned = true;
+        TankStunned?.Invoke();
+        foreach (MeshRenderer item in meshRenderers) //Changing shader
+        {
+            item.material.SetFloat("_isStunned", 1.0f);
+        }
+
+    }
+
+    void UnStun()
+    {
+        TankAwaken?.Invoke();
+        isStunned = false;
+        foreach (MeshRenderer item in meshRenderers) //Changing shader
+        {
+            item.material.SetFloat("_isStunned", 0.0f);
+        }
     }
 
     //Setting some specific values for AI Tank
@@ -187,7 +244,7 @@ public class EntityHandler : MonoBehaviour
             item.gameObject.layer = LayerMask.NameToLayer("PlayerTeamGreen");
 
         }
-        print(gameObject.layer);
+        
 
         abilities = new();
         effh = gameObject.AddComponent<EffectsHandler>();
@@ -225,7 +282,7 @@ public class EntityHandler : MonoBehaviour
             }
             
         }
-        this.enabled = false;
+        enabled = false;
     }
 
     public void Die()
@@ -238,6 +295,8 @@ public class EntityHandler : MonoBehaviour
             item.material.SetFloat("_isDead", 1.0f);
         }
     }
+
+    
         
 }
 
