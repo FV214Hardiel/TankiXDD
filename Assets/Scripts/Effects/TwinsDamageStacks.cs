@@ -54,4 +54,9 @@ public class TwinsDamageStacks : Effect
         return remainingDuration;
     }
 
+    public override void EndEffect()
+    {
+
+    }
+
 }

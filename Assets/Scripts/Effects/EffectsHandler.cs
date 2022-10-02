@@ -36,8 +36,9 @@ public class EffectsHandler : MonoBehaviour
 
         if (search == null)
         {            
-            effect.affectedObject = gameObject; 
+            effect.affectedObject = gameObject.GetComponent<EntityHandler>(); 
             activeEffects.Add(effect); //Adding effect
+            effect.InitEffect();
         }
         else
         {            
@@ -52,8 +53,9 @@ public class EffectsHandler : MonoBehaviour
             {
                 if (search.canBeDifferentInstances)
                 {
-                    effect.affectedObject = gameObject;
+                    effect.affectedObject = gameObject.GetComponent<EntityHandler>();
                     activeEffects.Add(effect); //Add effect if additional instances of one effect allowed
+                    effect.InitEffect();
                 }
                 else
                 {

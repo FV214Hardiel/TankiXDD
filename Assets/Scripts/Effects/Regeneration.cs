@@ -8,14 +8,14 @@ public class Regeneration : Effect
     public float innerBaseCD;
     float innerCD;
     Health heatlh;
-    public Regeneration(float duration, float power, GameObject obj)
+    public Regeneration(float duration, float power)
     {
         effectDuration = duration;
         effectPower = power;
         remainingDuration = duration;
 
-        affectedObject = obj;
-        heatlh = obj.GetComponent<EntityHandler>().health;
+        
+        heatlh = affectedObject.health;
 
         innerBaseCD = 0.5f;
         effectID = 1;
@@ -25,13 +25,14 @@ public class Regeneration : Effect
 
         effectStacks = 1;
 
-
-        InitEffect();
+        
         
     }
 
     public override float Tick(float deltatime)
     {
+        
+           
         innerCD -= deltatime;
         if (innerCD <= 0)
         {
@@ -54,14 +55,18 @@ public class Regeneration : Effect
     {
 
     }
+        
 
-    
-    
     //
     public void UseEffect()
     {
                
         Debug.Log("HEAL: " + effectPower * effectStacks);
         //Debug.Log(affectedObject.GetComponent<Shield>());
+    }
+
+    public override void EndEffect()
+    {
+
     }
 }

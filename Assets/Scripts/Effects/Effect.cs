@@ -40,7 +40,7 @@ public abstract class Effect
     public enum EffectTypes { Buff, Debuff }
     public EffectTypes effectType;
 
-    public GameObject affectedObject;
+    public EntityHandler affectedObject;
 
     public ushort effectID;
 
@@ -55,10 +55,13 @@ public abstract class Effect
 
     public bool canBeDifferentInstances;
 
-
     public float remainingDuration;
+
+    
     public abstract float Tick(float deltatime);
 
     public abstract void InitEffect();
+
+    public abstract void EndEffect();
 
 }
