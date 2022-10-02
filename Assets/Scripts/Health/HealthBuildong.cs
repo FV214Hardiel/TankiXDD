@@ -25,7 +25,7 @@ public class HealthBuildong : Health
 
     }
 
-    public override void TakingDMG(float damage, GameObject source)
+    public override void TakingDMG(float damage, EntityHandler source)
     {
         HP -= damage;
         HP = Mathf.Clamp(HP, 0, maxHP);

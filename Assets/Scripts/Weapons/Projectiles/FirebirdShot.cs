@@ -14,7 +14,7 @@ public class FirebirdShot : MonoBehaviour
     GameObject alreadyHit;
 
     float damage;
-    GameObject source;
+    EntityHandler source;
     
     void OnEnable()
     {
@@ -67,7 +67,7 @@ public class FirebirdShot : MonoBehaviour
     }
 
     //Creating the shot prefab 
-    public static void CreateShot(GameObject prefab, Vector3 pos, Vector3 velocityVector, GameObject source, float dmg, float tol)
+    public static void CreateShot(GameObject prefab, Vector3 pos, Vector3 velocityVector, EntityHandler source, float dmg, float tol)
     {
         GameObject go = Instantiate(prefab, pos, Camera.main.transform.rotation);
         go.GetComponent<Rigidbody>().velocity = velocityVector;

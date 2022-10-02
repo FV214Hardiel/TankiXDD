@@ -39,7 +39,7 @@ public class AIVulcan : AIShooting
     // Start is called before the first frame update
     void Start()
     {
-        source = GetComponentInParent<EntityHandler>().gameObject;
+        source = GetComponentInParent<EntityHandler>();
         muzzle = transform.Find("muzzle");
 
         ai = gameObject.GetComponentInParent<AIMove>();

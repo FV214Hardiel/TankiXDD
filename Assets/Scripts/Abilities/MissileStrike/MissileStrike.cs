@@ -17,7 +17,9 @@ public class MissileStrike : AbilityBase
     public GameObject Missile;
     Vector3 target;
     public Transform pointer;
-    
+
+    EntityHandler source;
+
     public float spawnHeight = 100;
     
     void Start()
@@ -26,6 +28,7 @@ public class MissileStrike : AbilityBase
 
         SetIcon();
 
+        source = GetComponent<EntityHandler>();
         //Debug.Log(abilitySlot);
         Missile = Resources.Load<GameObject>("Weaponry/Abilities/missile");        
 
@@ -62,7 +65,7 @@ public class MissileStrike : AbilityBase
                 {
                     state = AbilityState.cooldown;
                     //Launch();
-                    MissileScript.LaunchMissile(Missile, target, abilityDamage, abilityArea, gameObject);
+                    MissileScript.LaunchMissile(Missile, target, abilityDamage, abilityArea, source);
                     remainingCooldown = abilityCooldown;
                     groundArea.SetActive(false);
                 }

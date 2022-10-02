@@ -32,7 +32,7 @@ public class AIFirebird : AIShooting
     LayerMask enemyMask;
     void Start()
     {
-        source = GetComponentInParent<EntityHandler>().gameObject;
+        source = GetComponentInParent<EntityHandler>();
         muzzle = transform.Find("muzzle");
 
         ai = gameObject.GetComponentInParent<AIMove>();

@@ -134,4 +134,10 @@ public class PlayerMove : Move
         }
     }
 
+    private void OnDisable()
+    {
+        playerInputActions.PlayerTankControl.Movement.started -= AddTorque;
+        playerInputActions.PlayerTankControl.Movement.canceled -= ZeroTorque;
+    }
+
 }

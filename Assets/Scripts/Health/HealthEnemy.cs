@@ -44,8 +44,6 @@ public class HealthEnemy : Health
         GunRB = Gun.GetComponent<Rigidbody>();
 
         agent = GetComponent<NavMeshAgent>();
-        //moveScript = GetComponent<AIMove>();
-        //shotScript = GetComponent<AIShooting>();
 
         Destroy(transform.Find("mount").gameObject);
 
@@ -62,7 +60,7 @@ public class HealthEnemy : Health
     }
 
     
-    public override void TakingDMG(float damage, GameObject source)
+    public override void TakingDMG(float damage, EntityHandler source)
     {
         takingHitSound.Play();
 
@@ -79,7 +77,7 @@ public class HealthEnemy : Health
         }
     }
 
-    public override void OverDamage(float overdmg, GameObject source)
+    public override void OverDamage(float overdmg, EntityHandler source)
     {
        
         HP -= overdmg;
@@ -95,7 +93,7 @@ public class HealthEnemy : Health
         }
     }
 
-    public override void Dying(GameObject killer)
+    public override void Dying(EntityHandler killer)
     {
 
         GetComponent<EntityHandler>().Die();

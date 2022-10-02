@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class Speedboost : AbilityBase
 {
-    enum AbilityState { ready, active, cooldown }
-    AbilityState state = AbilityState.ready;
+    //enum AbilityState { ready, active, cooldown }
+    //AbilityState state = AbilityState.ready;
 
     
 }

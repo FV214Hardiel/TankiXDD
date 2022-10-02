@@ -13,6 +13,8 @@ public class Player : MonoBehaviour
     public static Collider PlayerHullColl;
     public static Collider PlayerTurretColl;
 
+    public static EntityHandler PlayerEH;
+
     public static Camera PlayerCamera;
 
     public static string PlayerName;

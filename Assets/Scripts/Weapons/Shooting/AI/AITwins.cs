@@ -35,7 +35,7 @@ public class AITwins : AIShooting
     void Start()
     {
 
-        source = GetComponentInParent<EntityHandler>().gameObject;
+        source = GetComponentInParent<EntityHandler>();
         muzzleL = transform.Find("muzzleL");
         muzzleR = transform.Find("muzzleR");
 

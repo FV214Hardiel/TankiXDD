@@ -33,7 +33,7 @@ public class AISmoky : AIShooting
 
     void Start()
     {
-        source = GetComponentInParent<EntityHandler>().gameObject;
+        source = GetComponentInParent<EntityHandler>();
         muzzle = transform.Find("muzzle");
 
         ai = gameObject.GetComponentInParent<AIMove>();

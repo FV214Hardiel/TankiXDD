@@ -56,7 +56,7 @@ public class HealthPlayer : Health
 
     }
 
-    public override void TakingDMG(float damage, GameObject source)
+    public override void TakingDMG(float damage, EntityHandler source)
     {
         takingHitSound.Play();
 
@@ -72,7 +72,7 @@ public class HealthPlayer : Health
 
     }
 
-    public override void OverDamage(float overdmg, GameObject source)
+    public override void OverDamage(float overdmg, EntityHandler source)
     {
         Debug.Log("OverdamagePlayer");
 
@@ -87,7 +87,7 @@ public class HealthPlayer : Health
         }
     }
 
-    public override void Dying(GameObject killer)
+    public override void Dying(EntityHandler killer)
     {
         GetComponent<EntityHandler>().Die();
 

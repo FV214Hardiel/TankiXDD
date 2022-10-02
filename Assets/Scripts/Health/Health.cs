@@ -27,17 +27,17 @@ public class Health : MonoBehaviour
 
     
 
-    public virtual void TakingDMG(float damage, GameObject source)
+    public virtual void TakingDMG(float damage, EntityHandler source)
     {
 
     }
 
-    public virtual void Dying(GameObject source)
+    public virtual void Dying(EntityHandler source)
     {
 
     }
 
-    public virtual void OverDamage(float overdmg, GameObject source)
+    public virtual void OverDamage(float overdmg, EntityHandler source)
     {
 
     }
