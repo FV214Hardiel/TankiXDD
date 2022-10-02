@@ -51,6 +51,9 @@ public class EntityHandler : MonoBehaviour
     public event System.Action TankStunned;
     public event System.Action TankAwaken;
 
+    AudioSource stunSound;
+    AudioSource unstunSound;
+
     void Awake()
     {
         empTenacityMax = 100;
@@ -63,6 +66,11 @@ public class EntityHandler : MonoBehaviour
         //Mesh Renderers
         meshRenderers = new();        
         meshRenderers.Add(GetComponent<MeshRenderer>());
+
+        Transform sounds = transform.Find("Sounds");
+        stunSound = sounds.Find("StunnedSound").GetComponent<AudioSource>();
+        unstunSound = sounds.Find("UnstunnedSound").GetComponent<AudioSource>();
+
 
         //ReceivingDamageEffects receivingDamageEffects = new();
 
@@ -164,7 +172,7 @@ public class EntityHandler : MonoBehaviour
     public void LoseEMPTenacity(float dmg, EntityHandler source)
     {
         empTenacity -= dmg;
-        if (empTenacity < 0)
+        if (empTenacity < 0 && !isStunned)
         {
             Stun();
         }
@@ -174,18 +182,25 @@ public class EntityHandler : MonoBehaviour
     void Stun()
     {
         isStunned = true;
+        stunSound.Play();
+
         TankStunned?.Invoke();
+
         foreach (MeshRenderer item in meshRenderers) //Changing shader
         {
             item.material.SetFloat("_isStunned", 1.0f);
         }
+        
 
     }
 
     void UnStun()
     {
         TankAwaken?.Invoke();
+
         isStunned = false;
+        unstunSound.Play();
+
         foreach (MeshRenderer item in meshRenderers) //Changing shader
         {
             item.material.SetFloat("_isStunned", 0.0f);
