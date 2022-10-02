@@ -4892,7 +4892,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 4c54636af11432f4e87f664b9a020ecb, type: 3}
+  m_audioClip: {fileID: 8300000, guid: f99279c357ea64d498ba7bafdb783602, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.7
   m_Pitch: 1
@@ -7296,7 +7296,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0d60b6402e34474799e67f247778b57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeOfLife: 0.5
   source: {fileID: 0}
   expForce: 0
   expRadius: 2.8
@@ -7304,6 +7303,6 @@ MonoBehaviour:
   pelletsCount: 6
   pelletsDistance: 40
   pelletsAngle: 8
-  pelletDamage: 50
+  pelletDamage: 10
   explosion: {fileID: 4619156206443000922}
   trail: {fileID: 213642979737029707, guid: fd1612da7c65ca7448a79bfb392733ae, type: 3}

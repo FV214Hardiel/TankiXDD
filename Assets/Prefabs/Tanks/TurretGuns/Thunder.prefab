@@ -331,12 +331,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   source: {fileID: 0}
-  weapRange: 50
+  weapRange: 15
   damage: 300
   angle: 0
   delayBetweenShots: 2
   shellPref: {fileID: 6277428715457980806, guid: 5bb08614d1ec6c74f8549efb7a9021c5, type: 3}
-  projectileSpeed: 15
+  projectileSpeed: 50
 --- !u!82 &8355261736195734821
 AudioSource:
   m_ObjectHideFlags: 0
