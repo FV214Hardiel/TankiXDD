@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3656117273604783570}
   - component: {fileID: 5327813395752141039}
   - component: {fileID: 6059766241199182338}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 8773119072997224658}
   - component: {fileID: 6783711974793724952}
   - component: {fileID: 5324666226617062337}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: WallTileSmall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -179,6 +179,6 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -7146687273355937487, guid: 1a20e2f5125fe254cb793e63177ac8b7, type: 3}

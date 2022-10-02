@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1938253032277704507}
   - component: {fileID: 3957814426571147842}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: ObjectiveTower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -46,18 +46,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74dec7730a44f96458bfb8535689212b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  baseHP: 150
   HP: 0
-  Hull: {fileID: 0}
-  Turret: {fileID: 0}
-  Gun: {fileID: 0}
+  maxHP: 150
   ExpPref: {fileID: 100012, guid: f3a153ef01a92d04dbdf22d8f0dcaa56, type: 3}
   ExplosionPoint: {fileID: 0}
   Alive: 0
-  baseHP: 150
-  maxHP: 150
-  TowerOk: {fileID: 0}
-  TowerNeOk: {fileID: 0}
+  BuildingOk: {fileID: 0}
+  BuildingNeOk: {fileID: 0}
   Debris: []
+  isObjective: 0
 --- !u!1 &1505708547377673499
 GameObject:
   m_ObjectHideFlags: 0
@@ -71,7 +69,7 @@ GameObject:
   - component: {fileID: 6106839605575974789}
   - component: {fileID: 1380448223844433045}
   - component: {fileID: 2986603201863976231}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: fab_tow.010
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -186,7 +184,7 @@ GameObject:
   - component: {fileID: 1507351442455323364}
   - component: {fileID: 8994530764647583318}
   - component: {fileID: 1069626976104724977}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: fab_tow.008
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -301,7 +299,7 @@ GameObject:
   - component: {fileID: 4237308145463176650}
   - component: {fileID: 4357482353050396682}
   - component: {fileID: 6971359507462653229}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: fab_tow.005
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -416,7 +414,7 @@ GameObject:
   - component: {fileID: 272918124752032043}
   - component: {fileID: 5963246465023165619}
   - component: {fileID: 3684979326608015050}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: fab_tow.004
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -531,7 +529,7 @@ GameObject:
   - component: {fileID: 2799223200009969689}
   - component: {fileID: 2500669793928619006}
   - component: {fileID: 1532218550648322780}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: fab_ok
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -642,7 +640,7 @@ GameObject:
   - component: {fileID: 2093614296981587053}
   - component: {fileID: 8089469783765181880}
   - component: {fileID: 8393962273702532351}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: fab_tow.013
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -757,7 +755,7 @@ GameObject:
   - component: {fileID: 2683934426194286536}
   - component: {fileID: 2858777770703145382}
   - component: {fileID: 7907769777292607332}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: fab_tow.006
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -872,7 +870,7 @@ GameObject:
   - component: {fileID: 4910884063135978543}
   - component: {fileID: 3805879331963291883}
   - component: {fileID: 1962870954934899344}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: fab_tow.002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -987,7 +985,7 @@ GameObject:
   - component: {fileID: 8763976991500883095}
   - component: {fileID: 1229526578759964600}
   - component: {fileID: 345160030551428961}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: fab_tow.007
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1102,7 +1100,7 @@ GameObject:
   - component: {fileID: 7882431317556025891}
   - component: {fileID: 6636915372142431537}
   - component: {fileID: 500164905597694892}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: fab_tow.009
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1217,7 +1215,7 @@ GameObject:
   - component: {fileID: 5682530422278553086}
   - component: {fileID: 3315665057917174596}
   - component: {fileID: 673426726107908324}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: fab_tow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1332,7 +1330,7 @@ GameObject:
   - component: {fileID: 2240356780534206899}
   - component: {fileID: 8788059496494491399}
   - component: {fileID: 6151552766381876402}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: fab_tow.011
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1447,7 +1445,7 @@ GameObject:
   - component: {fileID: 6161823808646921690}
   - component: {fileID: 6360889139814514993}
   - component: {fileID: 3193766340895063424}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: fab_tow.012
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1562,7 +1560,7 @@ GameObject:
   - component: {fileID: 6230148557444287793}
   - component: {fileID: 4741144065922174447}
   - component: {fileID: 6245497304382376116}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: fab_tow.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1677,7 +1675,7 @@ GameObject:
   - component: {fileID: 4604686361534000030}
   - component: {fileID: 1842629598508315251}
   - component: {fileID: 7926140598615859522}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: fab_tow.003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1789,7 +1787,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8676933190715296802}
   - component: {fileID: 8939285940546627459}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: fab_neok
   m_TagString: Untagged
   m_Icon: {fileID: 0}

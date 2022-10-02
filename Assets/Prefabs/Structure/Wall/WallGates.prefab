@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5649270582053730779}
   - component: {fileID: 7602862184937327889}
   - component: {fileID: 5649270582053730778}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: WallGates
   m_TagString: Untagged
   m_Icon: {fileID: 0}
