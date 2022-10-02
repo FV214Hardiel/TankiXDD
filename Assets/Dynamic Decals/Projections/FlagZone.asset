@@ -12,23 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcb8792a633d83f4f8f6885545aa7817, type: 3}
   m_Name: FlagZone
   m_EditorClassIdentifier: 
-  type: 1
+  type: 0
   instanced: 0
   forceForward: 0
   priority: 0
-  transparencyType: 1
-  cutoff: 0.01
+  transparencyType: 0
+  cutoff: 0.549
   tiling: {x: 0, y: 0}
   offset: {x: 0, y: 0}
   maskMethod: 0
   masks: 00000000
-  projectionLimit: 80
+  projectionLimit: 180
   _Cutoff: 130
-  _TilingOffset: 473
-  _MaskBase: 474
-  _MaskLayers: 475
+  _TilingOffset: 529
+  _MaskBase: 530
+  _MaskLayers: 531
   albedo:
-    texture: {fileID: 2800000, guid: 2922ce8b9de87c64f93b72c4b752a846, type: 3}
+    texture: {fileID: 2800000, guid: 39f8f4c88ba3f264197910be74fa5bfd, type: 3}
     color: {r: 0.6509434, g: 0.27340838, b: 0, a: 0.89411765}
     _MainTex: 16
     _Color: 75

@@ -28,7 +28,7 @@ public class FlagCapturing : MonoBehaviour
         objectiveHandlerInstance = FindObjectOfType<ObjectiveHandler>();
 
         captureSpeed = 100 / totalCaptureTime;
-        transform.localScale = new Vector3(2 * captureRange, 0.5f*captureRange, 2 * captureRange);
+        transform.localScale = new Vector3(2 * captureRange, 2*captureRange, 0.5f * captureRange);
 
         progressBarCanvas = GameObject.Find("progressBarCanvas"); 
         progressBarCanvas.SetActive(false);
@@ -72,7 +72,7 @@ public class FlagCapturing : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
         //print(other.name);
-        if (other.gameObject.layer == Player.PlayerHullColl.gameObject.layer)
+        if (other == Player.PlayerHullColl)
         {
            
             if (Vector3.Distance(transform.position, other.transform.position) < captureRange && !isCaptured)
