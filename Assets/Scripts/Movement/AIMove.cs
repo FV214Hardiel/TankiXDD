@@ -9,6 +9,8 @@ public class AIMove : Move
     
     public Vector3 patrolPoint;
 
+    EntityHandler eh;
+
     NavMeshAgent agent;
     //Ray lineOfSight;
     RaycastHit hit;
@@ -38,14 +40,17 @@ public class AIMove : Move
 
     public LayerMask ignoringLayers;
 
-   
+    bool isStunned;
 
-    
+
+
 
     void Start()
     {
-        maxBlindChaseDuration = 2;
-        //maxSpeed = 10;
+        eh = GetComponent<EntityHandler>();
+
+        maxBlindChaseDuration = 5;
+        maxSpeed = 8;
 
         agent = GetComponent<NavMeshAgent>();
         agent.speed = maxSpeed;
@@ -54,26 +59,48 @@ public class AIMove : Move
 
         turret = GetComponentInChildren<Turret>().gameObject.transform;
 
-        
+
         AIState = AIEnum.Patrol;
         agent.SetDestination(patrolPoint);
-
-        
 
 
         StartCoroutine(CustomUpdate(1));
 
+        eh.TankStunned += OnStun;
+        eh.TankAwaken += OnUnStun;
+
     }
 
+    private void OnStun()
+    {
+        
+        engineAudio.enabled = false;
+        agent.enabled = false;
+        isStunned = true;
+
+    }
+    private void OnUnStun()
+    {
+       
+        engineAudio.enabled = true;
+        agent.enabled = true;
+        isStunned = false;
+
+
+    }
     private void OnDisable()
     {
         StopAllCoroutines();
-        engineAudio.enabled = false;
+        
+
+        eh.TankStunned -= OnStun;
+        eh.TankAwaken -= OnUnStun;
     }
 
 
     void Update()
     {
+        if (isStunned) return;
 
         switch (AIState)
         {
@@ -96,8 +123,13 @@ public class AIMove : Move
     {
         while (true)
         {
-            //Debug.Log(AIState);
-            chaseTimer -= timeDelta; //decreasing chase timer
+            if (isStunned)
+            {
+                yield return new WaitForSeconds(timeDelta);
+                continue;
+            }
+                //Debug.Log(AIState);
+                chaseTimer -= timeDelta; //decreasing chase timer
             switch (AIState)
             {
                 case AIEnum.Patrol:

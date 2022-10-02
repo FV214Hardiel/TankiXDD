@@ -14,4 +14,10 @@ public class Move : MonoBehaviour
     {
        
     }
+
+    public virtual IEnumerator Stun()
+    {
+        print("virtual move");
+        yield return null;
+    }
 }
