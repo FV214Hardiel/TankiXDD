@@ -4,12 +4,10 @@ using UnityEngine;
 
 public class PlayerThunder : PlayerShooting
 {
-    public GameObject shellPref;
-    
+    public GameObject shellPref;    
 
     public float projectileSpeed;
     float timeOfLife;
-    // Start is called before the first frame update
     void Start()
     {
         //Base setup for shooting
@@ -50,7 +48,7 @@ public class PlayerThunder : PlayerShooting
     void Shot()
     {
         shotSound.Play();
-        ThunderShell.CreateShot(shellPref, muzzle.position, muzzle.forward * 45, source, damage, timeOfLife);
+        ThunderShell.CreateShot(shellPref, muzzle.position, muzzle.forward * projectileSpeed, source, damage, timeOfLife);
         remainingDelay = delayBetweenShots;
     }
 }
