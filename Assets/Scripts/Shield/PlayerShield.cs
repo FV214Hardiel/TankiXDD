@@ -10,22 +10,19 @@ public class PlayerShield : Shield
     {
         eh = GetComponent<EntityHandler>();
         eh.shield = this;
-
-        //materialPropertyBlocks = eh.materialPropertyBlocks;
-        materialPropertyBlock = new();
-
-        
+                
+        materialPropertyBlock = new();        
 
         baseSP = eh.hullCard.baseSP;
         maxSP = baseSP;
-        currentSP = maxSP;
-
-        //Debug.Log("RAZ");
+        currentSP = maxSP;        
 
         //Handling UI ShieldBar
         sb = GameObject.Find("ShieldBarUI").GetComponent<ShieldBarPlayer>();
         sb.enabled = true;
-        sb.shield = this;
+
+        sb.maxShield = maxSP;
+        sb.UpdateBar(currentSP);
 
         rechargeRate = eh.hullCard.shieldRechargeRate;
         rechargeDelay = eh.hullCard.shieldRechargeDelay;

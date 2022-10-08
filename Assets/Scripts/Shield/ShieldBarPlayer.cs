@@ -11,24 +11,14 @@ public class ShieldBarPlayer : MonoBehaviour
 
     TMPro.TextMeshProUGUI TextText;
 
-    float maxShield;
+    public float maxShield;    
     
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         barBaseWidth = Bar.rect.width;
-
-        maxShield = shield.maxSP;
-
-        TextText = GetComponentInChildren<TMPro.TextMeshProUGUI>();
-        TextText.text = shield.currentSP.ToString();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
 
     public void UpdateBar(float newSP) 
     {
@@ -36,6 +26,8 @@ public class ShieldBarPlayer : MonoBehaviour
         Bar.sizeDelta = new Vector2(perc, 40);
         
         newSP = Mathf.Floor(newSP);
+
+        TextText = GetComponentInChildren<TMPro.TextMeshProUGUI>();
         TextText.text = newSP.ToString();
     }
 }
