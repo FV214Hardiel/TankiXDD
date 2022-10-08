@@ -15,7 +15,7 @@ public class AIMove : Move
     //Ray lineOfSight;
     RaycastHit hit;
 
-    public LayerMask enemyLayers;
+    
 
     public float areaOfVision;
     public float attackRange;
@@ -38,6 +38,7 @@ public class AIMove : Move
 
     [SerializeField] float maxSpeed;
 
+    public LayerMask enemyLayers;
     public LayerMask ignoringLayers;
 
     bool isStunned;
@@ -49,6 +50,8 @@ public class AIMove : Move
     {
         eh = GetComponent<EntityHandler>();
 
+        ignoringLayers = eh.friendsMask;
+
         maxBlindChaseDuration = 5;
         maxSpeed = 8;
 
@@ -59,10 +62,8 @@ public class AIMove : Move
 
         turret = GetComponentInChildren<Turret>().gameObject.transform;
 
-
         AIState = AIEnum.Patrol;
         agent.SetDestination(patrolPoint);
-
 
         StartCoroutine(CustomUpdate(1));
 
@@ -161,20 +162,31 @@ public class AIMove : Move
     Transform SearchForEnemies()
     {        
         //Searching all colliders in range
-        Collider[] colliders = Physics.OverlapSphere(transform.position, areaOfVision, enemyLayers);
+        Collider[] colliders = Physics.OverlapSphere(transform.position, areaOfVision / 2, enemyLayers);
 
-        
         Transform newTarget = null;
-        float distance = areaOfVision + 10;
-        
-         foreach (Collider item in colliders)
+        float distance = areaOfVision / 2 + 1;
+
+        if (colliders.Length > 0) //if there are targets in an inner circle
+        {
+            foreach (Collider item in colliders)
+            { 
+                if (Vector3.Distance(transform.position, item.transform.position) < distance) //If distance with new item is less than earlier
+                {                           
+                    distance = Vector3.Distance(transform.position, item.transform.position); //New least distance                           
+                    newTarget = item.transform; //New target                        
+                }
+            }
+        }
+        else
+        {
+            colliders = Physics.OverlapSphere(transform.position, areaOfVision, enemyLayers);
+            foreach (Collider item in colliders)
             {
                 if (Physics.Linecast(transform.position, item.transform.position, out RaycastHit hit, ~ignoringLayers)) //Checking direct vision
                 {
                     if (hit.collider.gameObject == item.gameObject) //If only intersection is with target
                     {
-                        //Debug.Log("Vision with " + item.name);
-
                         if (Vector3.Distance(transform.position, item.transform.position) < distance) //If distance with new item is less than earlier
                         {
                             distance = Vector3.Distance(transform.position, item.transform.position); //New least distance
@@ -182,8 +194,12 @@ public class AIMove : Move
                         }
 
                     }
+                }
             }
         }
+        
+        
+         
 
         //Debug.Log(newTarget);
         return newTarget;
@@ -196,7 +212,7 @@ public class AIMove : Move
 
     void PatrolCustomUpdate()
     {
-        
+        agent.SetDestination(patrolPoint);
         target = SearchForEnemies();
         if (target != null) //if an enemy is near and visible then start chasing or attacking
         {
@@ -219,6 +235,11 @@ public class AIMove : Move
 
     void Chase()
     {
+        if (target == null)
+        {
+            AIState = AIEnum.Patrol;
+            return;
+        }
         relPos = Vector3.ProjectOnPlane((target.transform.position - turret.transform.position), transform.up);
         InnerRotQ = Quaternion.LookRotation(relPos, transform.up);
         turret.transform.rotation = Quaternion.RotateTowards(turret.transform.rotation, InnerRotQ, Time.deltaTime * 50);
@@ -226,6 +247,11 @@ public class AIMove : Move
 
     void ChaseCustomUpdate()
     {
+        if (target == null)
+        {
+            AIState = AIEnum.Patrol;
+            return;
+        }
         newTarget = SearchForEnemies(); //if a new enemy is found then switch on the new target
         if (newTarget != null && newTarget != target)
         {
@@ -244,7 +270,7 @@ public class AIMove : Move
                 {
                     target = null;
                     AIState = AIEnum.Patrol;
-                    agent.SetDestination(patrolPoint);
+                    
                     agent.speed = maxSpeed / 2;
                     engineAudio.pitch = 0.8f;
                 }
@@ -276,7 +302,6 @@ public class AIMove : Move
                 {
                     target = null;
                     AIState = AIEnum.Patrol;
-                    agent.SetDestination(patrolPoint);
                     agent.speed = maxSpeed / 2;
                     engineAudio.pitch = 0.8f;
                 }
@@ -288,6 +313,12 @@ public class AIMove : Move
 
     void Attack()
     {
+        if (target == null)
+        {
+            AIState = AIEnum.Patrol;
+            return;
+        }
+
         relPos = Vector3.ProjectOnPlane((target.transform.position - turret.transform.position), transform.up);
         InnerRotQ = Quaternion.LookRotation(relPos, transform.up);
         turret.transform.rotation = Quaternion.RotateTowards(turret.transform.rotation, InnerRotQ, Time.deltaTime * 50);
@@ -295,7 +326,11 @@ public class AIMove : Move
     }
     void AttackCustomUpdate()
     {
-
+        if (target == null)
+        {
+            AIState = AIEnum.Patrol;
+            return;
+        }
         //if target isnt visible OR out of range then chase
         Physics.Linecast(transform.position, target.position, out hit, ~enemyLayers);
         //print(hit.collider);
@@ -320,394 +355,5 @@ public class AIMove : Move
         }
     }
 
-
 }
 
-//{
-
-//    public GameObject player;
-//public Vector3 patrolPoint;
-//public Vector3 goal;
-
-//NavMeshAgent agent;
-//Ray lineOfSight;
-//RaycastHit hit;
-//public LayerMask playerMask;
-
-
-//public Collider playerColl;
-//bool playerAlive;
-//HealthPlayer playerHealth;
-
-//AudioSource engineAudio;
-//public enum AIEnum { Patrol, Chase, Attack }
-//public AIEnum AIState;
-
-//Transform turret;
-
-//Vector3 relPos;
-//Quaternion InnerRotQ;
-
-//[SerializeField] float maxSpeed;
-
-//private void OnEnable()
-//{
-//    //patrolPoint = transform.position;
-//    OnPlayerChanged();
-
-//    Player.playerIsChanged += OnPlayerChanged;
-//}
-
-//private void OnDisable()
-//{
-//    Player.playerIsChanged -= OnPlayerChanged;
-//}
-
-//void OnPlayerChanged()
-//{
-//    Debug.Log("onpleerchange");
-//    player = Player.PlayerHull;
-
-//    //if (Player.PlayerHull.transform.position != null)
-//    //{
-//    //    patrolPoint = Player.PlayerHull.transform.position;
-//    //}
-//    if (player != null)
-//    {
-//        playerColl = player.GetComponent<Collider>();
-//        playerHealth = playerColl.GetComponent<HealthPlayer>();
-//        playerAlive = playerHealth.Alive;
-//    }
-
-
-//}
-
-//void Start()
-//{
-//    maxSpeed = 5;
-
-//    agent = GetComponent<NavMeshAgent>();
-
-//    engineAudio = GetComponent<AudioSource>();
-
-//    turret = GetComponentInChildren<Turret>().gameObject.transform;
-
-//    goal = patrolPoint;
-//    if (player == null)
-//    {
-//        Debug.Log("piska");
-//    }
-
-//    AIState = AIEnum.Patrol;
-//    agent.SetDestination(goal);
-
-
-
-//}
-
-
-//void Update()
-//{
-//    switch (AIState)
-//    {
-//        case AIEnum.Patrol:
-//            //Debug.Log("Patrol");
-//            Patrol();
-//            break;
-//        case AIEnum.Chase:
-//            Chase();
-//            break;
-//        case AIEnum.Attack:
-//            Attack();
-//            break;
-//    }
-//}
-
-//public IEnumerator CustomUpdate(float timeDelta)
-//{
-//    while (true)
-//    {
-//        yield return new WaitForSeconds(timeDelta);
-//    }
-//}
-
-
-//void Patrol()
-//{
-//    lineOfSight = new Ray(transform.position, player.transform.position - transform.position);
-//    Debug.DrawRay(transform.position, player.transform.position - transform.position, Color.red);
-//    Physics.Raycast(lineOfSight, out hit);
-
-//    //Debug.Log(hit.distance);        
-//    //Debug.Log(hit.collider);
-//    //Debug.Log(playerAlive);
-
-
-
-//    if (hit.distance < 50 && hit.collider == playerColl && playerAlive)
-//    {
-//        Debug.Log("playerdetected");
-//        agent.SetDestination(player.transform.position);
-//        agent.speed = maxSpeed;
-//        engineAudio.pitch = Mathf.Clamp01(agent.speed / 5);
-//        AIState = AIEnum.Chase;
-
-//    }
-//}
-
-//void Chase()
-//{
-//    lineOfSight = new Ray(transform.position, player.transform.position - transform.position);
-//    Debug.DrawRay(transform.position, player.transform.position - transform.position, Color.red);
-//    Physics.Raycast(lineOfSight, out hit);
-
-//    relPos = Vector3.ProjectOnPlane((player.transform.position - turret.transform.position), transform.up);
-//    InnerRotQ = Quaternion.LookRotation(relPos, transform.up);
-//    turret.transform.rotation = Quaternion.RotateTowards(turret.transform.rotation, InnerRotQ, Time.deltaTime * 50);
-
-//    agent.SetDestination(player.transform.position);
-
-//    if (hit.distance > 50 || !playerAlive)
-//    {
-//        agent.SetDestination(patrolPoint);
-//        engineAudio.pitch = Mathf.Clamp01(agent.speed / 5);
-//        AIState = AIEnum.Patrol;
-//    }
-//    if (hit.distance < 19 && hit.collider == playerColl)
-//    {
-//        agent.speed = maxSpeed / 3;
-//        engineAudio.pitch = Mathf.Clamp01(agent.speed / 5);
-//        AIState = AIEnum.Attack;
-//    }
-//}
-
-//void Attack()
-//{
-//    lineOfSight = new Ray(transform.position, player.transform.position - transform.position);
-//    Debug.DrawRay(transform.position, player.transform.position - transform.position, Color.red);
-//    Physics.Raycast(lineOfSight, out hit);
-
-//    relPos = Vector3.ProjectOnPlane((player.transform.position - turret.transform.position), transform.up);
-//    InnerRotQ = Quaternion.LookRotation(relPos, transform.up);
-//    turret.transform.rotation = Quaternion.RotateTowards(turret.transform.rotation, InnerRotQ, Time.deltaTime * 50);
-
-//    agent.SetDestination(player.transform.position);
-//    playerAlive = playerHealth.Alive;
-
-//    if ((hit.collider != Player.PlayerHullColl && hit.collider != Player.PlayerTurretColl) || hit.distance > 21)
-//    {
-//        agent.speed = maxSpeed;
-//        engineAudio.pitch = Mathf.Clamp01(agent.speed / 5);
-//        AIState = AIEnum.Chase;
-
-//    }
-
-//    if (!playerAlive)
-//    {
-//        agent.SetDestination(patrolPoint);
-//        engineAudio.pitch = Mathf.Clamp01(agent.speed / 5);
-//        AIState = AIEnum.Patrol;
-//    }
-
-//}
-
-    
-//}
-
-
-//public class AIMove : Move
-//{
-
-//    public GameObject player;
-//    public Vector3 patrolPoint;
-//    public Vector3 goal;   
-
-//    NavMeshAgent agent;
-//    Ray lineOfSight;
-//    RaycastHit hit;
-//    public LayerMask playerMask;
-
-//    [HideInInspector]
-//    public Collider playerColl;
-//    bool playerAlive;
-//    HealthPlayer playerHealth;
-//    bool inChase;
-
-//    [HideInInspector]
-//    public bool inAttack;
-//    bool isPatrol;
-
-//    Transform turret;
-
-//    Vector3 relPos;
-//    Quaternion InnerRotQ;
-
-//    private void OnEnable()
-//    {
-//        patrolPoint = transform.position;
-//        OnPlayerChanged();
-//        Player.playerIsChanged += OnPlayerChanged; //Á‰ÂÒ¸ Ï˚ ÔÓ‰ÔËÒ˚‚‡ÂÏÒˇ
-
-//    }
-
-//    private void OnDisable()
-//    {
-//        //ÚÛÚ Ï˚ ÓÚÔËÒ˚‚‡ÂÏÒˇ
-//        Player.playerIsChanged -= OnPlayerChanged;
-//    }
-
-//    void OnPlayerChanged()
-//    {
-//        player = Player.PlayerHull;
-//        patrolPoint = Player.PlayerHull.transform.position;
-//        playerColl = player.GetComponent<Collider>();
-//        playerHealth = playerColl.GetComponent<HealthPlayer>();
-//        playerAlive = playerHealth.Alive;
-//    }
-
-//    void Start()
-//    {
-//        agent = GetComponent<NavMeshAgent>();
-
-//        turret = GetComponentInChildren<Turret>().gameObject.transform;
-
-//        if (goal == null)
-//        {
-//            goal = patrolPoint;
-//        }
-
-//        /*playerColl = player.GetComponent<Collider>();
-//        playerHealth = playerColl.GetComponent<HealthPlayer>();
-//        playerAlive = playerHealth.Alive;
-//        playerAlive = true;*/
-
-//        inChase = false;
-//        inAttack = false;
-//        isPatrol = true;
-//        agent.SetDestination(goal);
-
-
-
-//    }
-
-//    // ( Time.deltaTime * 50 = 1) ◊“Œ¡€ ¬€–Œ¬Õﬂ“‹ ‘» —≈ƒ ¿œƒ≈…“ » œ–Œ—“Œ ¿œƒ≈…“
-//    void Update()
-//    {
-//        lineOfSight = new Ray(transform.position, player.transform.position - transform.position);
-//        Debug.DrawRay(transform.position, player.transform.position - transform.position);
-//        Physics.Raycast(lineOfSight, out hit);
-
-
-//        if (isPatrol)
-//        {
-//            Patrol();
-//        }
-
-//        if (inChase)
-//        {
-
-//            Chase();
-
-//        }
-
-//        if (inAttack)
-//        {
-//            Attack();
-//        }
-
-
-
-//    }
-
-
-//    void Patrol()
-//    {
-
-//        if (hit.distance < 50 && hit.collider == playerColl && playerAlive)
-//        {
-
-//            agent.SetDestination(player.transform.position);
-//            agent.speed = 6;
-//            inChase = true;
-
-//            isPatrol = false;
-//        }
-//    }
-
-//    void Chase()
-//    {
-//        relPos = Vector3.ProjectOnPlane((player.transform.position - turret.transform.position), transform.up);
-//        InnerRotQ = Quaternion.LookRotation(relPos, transform.up);
-//        turret.transform.rotation = Quaternion.RotateTowards(turret.transform.rotation, InnerRotQ, Time.deltaTime * 50);
-
-//        agent.SetDestination(player.transform.position);
-
-//        if (hit.distance > 50 || !playerAlive)
-//        {
-
-//            agent.SetDestination(patrolPoint);
-//            isPatrol = true;
-
-//            inChase = false;
-//        }
-//        if (hit.distance < 19 && hit.collider == playerColl)
-//        {
-
-//            agent.speed = 2;
-//            inAttack = true;
-
-//            inChase = false;
-//        }
-//    }
-
-//    void Attack()
-//    {
-//        relPos = Vector3.ProjectOnPlane((player.transform.position - turret.transform.position), transform.up);
-//        InnerRotQ = Quaternion.LookRotation(relPos, transform.up);
-//        turret.transform.rotation = Quaternion.RotateTowards(turret.transform.rotation, InnerRotQ, Time.deltaTime * 50);
-
-//        agent.SetDestination(player.transform.position);
-//        playerAlive = playerHealth.Alive;
-
-//        if ((hit.collider != Player.PlayerHullColl && hit.collider != Player.PlayerTurretColl) || hit.distance > 21)
-//        {
-//            agent.speed = 6;
-//            inChase = true;
-
-//            inAttack = false;
-
-//        }
-
-//        if (!playerAlive)
-//        {
-//            agent.SetDestination(patrolPoint);
-//            isPatrol = true;
-
-//            inAttack = false;
-//        }
-
-//    }
-
-
-//}
-
-/*
-public Transform goal;
-Transform parent;
-NavMeshAgent agent;
-void Start()
-{
-
-    agent = GetComponent<NavMeshAgent>();
-    Debug.Log(agent.steeringTarget);
-    agent.SetDestination(transform.position);
-
-
-}
-
-
-void Update()
-{
-    agent.SetDestination(goal.position);
-
-}*/

@@ -99,7 +99,7 @@ public class AllHullsTurrets : ScriptableObject
 
 
     public static GameObject CreatePlayerTank(Vector3 spawnPosition, Quaternion spawnRotation, TankHull chosenHull, byte hullTier, 
-        TankTurret chosenTurret, byte turretTier)
+        TankTurret chosenTurret, byte turretTier, int team = 0)
     {
         GameObject tunk = Instantiate(chosenHull.prefabOfHull);
         tunk.name = "PlayerHull";
@@ -155,6 +155,8 @@ public class AllHullsTurrets : ScriptableObject
         eh.turretCard = chosenTurret;
         eh.turretMod = chosenTurret.modifications[turretTier];
 
+        eh.team = LevelHandler.instance.teams[team];
+
         eh.PlayerTankSetup();
 
         //Making record to Player class about changed turret
@@ -164,7 +166,7 @@ public class AllHullsTurrets : ScriptableObject
     }
 
     public static GameObject CreateEnemyTank(Vector3 spawnPosition, Quaternion spawnRotation, TankHull chosenHull, byte hullTier, 
-        TankTurret chosenTurret, byte turretTier)
+        TankTurret chosenTurret, byte turretTier, int team = 1)
     {
         GameObject tunk = Instantiate(chosenHull.prefabOfHull); //instantiate корпус
 
@@ -213,6 +215,8 @@ public class AllHullsTurrets : ScriptableObject
         //Putting stats card in EH
         eh.turretCard = chosenTurret;
         eh.turretMod = chosenTurret.modifications[turretTier];
+
+        eh.team = LevelHandler.instance.teams[team];
 
         eh.AITankSetup();
 

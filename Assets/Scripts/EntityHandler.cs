@@ -11,6 +11,8 @@ public class EntityHandler : MonoBehaviour
     public TankTurret turretCard;
     public TurretMod turretMod;
 
+    public string team;
+
     public bool isSkin;
     public Texture2D skinTexture;
 
@@ -78,7 +80,6 @@ public class EntityHandler : MonoBehaviour
 
     private void Update()
     {
-
         
         if (empTenacity < empTenacityMax)
         {
@@ -101,13 +102,14 @@ public class EntityHandler : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.Backspace))
         {
             print("test1");
-            effh.AddEffect(new PiecesDamageReduction(10));
+            //effh.AddEffect(new PiecesDamageReduction(10));
+            DealDamage(100, this);
         }
 
         if (Input.GetKeyUp(KeyCode.L))
         {
             print("test2");
-            effh.AddEffect(new HalfDamageReduction(10));
+            effh.AddEffect(new Regeneration(100, 2));
         }
     }
 
@@ -211,15 +213,24 @@ public class EntityHandler : MonoBehaviour
     public void AITankSetup()
     {        
         isPlayer = false;
-        friendsMask = LayerMask.GetMask("EnemyTeamRed");
-        enemiesMask = LayerMask.GetMask("PlayerTeamGreen");
+        friendsMask = LayerMask.GetMask(team);
+
+        List<string> oppTeams = new();
+        foreach (string item in LevelHandler.instance.teams)
+        {
+            if (item != team)
+            {
+                oppTeams.Add(item);
+            }
+        }
+        enemiesMask = LayerMask.GetMask(oppTeams.ToArray());
 
         foreach (MeshRenderer item in meshRenderers)
         {
             item.material.SetFloat("_isSkin", 0.0f);
             item.material.SetColor("_TankColor", baseEnemyColor);            
             
-            item.gameObject.layer = LayerMask.NameToLayer("EnemyTeamRed");
+            item.gameObject.layer = LayerMask.NameToLayer(team);
 
         }
 
@@ -234,8 +245,17 @@ public class EntityHandler : MonoBehaviour
     {
         isPlayer = true;
 
-        friendsMask = LayerMask.GetMask("PlayerTeamGreen");
-        enemiesMask = LayerMask.GetMask("EnemyTeamRed");
+        friendsMask = LayerMask.GetMask(team);
+        
+        List<string> oppTeams = new();
+        foreach (string item in LevelHandler.instance.teams)
+        {
+            if (item != team)
+            {
+                oppTeams.Add(item);
+            }
+        }
+        enemiesMask = LayerMask.GetMask(oppTeams.ToArray());
 
         if (GameInfoSaver.instance.chosenSkin != null)
         {
@@ -256,7 +276,7 @@ public class EntityHandler : MonoBehaviour
                 item.material.SetColor("_TankColor", basePlayerColor);
             }
 
-            item.gameObject.layer = LayerMask.NameToLayer("PlayerTeamGreen");
+            item.gameObject.layer = LayerMask.NameToLayer(team);
 
         }
         
