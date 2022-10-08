@@ -70,7 +70,8 @@ public class AIShield : Shield
             StartCoroutine(AccumulateDMG());
 
         }
-        takenDamageSum += damage;
+        takenDamageSum += Mathf.Clamp(damage, 0, currentSP);
+        
         
         currentSP -= damage;
         
@@ -99,7 +100,7 @@ public class AIShield : Shield
             StartCoroutine(AccumulateDMG());
 
         }
-        takenDamageSum += damage;
+        takenDamageSum += Mathf.Clamp(damage, 0, currentSP);
         currentSP -= damage;
         
         if (currentSP <= 0)
