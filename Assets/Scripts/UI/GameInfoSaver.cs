@@ -51,6 +51,7 @@ public class GameInfoSaver : MonoBehaviour
         GameObject lh = GameObject.Find("LevelHandler");
         if (lh != null)
         {
+            lh.GetComponent<LevelHandler>().enabled = true;
 
             lh.GetComponent<Player>().enabled = true;
         }

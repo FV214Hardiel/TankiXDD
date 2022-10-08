@@ -21,11 +21,14 @@ public class EnemySpawner : MonoBehaviour
     WaitForSeconds CD;    
 
     public GameObject player;
+    public LayerMask enemyLayers;
 
     //Ray lineOfSight;
 
     //public LayerMask playerMask;
     float dist;
+
+    Collider[] colliders;
 
 
     void Start()
@@ -35,26 +38,44 @@ public class EnemySpawner : MonoBehaviour
         noEnemy = true;
         CD = new WaitForSeconds(SpawnCD);
 
-        player = Player.PlayerHull;        
+        player = Player.PlayerHull;
+
+        colliders = new Collider[1];
+
+        StartCoroutine(CustomUpdate(1));
     }
 
+    public IEnumerator CustomUpdate(float timeDelta)
+    {
+        while (true)
+        {
+            if (!CDready)
+            {
+                yield return new WaitForSeconds(timeDelta);
+                print("not ready");
+                continue;
+            }
+            if (Physics.OverlapSphereNonAlloc(transform.position, detectionRange, colliders, enemyLayers) > 0 || spawnWithoutPlayerNear)
+            {
+                print("enemy detected");
+                if (availableSpawns > 0)
+                {
+                    print("spawning");
+                    enemy = AllHullsTurrets.CreateEnemyTank(transform.position, transform.rotation, Hull[Random.Range(0, Hull.Length)], 0, Turret[Random.Range(0, Turret.Length)], 0);
+
+                    availableSpawns--;
+
+                    StartCoroutine(RespawnerCD());
+                }
+            }
+
+            yield return new WaitForSeconds(timeDelta);
+        }
+    }
 
     void Update()
     {
-        if (!CDready) return; 
-
-        dist = Vector3.Distance(transform.position, player.transform.position);
-        if ((dist < detectionRange || spawnWithoutPlayerNear) & availableSpawns > 0)
-        {           
-            enemy = AllHullsTurrets.CreateEnemyTank(transform.position, transform.rotation, Hull[Random.Range(0, Hull.Length)], 0, Turret[Random.Range(0, Turret.Length)], 0);
-            
-            availableSpawns--;
-
-            StartCoroutine(RespawnerCD());
-
-            //enemy.GetComponent<HealthEnemy>().EnemyDestroyed += EnemyDead;
-        }
-
+        
     }
 
     private IEnumerator RespawnerCD()

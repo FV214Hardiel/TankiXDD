@@ -22,10 +22,10 @@ public class Rotation : MonoBehaviour
     private void Start()
     {
         eh = GetComponentInParent<EntityHandler>();
-        rotSpeed = eh.turretMod.turretRotationSpeed * Time.fixedDeltaTime;
+        rotSpeed = eh.turretMod.turretRotationSpeed * Time.fixedDeltaTime; 
 
-        target = GameObject.Find("Poinet").transform;
-        gun = transform.Find("barrel").gameObject;
+        target = GameObject.Find("Poinet").transform; //Find invisible helping GO
+        gun = transform.Find("barrel").gameObject; //GO for gun depression
     }
 
     void FixedUpdate()
