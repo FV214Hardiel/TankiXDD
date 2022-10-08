@@ -306,6 +306,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 517eca24da8d08e42b497c8b06c5e5a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  source: {fileID: 0}
+  weapRange: 15
+  damage: 400
+  angle: 0
+  delayBetweenShots: 3
+  isTargetLocked: 0
+  shellPref: {fileID: 6277428715457980806, guid: 5bb08614d1ec6c74f8549efb7a9021c5, type: 3}
+  projectileSpeed: 50
 --- !u!114 &4570149966750535368
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -336,7 +344,7 @@ MonoBehaviour:
   angle: 0
   delayBetweenShots: 2
   shellPref: {fileID: 6277428715457980806, guid: 5bb08614d1ec6c74f8549efb7a9021c5, type: 3}
-  projectileSpeed: 50
+  projectileSpeed: 60
 --- !u!82 &8355261736195734821
 AudioSource:
   m_ObjectHideFlags: 0
