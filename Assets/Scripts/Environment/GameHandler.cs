@@ -10,27 +10,41 @@ public class GameHandler : MonoBehaviour
     public bool pausa = GameIsPaused;
     public static bool GameIsOver;
     public bool geymOver = GameIsOver;
+
+    public byte lives;
     void Start()
     {
 
         GameIsPaused = false;
         GameIsOver = false;
+
         HealthPlayer.playerIsDead += OnPlayersDeath;
+        lives = 3;
     }
     private void OnDestroy()
     {
-
         HealthPlayer.playerIsDead -= OnPlayersDeath;
     }
     void OnPlayersDeath()
     {
-        GameHandler.GameIsOver = true;
-        GameHandler.GameIsPaused = true;
-        loseScreen.SetActive(true);
-        Time.timeScale = 0.8f;
-        StartCoroutine(LevelEnding());
+        if (lives > 0)
+        {
+            StartCoroutine(Player.instance.Respawn(5));
+            lives--;
+            
+        }
+        else
+        {
+            GameIsOver = true;
+            GameIsPaused = true;
+            loseScreen.SetActive(true);
+            Time.timeScale = 0.8f;
+            StartCoroutine(LevelEnding());
+        }
+
+        
     }
-    // Update is called once per frame
+    
     private IEnumerator LevelEnding()
     {
         yield return new WaitForSeconds(1f);
@@ -38,7 +52,7 @@ public class GameHandler : MonoBehaviour
         {
             Time.timeScale = i / 10f;
             yield return new WaitForSecondsRealtime(0.3f);
-            //Debug.Log(Time.timeScale);
+            
 
         }
     }
