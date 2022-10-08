@@ -22,7 +22,7 @@ public class Player : MonoBehaviour
     void OnEnable()
     {
         //spawner
-        //Debug.Log("enable");
+
         instance = this;
         PlayerName = GameInfoSaver.instance.enterName;
 
@@ -36,7 +36,11 @@ public class Player : MonoBehaviour
 
     public void ChangePlayerHull(GameObject hull)
     {
-        
+        if (PlayerHull != null)
+        {
+            Destroy(PlayerHull);
+        }
+
         PlayerHull = hull;
         PlayerHullColl = hull.GetComponent<Collider>();
 
@@ -64,6 +68,20 @@ public class Player : MonoBehaviour
         //Debug.Log("PlayerTurret changed");
 
     }
+
+    public System.Collections.IEnumerator Respawn(float time)
+    {
+        yield return new WaitForSeconds(time);
+        GameObject spawnPoint = GameObject.Find("PlayerSpawnLocation");
+        AllHullsTurrets.CreatePlayerTank(spawnPoint.transform.position, spawnPoint.transform.rotation,
+            GameInfoSaver.instance.chosenHull, GameInfoSaver.instance.hullTier, GameInfoSaver.instance.chosenTurret, GameInfoSaver.instance.turretTier);
+    }
+    //public GameObject Respawn()
+    //{
+    //    GameObject spawnPoint = GameObject.Find("PlayerSpawnLocation");
+    //    return AllHullsTurrets.CreatePlayerTank(spawnPoint.transform.position, spawnPoint.transform.rotation,
+    //        GameInfoSaver.instance.chosenHull, GameInfoSaver.instance.hullTier, GameInfoSaver.instance.chosenTurret, GameInfoSaver.instance.turretTier);
+    //}
 
 
 
