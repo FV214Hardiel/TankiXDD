@@ -4,46 +4,22 @@ using UnityEngine;
 
 public class AIVulcan : AIShooting
 {
-    public float delayBetweenShots;
-    float remainingDelay;
+    
 
     [SerializeField] byte stacks;
     public float stackDuration;
     float stackTimer;
     float modifiedDelay;
 
-    public Transform muzzle;
-
-    public float weapRange;
-
-    Vector3 shotVector;
-    public float angle;
-
-    List<ushort> disperseAngles;
-    List<float> disperseLengths;
-    int index;
-
-    AudioSource shotSound;
     AudioSource chargeSound;
 
     public GameObject prefabOfShot;
-    public ParticleSystem shotEffect;
+    public ParticleSystem shotEffect;    
 
-    AIMove ai;
-    bool isTargetLocked;
-
-    Ray lineOfFire;
-    RaycastHit hit;
-    LayerMask enemyMask;
-
-    // Start is called before the first frame update
     void Start()
     {
         source = GetComponentInParent<EntityHandler>();
-        muzzle = transform.Find("muzzle");
-
-        ai = gameObject.GetComponentInParent<AIMove>();
-        enemyMask = ai.enemyLayers;
+        muzzle = transform.Find("muzzle");        
 
         shotSound = GetComponent<AudioSource>();
         chargeSound = transform.Find("ChargesSound").GetComponent<AudioSource>();
@@ -70,13 +46,18 @@ public class AIVulcan : AIShooting
         source.TankStunned += OnStun;
         source.TankAwaken += OnUnStun;
 
+        ai = gameObject.GetComponentInParent<AIMove>();
+        enemyMask = ai.enemyLayers;
+
         StartCoroutine(CustomUpdate(0.3f));
     }
 
-    private void OnDestroy()
+    private void OnDisable()
     {
         source.TankStunned -= OnStun;
         source.TankAwaken -= OnUnStun;
+        shotSound.Stop();
+        chargeSound.Stop();
 
     }
 
@@ -111,7 +92,7 @@ public class AIVulcan : AIShooting
         }
     }
 
-    // Update is called once per frame
+    
     void Update()
     {
         if (GameHandler.GameIsPaused || isStunned) //Checking pause
@@ -198,9 +179,5 @@ public class AIVulcan : AIShooting
         stackTimer = stackDuration;
     }
 
-    private void OnDisable()
-    {
-        shotSound.Stop();
-        chargeSound.Stop();
-    }
+    
 }

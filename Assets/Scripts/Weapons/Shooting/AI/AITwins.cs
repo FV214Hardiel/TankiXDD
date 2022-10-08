@@ -4,11 +4,8 @@ using UnityEngine;
 
 public class AITwins : AIShooting
 {
-    public GameObject shellPref;   
-
-    public float delayBetweenShots;
-    float remainingDelay;
-
+    public GameObject shellPrefab;   
+    
     public Transform muzzleL;
     public Transform muzzleR;
 
@@ -17,20 +14,8 @@ public class AITwins : AIShooting
     float debuffPower;
     float debuffDuration;
 
-    public float weapRange;
     public float projectileSpeed;
     float timeOfLife;
-
-    AudioSource shotSound;
-
-    AIMove ai;
-    bool isTargetLocked;
-
-    Ray lineOfFire;
-    RaycastHit hit;
-    LayerMask enemyMask;
-
-
 
     void Start()
     {
@@ -61,7 +46,7 @@ public class AITwins : AIShooting
 
     }
 
-    private void OnDestroy()
+    private void OnDisable()
     {
         source.TankStunned -= OnStun;
         source.TankAwaken -= OnUnStun;
@@ -113,13 +98,13 @@ public class AITwins : AIShooting
         {            
             if (shotFromRight)
             {
-                TwinsShell.CreateShot(shellPref, muzzleR.position, muzzleR.forward * projectileSpeed, source, damage, new TwinsDamageStacks(debuffPower, debuffDuration), timeOfLife);
+                TwinsShell.CreateShot(shellPrefab, muzzleR.position, muzzleR.forward * projectileSpeed, source, damage, new TwinsDamageStacks(debuffPower, debuffDuration), timeOfLife);
                 shotFromRight = false;
                 shotSound.Play();
             }
             else
             {
-                TwinsShell.CreateShot(shellPref, muzzleL.position, muzzleL.forward * projectileSpeed, source, damage, new TwinsDamageStacks(debuffPower, debuffDuration), timeOfLife);
+                TwinsShell.CreateShot(shellPrefab, muzzleL.position, muzzleL.forward * projectileSpeed, source, damage, new TwinsDamageStacks(debuffPower, debuffDuration), timeOfLife);
                 shotFromRight = true;
                 shotSound.Play();
             }

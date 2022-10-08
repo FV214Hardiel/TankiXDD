@@ -3,33 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class AISmoky : AIShooting
-{
-    public float delayBetweenShots;
-    float remainingDelay;
-
-    public Transform muzzle;
-
-    public float weapRange;
-
-    public float angle;
-
-    List<ushort> disperseAngles;
-    List<float> disperseLengths;
-    int index;       
-
-    AIMove ai;
-    bool isTargetLocked;
-
-    Ray lineOfFire;
-    RaycastHit hit;
-    LayerMask enemyMask;
-
-    AudioSource shotSound;
-    public GameObject prefabOfShot;
+{       
     public ParticleSystem shotEffect;
-    public ParticleSystem hitEffect;
-
-   
+    public ParticleSystem hitEffect;       
 
     void Start()
     {
@@ -50,7 +26,7 @@ public class AISmoky : AIShooting
 
     }
 
-    private void OnDestroy()
+    private void OnDisable()
     {
         source.TankStunned -= OnStun;
         source.TankAwaken -= OnUnStun;

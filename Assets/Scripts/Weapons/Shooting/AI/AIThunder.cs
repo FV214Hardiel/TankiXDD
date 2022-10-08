@@ -2,17 +2,91 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AIThunder : MonoBehaviour
+public class AIThunder : AIShooting
 {
-    // Start is called before the first frame update
+    public GameObject shellPref;
+
+    public float projectileSpeed;
+    float timeOfLife;
     void Start()
     {
-        
+        //Base setup for shooting
+        source = GetComponentInParent<EntityHandler>();
+        muzzle = transform.Find("muzzle");
+
+        timeOfLife = weapRange / projectileSpeed;
+
+        shotSound = GetComponent<AudioSource>();
+
+        remainingDelay = 0;
+
+        ai = gameObject.GetComponentInParent<AIMove>();
+        enemyMask = ai.enemyLayers;
+
+        source.TankStunned += OnStun;
+        source.TankAwaken += OnUnStun;
+
+        StartCoroutine(CustomUpdate(0.3f));
+    }
+    private void OnDisable()
+    {
+        source.TankStunned -= OnStun;
+        source.TankAwaken -= OnUnStun;
+
     }
 
-    // Update is called once per frame
-    void Update()
+    protected override void OnStun()
     {
-        
+        base.OnStun();
+    }
+
+    protected override void OnUnStun()
+    {
+        base.OnUnStun();
+        StartCoroutine(CustomUpdate(1));
+    }
+
+    public IEnumerator CustomUpdate(float timeDelta)
+    {
+        while (true)
+        {
+            if (ai.AIState == AIMove.AIEnum.Attack)
+            {
+                lineOfFire = new Ray(muzzle.position, muzzle.forward);
+                isTargetLocked = Physics.Raycast(lineOfFire, weapRange + 40, enemyMask);
+            }
+            else
+            {
+                isTargetLocked = false;
+            }
+            //print(isTargetLocked);
+            yield return new WaitForSeconds(timeDelta);
+        }
+    }
+
+    private void Update()
+    {
+        if (GameHandler.GameIsPaused || isStunned) //Checking pause
+        {            
+            return;
+        }
+
+        if (remainingDelay > 0) //Decreasing delay timer  
+        {
+            remainingDelay -= Time.deltaTime;
+            return;
+        }
+
+        if (isTargetLocked) //Shot
+        {
+            Shot();
+        }
+    }
+
+    void Shot()
+    {
+        shotSound.Play();
+        ThunderShell.CreateShot(shellPref, muzzle.position, muzzle.forward * projectileSpeed, source, damage, timeOfLife);
+        remainingDelay = delayBetweenShots;
     }
 }

@@ -4,30 +4,12 @@ using UnityEngine;
 
 
 public class AIRailgun : AIShooting
-{
-
-    Transform muzzle;
-
-    public float weapRange;
-
-    public float delayBetweenShots;
-    float remainingDelay;    
-
-
+{   
     ParticleSystem chargeLight;
     public float chargeDuration;
     AudioSource chargeSound;
 
-    public GameObject prefabOfShot;
-
-    AudioSource shotSound;
-
-    AIMove ai;
-    bool isTargetLocked;
-
-    Ray lineOfFire;
-    RaycastHit hit;
-    LayerMask enemyMask;
+    public GameObject shellPrefab;
 
 
     void Start()
@@ -49,13 +31,11 @@ public class AIRailgun : AIShooting
         source.TankAwaken += OnUnStun;
 
         StartCoroutine(CustomUpdate(0.3f));
-
-
     }
 
     
 
-    private void OnDestroy()
+    private void OnDisable()
     {
         source.TankStunned -= OnStun;
         source.TankAwaken -= OnUnStun;
@@ -136,11 +116,11 @@ public class AIRailgun : AIShooting
                 }
             }
 
-            WeaponTrail.Create(prefabOfShot, muzzle.position, hit.point); //Shot VFX if hit
+            WeaponTrail.Create(shellPrefab, muzzle.position, hit.point); //Shot VFX if hit
         }
         else
         {
-            WeaponTrail.Create(prefabOfShot, muzzle.position, muzzle.position + muzzle.forward * weapRange); //Shot VFX if no hit
+            WeaponTrail.Create(shellPrefab, muzzle.position, muzzle.position + muzzle.forward * weapRange); //Shot VFX if no hit
         }
 
         remainingDelay = delayBetweenShots;

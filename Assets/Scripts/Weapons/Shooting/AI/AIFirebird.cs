@@ -4,32 +4,13 @@ using UnityEngine;
 
 public class AIFirebird : AIShooting
 {
-    public float angle;
-    Vector3 shotVector;
-
-    Transform muzzle;
-
-    List<ushort> disperseAngles;
-    List<float> disperseLengths;
-    int index;
-
-    public GameObject prefab;
-
-    public float delayBetweenShots;
-    float remainingDelay;
-
-    AudioSource shotSound;
-
-    public float weapRange;
+    public GameObject shellPrefab;
+   
+    
     public float projectileSpeed;
     float timeOfLife;
 
-    AIMove ai;
-    bool isTargetLocked;
-
-    Ray lineOfFire;
-    RaycastHit hit;
-    LayerMask enemyMask;
+   
     void Start()
     {
         source = GetComponentInParent<EntityHandler>();
@@ -67,10 +48,11 @@ public class AIFirebird : AIShooting
         index = 0;
     }
 
-    private void OnDestroy()
+    private void OnDisable()
     {
         source.TankStunned -= OnStun;
         source.TankAwaken -= OnUnStun;
+        shotSound.Stop();
 
     }
 
@@ -125,7 +107,7 @@ public class AIFirebird : AIShooting
         {
             shotVector = DisperseVector(muzzle.forward, angle) * projectileSpeed;
 
-            FirebirdShot.CreateShot(prefab, muzzle.position, shotVector, source, damage, timeOfLife);
+            FirebirdShot.CreateShot(shellPrefab, muzzle.position, shotVector, source, damage, timeOfLife);
 
             remainingDelay = delayBetweenShots;
         }
@@ -151,8 +133,5 @@ public class AIFirebird : AIShooting
         return vector.normalized;
     }
 
-    private void OnDisable()
-    {
-        shotSound.Stop();
-    }
+    
 }
