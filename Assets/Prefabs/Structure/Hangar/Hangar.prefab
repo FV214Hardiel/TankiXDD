@@ -248,6 +248,9 @@ MonoBehaviour:
   spawnWithoutPlayerNear: 0
   availableSpawns: 4
   player: {fileID: 0}
+  enemyLayers:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!1 &5504720062561261001
 GameObject:
   m_ObjectHideFlags: 0
