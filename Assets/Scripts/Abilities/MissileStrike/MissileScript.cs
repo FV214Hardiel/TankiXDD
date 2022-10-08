@@ -37,9 +37,7 @@ public class MissileScript : MonoBehaviour
         newMissile.damage = dmg;
         newMissile.area = aoe;
         newMissile.source = source;
-        newMissile.target = target;
-
-        
+        newMissile.target = target;     
 
     }
     void EXPLOSON111()

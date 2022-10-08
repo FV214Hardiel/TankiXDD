@@ -19,6 +19,6 @@ MonoBehaviour:
   cooldown: 2
   power: 0
   duration: 0
-  damage: 320
+  damage: 260
   range: 50
   radius: 5
