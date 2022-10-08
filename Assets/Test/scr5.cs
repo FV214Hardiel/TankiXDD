@@ -4,21 +4,17 @@ using UnityEngine;
 
 public class scr5 : MonoBehaviour
 {
-    
+    public LayerMask testMask;
+
     void Start()
     {
-        print("Start");
+        print(testMask.value);
+
+        testMask = LayerMask.GetMask("RedTeam", "GreenTeam");
+
+        print(testMask.value);
     }
 
-    private void OnEnable()
-    {
-        print("On Enable");
-    }
-
-    private void Awake()
-    {
-        print("Awake");
-    }
 
    
 }
