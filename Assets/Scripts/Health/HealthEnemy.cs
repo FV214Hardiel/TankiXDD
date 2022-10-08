@@ -17,8 +17,7 @@ public class HealthEnemy : Health
 
     float takenDamageSum;
 
-    Transform sounds;
-    
+    Transform sounds;    
 
     Transform damagePopupPrefab;
 
@@ -27,14 +26,16 @@ public class HealthEnemy : Health
     public event Action EnemyDestroyed;
     void Start()
     {
-        GetComponent<EntityHandler>().health = this;
+        GetComponent<EntityHandler>().health = this; //Adding this instance to EH
 
         baseHP = GetComponent<EntityHandler>().hullMod.baseHP; // Getting Base Health from tank card
         maxHP = baseHP;
         HP = maxHP;
         Alive = true;
 
-        enemyHealthBar = GetComponentInChildren<Slider>(true);
+
+        //Health bar
+        enemyHealthBar = GetComponentInChildren<Slider>(true); 
         enemyHealthBar.transform.parent.gameObject.SetActive(true);        
         enemyHealthBar.maxValue = maxHP;
         enemyHealthBar.value = HP;
@@ -49,7 +50,7 @@ public class HealthEnemy : Health
 
         agent = GetComponent<NavMeshAgent>();
 
-        Destroy(transform.Find("mount").gameObject);
+        
 
         damagePopupPrefab = Resources.Load<Transform>("DamageNumbersPopup");
         mainCamera = Camera.main;
@@ -74,29 +75,55 @@ public class HealthEnemy : Health
 
         HP = Mathf.Clamp(HP, 0, maxHP);
         enemyHealthBar.value = HP;
+
         if (takenDamageSum == 0)
         {
             StartCoroutine(AccumulateDMG());
 
         }
         takenDamageSum += damage;
-        //DamageNumbersPopup.Create(damagePopupPrefab, transform.position + Vector3.up * 2, mainCamera.transform.right, damage, Color.red);
-        //print(takenDamageSum);
 
+        //daed
         if (HP <= 0 && Alive)
         {
             Dying(source);
         }
     }
 
+    //Coroutine for displaying damage
+    //Needed for multiple instances of damage in one frame (shotgun for example)
     System.Collections.IEnumerator AccumulateDMG()
     {
-        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame(); //Waiting for end of frame
 
-        DamageNumbersPopup.Create(damagePopupPrefab, transform.position + Vector3.up * 2, mainCamera.transform.right, takenDamageSum, Color.red);
-        takenDamageSum = 0;
+        DamageNumbersPopup.Create(damagePopupPrefab, transform.position + Vector3.up * 2, mainCamera.transform.right, takenDamageSum, Color.red); 
+        takenDamageSum = 0; //zeroing damage for next frame
 
     }
+
+    public override void Heal(float amount, EntityHandler source)
+    {
+        if (HP >= maxHP) //No heal above full HP
+        {
+            return;
+        }
+
+        HP += amount;
+
+        DamageNumbersPopup.Create(damagePopupPrefab, transform.position + Vector3.up * 2, mainCamera.transform.right, amount, Color.green);
+
+        HP = Mathf.Clamp(HP, 0, maxHP);
+        enemyHealthBar.value = HP;
+
+        //daed
+        if (HP == 0 && Alive)
+        {
+            Dying(source);
+        }
+
+    }
+
+    //Method for excessive shield damage
     public override void OverDamage(float overdmg, EntityHandler source)
     {
        
@@ -116,23 +143,25 @@ public class HealthEnemy : Health
     public override void Dying(EntityHandler killer)
     {
 
-        GetComponent<EntityHandler>().Die();
+        GetComponent<EntityHandler>().Die(); //Some Die method from EH
 
-        agent.enabled = false;
-        
+        destructionSound.Play(); //VFX SFX
         Destroy(Instantiate(ExpPref, transform), 9);
 
-        scrs = GetComponentsInChildren<MonoBehaviour>();
-        //Debug.Log(scrs);
+        Alive = false;
+
+        agent.enabled = false; //Disabling AI       
+
+        //Disabling all scripts
+
+        scrs = GetComponentsInChildren<MonoBehaviour>();       
         foreach (MonoBehaviour mono in scrs)
         {
             mono.enabled = false;
-            //Destroy(mono);
-
+            
         }
-
         
-
+        //Scattering the debris
         foreach (Collider nearby in Debris)
         {
             nearby.gameObject.SetActive(true);
@@ -140,6 +169,8 @@ public class HealthEnemy : Health
             rb.AddExplosionForce(55, ExplosionPoint.transform.position, 10);
 
         }
+
+        //Scattering meshes
         HullRB.useGravity = true;
         HullRB.AddExplosionForce(100, ExplosionPoint.position, 5);
 
@@ -153,15 +184,13 @@ public class HealthEnemy : Health
         Gun.GetComponent<Collider>().enabled = true;
         GunRB.AddExplosionForce(10, ExplosionPoint.position, 9);
 
-        destructionSound.Play();
-
-        Alive = false;
+        Destroy(transform.Find("mount").gameObject);
 
 
-        Debug.Log(killer.name + " killed " + gameObject.name);
-        EnemyDestroyed?.Invoke();
+        //Debug.Log(killer.name + " killed " + gameObject.name);
+        EnemyDestroyed?.Invoke(); //If anyone is interested
 
-        Destroy(gameObject, 8);
+        Destroy(gameObject, 8); //Destroying corpse after some time
         enabled = false;
     }
 

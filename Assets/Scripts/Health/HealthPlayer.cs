@@ -12,13 +12,18 @@ public class HealthPlayer : Health
     MonoBehaviour[] scrs;
 
     Transform sounds;
-    
+
+    Transform damagePopupPrefab;
+    Camera mainCamera;
+
 
     public static event Action playerIsDead;
 
     private void OnEnable()
     {
-        
+        damagePopupPrefab = Resources.Load<Transform>("DamageNumbersPopup");
+        mainCamera = Camera.main;
+
         baseHP = GetComponent<EntityHandler>().hullMod.baseHP; // Getting Base Health from tank card
         GetComponent<EntityHandler>().health = this;
        
@@ -72,6 +77,28 @@ public class HealthPlayer : Health
 
     }
 
+    public override void Heal(float amount, EntityHandler source)
+    {
+       
+        if (HP >= maxHP) 
+        {
+            return;
+        }
+
+        HP += amount;
+
+        DamageNumbersPopup.Create(damagePopupPrefab, transform.position + Vector3.up * 2, mainCamera.transform.right, amount, Color.green);
+
+        HP = Mathf.Clamp(HP, 0, maxHP);
+        hb.UpdateBar(HP);
+
+        if (HP == 0 && Alive)
+        {
+            Dying(source);
+        }
+
+    }
+
     public override void OverDamage(float overdmg, EntityHandler source)
     {
         Debug.Log("OverdamagePlayer");
@@ -95,7 +122,7 @@ public class HealthPlayer : Health
 
         //trying disable all scripts
         scrs = GetComponentsInChildren<MonoBehaviour>();
-        Debug.Log(scrs);
+        
         foreach (MonoBehaviour mono in scrs)
         {
             mono.enabled = false;
@@ -135,7 +162,7 @@ public class HealthPlayer : Health
         Alive = false;
         playerIsDead?.Invoke();
 
-        Debug.Log("BOOM");
+        
         enabled = false;
     }
 

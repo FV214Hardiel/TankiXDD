@@ -32,6 +32,13 @@ public class Health : MonoBehaviour
 
     }
 
+    public virtual void Heal(float amount, EntityHandler source)
+    {
+
+    }
+
+
+
     public virtual void Dying(EntityHandler source)
     {
 

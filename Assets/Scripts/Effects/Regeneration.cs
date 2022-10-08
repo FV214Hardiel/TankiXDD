@@ -13,9 +13,8 @@ public class Regeneration : Effect
         effectDuration = duration;
         effectPower = power;
         remainingDuration = duration;
-
         
-        heatlh = affectedObject.health;
+        
 
         innerBaseCD = 0.5f;
         effectID = 1;
@@ -53,16 +52,14 @@ public class Regeneration : Effect
 
     public override void InitEffect()
     {
-
+        heatlh = affectedObject.health;
     }
         
 
     //
     public void UseEffect()
-    {
-               
-        Debug.Log("HEAL: " + effectPower * effectStacks);
-        //Debug.Log(affectedObject.GetComponent<Shield>());
+    {        
+        heatlh.Heal(effectPower * effectStacks, affectedObject);       
     }
 
     public override void EndEffect()
