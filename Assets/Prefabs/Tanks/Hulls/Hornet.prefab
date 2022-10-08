@@ -170,11 +170,11 @@ WheelCollider:
   m_Center: {x: -0.25, y: 0, z: 0}
   m_Radius: 0.35
   m_SuspensionSpring:
-    spring: 700
+    spring: 400
     damper: 100
     targetPosition: 0
   m_SuspensionDistance: 0.02
-  m_ForceAppPointDistance: 1.5
+  m_ForceAppPointDistance: 1
   m_Mass: 5
   m_WheelDampingRate: 1
   m_ForwardFriction:
@@ -263,11 +263,11 @@ WheelCollider:
   m_Center: {x: -0.25, y: 0, z: 0}
   m_Radius: 0.35
   m_SuspensionSpring:
-    spring: 700
+    spring: 400
     damper: 100
     targetPosition: 0
   m_SuspensionDistance: 0.02
-  m_ForceAppPointDistance: 1.5
+  m_ForceAppPointDistance: 1
   m_Mass: 5
   m_WheelDampingRate: 1
   m_ForwardFriction:
@@ -688,7 +688,7 @@ WheelCollider:
   m_SuspensionSpring:
     spring: 300
     damper: 4
-    targetPosition: 0.5
+    targetPosition: 0
   m_SuspensionDistance: 0.08
   m_ForceAppPointDistance: 1
   m_Mass: 0.1
@@ -1969,11 +1969,11 @@ WheelCollider:
   m_Center: {x: -0.25, y: 0, z: 0}
   m_Radius: 0.35
   m_SuspensionSpring:
-    spring: 700
+    spring: 400
     damper: 100
     targetPosition: 0
   m_SuspensionDistance: 0.02
-  m_ForceAppPointDistance: 1.5
+  m_ForceAppPointDistance: 1
   m_Mass: 5
   m_WheelDampingRate: 1
   m_ForwardFriction:
@@ -2405,11 +2405,11 @@ WheelCollider:
   m_Center: {x: -0.25, y: 0, z: 0}
   m_Radius: 0.35
   m_SuspensionSpring:
-    spring: 700
+    spring: 400
     damper: 100
     targetPosition: 0
   m_SuspensionDistance: 0.02
-  m_ForceAppPointDistance: 1.5
+  m_ForceAppPointDistance: 1
   m_Mass: 5
   m_WheelDampingRate: 1
   m_ForwardFriction:
@@ -2467,11 +2467,11 @@ WheelCollider:
   m_Center: {x: -0.25, y: 0, z: 0}
   m_Radius: 0.35
   m_SuspensionSpring:
-    spring: 700
+    spring: 400
     damper: 100
     targetPosition: 0
   m_SuspensionDistance: 0.02
-  m_ForceAppPointDistance: 1.5
+  m_ForceAppPointDistance: 1
   m_Mass: 5
   m_WheelDampingRate: 1
   m_ForwardFriction:
@@ -2815,7 +2815,7 @@ WheelCollider:
   m_SuspensionSpring:
     spring: 300
     damper: 4
-    targetPosition: 0.5
+    targetPosition: 0
   m_SuspensionDistance: 0.08
   m_ForceAppPointDistance: 1
   m_Mass: 0.1
@@ -2987,11 +2987,11 @@ WheelCollider:
   m_Center: {x: -0.25, y: 0, z: 0}
   m_Radius: 0.35
   m_SuspensionSpring:
-    spring: 700
+    spring: 400
     damper: 100
     targetPosition: 0
   m_SuspensionDistance: 0.02
-  m_ForceAppPointDistance: 1.5
+  m_ForceAppPointDistance: 1
   m_Mass: 5
   m_WheelDampingRate: 1
   m_ForwardFriction:
@@ -3640,11 +3640,11 @@ WheelCollider:
   m_Center: {x: -0.25, y: 0, z: 0}
   m_Radius: 0.35
   m_SuspensionSpring:
-    spring: 700
+    spring: 400
     damper: 100
     targetPosition: 0
   m_SuspensionDistance: 0.02
-  m_ForceAppPointDistance: 1.5
+  m_ForceAppPointDistance: 1
   m_Mass: 5
   m_WheelDampingRate: 1
   m_ForwardFriction:
@@ -4528,11 +4528,11 @@ WheelCollider:
   m_Center: {x: -0.25, y: 0, z: 0}
   m_Radius: 0.35
   m_SuspensionSpring:
-    spring: 700
+    spring: 400
     damper: 100
     targetPosition: 0
   m_SuspensionDistance: 0.02
-  m_ForceAppPointDistance: 1.5
+  m_ForceAppPointDistance: 1
   m_Mass: 5
   m_WheelDampingRate: 1
   m_ForwardFriction:
@@ -4846,13 +4846,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   patrolPoint: {x: 0, y: 0, z: 0}
-  enemyLayers:
-    serializedVersion: 2
-    m_Bits: 8
   areaOfVision: 60
   attackRange: 30
   AIState: 0
   maxSpeed: 10
+  enemyLayers:
+    serializedVersion: 2
+    m_Bits: 8
   ignoringLayers:
     serializedVersion: 2
     m_Bits: 0
