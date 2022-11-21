@@ -3,8 +3,63 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class EntityHandler : MonoBehaviour
+
+public interface IDamagable
 {
+    GameObject Gameobject { get; }
+    bool IsDead { get; set; }
+    void DealDamage(float damage, IEntity entity);
+    void DealEMP(float damage, IEntity entity);
+    EffectsHandler EffH { get;}
+
+    
+
+}
+
+
+public interface IEntity
+{
+    GameObject Gameobject { get; }
+
+    Health HealthScript { get; set; }
+    Shield ShieldScript { get; set; }
+
+    bool IsDead { get; set; }
+
+    EffectsHandler EffH { get; set; }
+
+    LayerMask EnemiesMasks { get; set; }
+    LayerMask FriendlyMasks { get; set; }
+
+
+    ReceivingDamageEffects PropertyReceivingDamageEffects { get; set; }
+
+
+
+
+
+
+}
+
+public class EntityHandler : MonoBehaviour, IDamagable, IEntity
+{
+    public Health HealthScript { get { return health; } set { health = value; } }
+    public Shield ShieldScript { get { return shield; } set { shield = value; } }
+    public GameObject Gameobject { get { return gameObject; } }
+
+    public bool IsDead
+    {
+        get { return isDead; }
+        set
+        { isDead = value; }
+    }
+
+    public EffectsHandler EffH { get { return effh; } set { effh = value; } }
+
+    public LayerMask EnemiesMasks { get { return enemiesMask; } set { enemiesMask = value; } }
+    public LayerMask FriendlyMasks { get { return friendsMask; } set { friendsMask = value; } }
+
+
     public TankHull hullCard;
     public HullMod hullMod;
 
@@ -14,7 +69,7 @@ public class EntityHandler : MonoBehaviour
     public string team;
 
     public bool isSkin;
-    public Texture2D skinTexture;
+    public SkinCard skin;
 
     Color basePlayerColor;
     Color baseEnemyColor;
@@ -22,28 +77,30 @@ public class EntityHandler : MonoBehaviour
 
     public Move moveScript;
 
-    public Health health;
-    public Shield shield;
+    Health health;
+    Shield shield;
     public EffectsHandler effh;
 
-    //float baseArmor;
-    public float armor;
-    //List<Effect> receivingDamageEffects; 
-    public delegate float ReceivingDamageEffects(float x);
-    public ReceivingDamageEffects receivingDamageEffects;
+    
+
+   
+    
+
+    public ReceivingDamageEffects PropertyReceivingDamageEffects { get { return health.receivingDamageEffects; } set { health.receivingDamageEffects = value; } }
 
     float empTenacityMax;
     public float empTenacity;
 
-    public LayerMask friendsMask;
-    public LayerMask enemiesMask;
+    LayerMask friendsMask;
+    LayerMask enemiesMask;
 
     public List<Component> abilities;
 
     public float outOfDamage;
     public bool isPlayer;
 
-    public bool isDead;
+    
+    bool isDead;
     bool isStunned;
 
     AudioSource hitMarker;
@@ -102,20 +159,20 @@ public class EntityHandler : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.Backspace))
         {
             print("test1");
-            //effh.AddEffect(new PiecesDamageReduction(10));
-            DealDamage(100, this);
+            
+            DealDamage(307, this);
         }
 
         if (Input.GetKeyUp(KeyCode.L))
         {
             print("test2");
-            effh.AddEffect(new Regeneration(100, 2));
+            effh.AddEffect(new Regeneration(4, 4));
         }
     }
 
 
 
-    public void DealDamage(float dmg, EntityHandler source)
+    public void DealDamage(float dmg, IEntity source)
     {
         if (isDead)
         {
@@ -124,9 +181,9 @@ public class EntityHandler : MonoBehaviour
         outOfDamage = 0; //On every attempt of dealing dmg timer resets
         
         float newDmg = dmg; //Applying defence buffs and debuffs
-        if (receivingDamageEffects != null)
+        if (health.receivingDamageEffects != null)
         {
-            foreach (ReceivingDamageEffects item in receivingDamageEffects.GetInvocationList())
+            foreach (ReceivingDamageEffects item in health.receivingDamageEffects.GetInvocationList())
             {
                 newDmg = item.Invoke(newDmg);
             }
@@ -141,13 +198,16 @@ public class EntityHandler : MonoBehaviour
         {
             health.TakingDMG(newDmg, source);
         }
-        if (source == Player.PlayerEH) //Playing hit sound only for player
+        if (source == Player.PlayerEntity) //Playing hit sound only for player
         {
-            hitMarker.Play();
+            //hitMarker.Play();
+            UIHitmarkerScript.instance.CreateHitmarker();
+            LevelStatisticsManager.instance.AddValue("player_damage", newDmg);
+
         }
     }
 
-    public void DealEMP(float dmg, EntityHandler source)
+    public void DealEMP(float dmg, IEntity source)
     {
         if (isDead)
         {
@@ -165,13 +225,13 @@ public class EntityHandler : MonoBehaviour
         }
         
 
-        if (source == Player.PlayerEH) //Playing hit sound only for player
+        if (source == Player.PlayerEntity) //Playing hit sound only for player
         {
             hitMarker.Play();
         }
     }
 
-    public void LoseEMPTenacity(float dmg, EntityHandler source)
+    public void LoseEMPTenacity(float dmg, IEntity source)
     {
         empTenacity -= dmg;
         if (empTenacity < 0 && !isStunned)
@@ -213,17 +273,8 @@ public class EntityHandler : MonoBehaviour
     public void AITankSetup()
     {        
         isPlayer = false;
-        friendsMask = LayerMask.GetMask(team);
 
-        List<string> oppTeams = new();
-        foreach (string item in LevelHandler.instance.teams)
-        {
-            if (item != team)
-            {
-                oppTeams.Add(item);
-            }
-        }
-        enemiesMask = LayerMask.GetMask(oppTeams.ToArray());
+        SetLayermasks();
 
         foreach (MeshRenderer item in meshRenderers)
         {
@@ -245,22 +296,12 @@ public class EntityHandler : MonoBehaviour
     {
         isPlayer = true;
 
-        friendsMask = LayerMask.GetMask(team);
-        
-        List<string> oppTeams = new();
-        foreach (string item in LevelHandler.instance.teams)
-        {
-            if (item != team)
-            {
-                oppTeams.Add(item);
-            }
-        }
-        enemiesMask = LayerMask.GetMask(oppTeams.ToArray());
+        SetLayermasks();
 
         if (GameInfoSaver.instance.chosenSkin != null)
         {
             isSkin = true;
-            skinTexture = GameInfoSaver.instance.chosenSkin;
+            skin = GameInfoSaver.instance.chosenSkin;
         }
 
         foreach (MeshRenderer item in meshRenderers)
@@ -268,7 +309,7 @@ public class EntityHandler : MonoBehaviour
             if (isSkin)
             {
                 item.material.SetFloat("_isSkin", 1.0f);
-                item.material.SetTexture("_Skin", skinTexture);
+                item.material.SetTexture("_Skin", skin.skinTexture);
             }
             else
             {
@@ -286,7 +327,7 @@ public class EntityHandler : MonoBehaviour
 
         hitMarker = GameObject.Find("HitSFX").GetComponent<AudioSource>();
 
-        Player.PlayerEH = this;
+        Player.PlayerEntity = this;
 
 
     }
@@ -304,11 +345,11 @@ public class EntityHandler : MonoBehaviour
         foreach (MeshRenderer item in meshRenderers) //Changing shader
         {
             item.material.SetColor("_TankColor", basePlayerColor);
-            if (skinTexture != null)
+            if (skin != null)
             {                               
                 isSkin = true;
                 item.material.SetFloat("_isSkin", 1.0f);
-                item.material.SetTexture("_Skin", skinTexture);
+                item.material.SetTexture("_Skin", skin.skinTexture);
             }
             else
             {
@@ -320,6 +361,20 @@ public class EntityHandler : MonoBehaviour
         enabled = false;
     }
 
+    void SetLayermasks()
+    {
+        friendsMask = LayerMask.GetMask(team);
+
+        List<string> oppTeams = new();
+        foreach (string item in LevelHandler.instance.teams)
+        {
+            if (item != team)
+            {
+                oppTeams.Add(item);
+            }
+        }
+        enemiesMask = LayerMask.GetMask(oppTeams.ToArray());
+    }
     public void Die()
     {
         isDead = true;

@@ -9,7 +9,7 @@ public class PlayerShield : Shield
     void OnEnable()
     {
         eh = GetComponent<EntityHandler>();
-        eh.shield = this;
+        eh.ShieldScript = this;
                 
         materialPropertyBlock = new();        
 
@@ -65,7 +65,7 @@ public class PlayerShield : Shield
         }
     }
 
-    public override void TakingDMG(float damage, EntityHandler source)
+    public override void TakingDMG(float damage, IEntity source)
     {
         takingHitSound.Play();
         StopShieldRecharge();
@@ -77,7 +77,7 @@ public class PlayerShield : Shield
             shieldBrokenSound.Play();
             DisableShieldShader();
             
-            eh.health.OverDamage(0 - currentSP, source);
+            eh.HealthScript.OverDamage(0 - currentSP, source);
 
             currentSP = 0;
         }
@@ -86,7 +86,7 @@ public class PlayerShield : Shield
 
     }
 
-    public override void TakingEMP(float damage, EntityHandler source)
+    public override void TakingEMP(float damage, IEntity source)
     {
         takingHitSound.Play();
         StopShieldRecharge();

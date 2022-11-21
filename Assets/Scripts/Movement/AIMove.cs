@@ -50,7 +50,7 @@ public class AIMove : Move
     {
         eh = GetComponent<EntityHandler>();
 
-        ignoringLayers = eh.friendsMask;
+        ignoringLayers = eh.FriendlyMasks;
 
         maxBlindChaseDuration = 5;
         maxSpeed = 8;
@@ -261,7 +261,9 @@ public class AIMove : Move
         }
 
         Physics.Linecast(transform.position, target.position, out hit, ~ignoringLayers);
-       
+
+        if (hit.transform == null) return;
+
         if (hit.collider.gameObject == target.gameObject) //if no intersection
         {
             if (hit.distance > (areaOfVision + 2)) //If enemy ran away

@@ -46,7 +46,7 @@ public class PlayerMove : Move
     private void Update()
     {
         //No movement and sound when paused
-        if (GameHandler.GameIsPaused)
+        if (GameHandler.instance.GameIsPaused)
         {
             engineAudio.pitch = 0;
             return;
@@ -113,8 +113,8 @@ public class PlayerMove : Move
 
     void AddTorque(InputAction.CallbackContext callback)
     {
-        
 
+        //print("AddTorque");
         foreach (WheelCollider item in wheels)
         {
             item.wheelDampingRate = 1;
@@ -125,7 +125,7 @@ public class PlayerMove : Move
 
     void ZeroTorque(InputAction.CallbackContext callback)
     {
-        
+        //print("ZeroTorque");
         foreach (WheelCollider item in wheels)
         {
             item.wheelDampingRate = 6;

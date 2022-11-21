@@ -1,22 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AIShield : Shield
 {
     Transform damagePopupPrefab;
-    Camera mainCamera;
+    Transform mainCamera;
+
+    Slider enemyHealthBar;
+    Transform healthBarTransform;
+
+    DamageNumbersPopup popup;
 
     float takenDamageSum;
     void OnEnable()
     {
         damagePopupPrefab = Resources.Load<Transform>("DamageNumbersPopup");
-        mainCamera = Camera.main;
+        mainCamera = Camera.main.transform;
+
+        //Health bar
+        enemyHealthBar = GetComponentInChildren<Slider>(true); 
+        healthBarTransform = enemyHealthBar.transform;
 
         materialPropertyBlock = new();
 
         eh = GetComponent<EntityHandler>();
-        eh.shield = this;
+        eh.ShieldScript = this;
 
         baseSP = eh.hullCard.baseSP;
         maxSP = baseSP;
@@ -60,28 +70,29 @@ public class AIShield : Shield
 
   
 
-    public override void TakingDMG(float damage, EntityHandler source)
+    public override void TakingDMG(float damage, IEntity source)
     {
         takingHitSound.Play();
         StopShieldRecharge();
 
-        if (takenDamageSum == 0)
-        {
-            StartCoroutine(AccumulateDMG());
+        //if (takenDamageSum == 0)
+        //{
+        //    StartCoroutine(AccumulateDMG());
 
-        }
-        takenDamageSum += Mathf.Clamp(damage, 0, currentSP);
-        
-        
-        currentSP -= damage;
-        
+        //}
+        //takenDamageSum += Mathf.Clamp(damage, 0, currentSP);
+
+        PopupCreate(damage);
+
+        currentSP -= damage;  
 
         if (currentSP <= 0)
         {
             shieldBrokenSound.Play();
             DisableShieldShader();
 
-            eh.health.OverDamage(0 - currentSP, source);
+            eh.HealthScript.OverDamage(0 - currentSP, source);
+            //eh.health.popup = popup;
             
             currentSP = 0;
         }
@@ -89,20 +100,15 @@ public class AIShield : Shield
 
     }
 
-    public override void TakingEMP(float damage, EntityHandler source)
+    public override void TakingEMP(float damage, IEntity source)
     {
         takingEMPSound.Play();
         StopShieldRecharge();
 
+        PopupCreate(damage);
 
-        if (takenDamageSum == 0)
-        {
-            StartCoroutine(AccumulateDMG());
+        currentSP -= damage;        
 
-        }
-        takenDamageSum += Mathf.Clamp(damage, 0, currentSP);
-        currentSP -= damage;
-        
         if (currentSP <= 0)
         {
             shieldBrokenSound.Play();
@@ -117,14 +123,31 @@ public class AIShield : Shield
 
     }
 
-    IEnumerator AccumulateDMG()
+    void PopupCreate(float damage)
     {
-        yield return new WaitForEndOfFrame();
-
-        DamageNumbersPopup.Create(damagePopupPrefab, transform.position + Vector3.up * 2, mainCamera.transform.right, takenDamageSum, Color.blue);
-        takenDamageSum = 0;
-
+        
+        damage = Mathf.Clamp(damage, 0, currentSP);
+        if (popup == null)
+        {
+            //print("null");
+            popup = DamageNumbersPopup.CreateStatic(damagePopupPrefab, healthBarTransform.position + transform.up + mainCamera.right, damage, Color.blue);
+            popup.transform.SetParent(gameObject.transform);
+        }
+        else
+        {
+            //print("NOT null");
+            popup.ChangeText(damage);
+        }
     }
+
+    //IEnumerator AccumulateDMG()
+    //{
+    //    yield return new WaitForEndOfFrame();
+
+    //    DamageNumbersPopup.Create(damagePopupPrefab, transform.position + Vector3.up * 2, mainCamera.transform.right, takenDamageSum, Color.blue);
+    //    takenDamageSum = 0;
+
+    //}
 
     public override void StartShieldRecharge()
     {
