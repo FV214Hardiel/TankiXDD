@@ -5,14 +5,13 @@ using TMPro;
 
 public class DamageNumbersPopup : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public TextMeshPro textMesh;
 
-    //Camera main;
+    public float value;
 
-    TextMeshPro textMesh;
+    float timer;
 
-    float speed;
-
+    Transform mainCamera;
     public static void Create(Transform damagePopupPrefab, Vector3 position, Vector3 right, float numbers, Color colour)
     {
         int disperse = Random.Range(0, 21);
@@ -23,19 +22,46 @@ public class DamageNumbersPopup : MonoBehaviour
         textMesh.renderer.material.SetColor("_OutlineColor", colour);
         Destroy(DamageNumbersObject.gameObject, 2);
     }
-    void OnEnable()
+
+    public static DamageNumbersPopup CreateStatic(Transform damagePopupPrefab, Vector3 position, float numbers, Color colour)
     {
-        speed = 10;
-        //main = Camera.main; 
-        //textMesh = transform.GetComponent<TextMeshPro>();
+        Transform DamageNumbersObject = Instantiate(damagePopupPrefab, position, Camera.main.transform.rotation);
+
+        DamageNumbersPopup popup = DamageNumbersObject.GetComponent<DamageNumbersPopup>();
+
+        popup.textMesh = DamageNumbersObject.GetComponent<TextMeshPro>();
+        popup.value = numbers;
+        
+
+        popup.timer = 2;
+        
+        popup.textMesh.renderer.material.SetColor("_OutlineColor", colour);        
+
+        return popup;
+    }
+    void Start()
+    {        
+        mainCamera = Camera.main.transform; 
+        
+        textMesh.text = Mathf.Floor(value).ToString();
     }
 
-    // Update is called once per frame
+    
     void Update()
     {
+        transform.rotation = mainCamera.rotation;
+        timer -= Time.deltaTime;
+        if (timer < 0)
+        {
+            Destroy(gameObject);
+        }        
 
-        transform.position += Time.deltaTime * Vector3.up * speed;
-        speed -= Time.deltaTime * 3;
+    }
 
+    public void ChangeText(float numbers)
+    {
+        value += numbers;
+        textMesh.text = Mathf.Floor(value).ToString();
+        timer = 2;
     }
 }
