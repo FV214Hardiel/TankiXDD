@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a855e5fc56132674fbaf91304076cb45, type: 3}
   m_Name: Railgun
   m_EditorClassIdentifier: 
-  gunName: Railgun
+  turretName: Railgun
+  turretPrice: 150
+  upgradePrice: 45
   prefabOfTurret: {fileID: 6283641191232944706, guid: a38d9525b0abfcb4d90d7e0fc6d9b36a, type: 3}
   modifications:
   - {fileID: 11400000, guid: 0e08cf1d50611b24dafefd3b86991d45, type: 2}

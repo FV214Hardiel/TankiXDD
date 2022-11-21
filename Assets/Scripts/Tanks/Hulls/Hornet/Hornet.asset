@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Hornet
   m_EditorClassIdentifier: 
   hullName: Hornet
+  hullPrice: 1528
+  upgradePrice: 0
   prefabOfHull: {fileID: 7780130218654329509, guid: 0425c349034b52f4d9c1b44ec1bac838, type: 3}
   baseHP: 120
   hullSpeed: 24

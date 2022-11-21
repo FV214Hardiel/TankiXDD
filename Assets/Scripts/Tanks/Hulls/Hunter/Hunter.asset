@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Hunter
   m_EditorClassIdentifier: 
   hullName: Hunter
+  hullPrice: 122
+  upgradePrice: 0
   prefabOfHull: {fileID: 6241842525950719699, guid: f980f7ea6069ebe41840fa0f077dd49e, type: 3}
   baseHP: 280
   hullSpeed: 10

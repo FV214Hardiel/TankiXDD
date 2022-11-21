@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a855e5fc56132674fbaf91304076cb45, type: 3}
   m_Name: Thunder
   m_EditorClassIdentifier: 
-  gunName: Thunder
+  turretName: Thunder
+  turretPrice: 0
+  upgradePrice: 0
   prefabOfTurret: {fileID: 5494545519332580398, guid: 5daa90b195563cc4fbf02474ec427c94, type: 3}
   modifications:
   - {fileID: 11400000, guid: d83a6c9ac0f949548aea952a8600206a, type: 2}

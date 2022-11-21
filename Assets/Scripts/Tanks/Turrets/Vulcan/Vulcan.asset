@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a855e5fc56132674fbaf91304076cb45, type: 3}
   m_Name: Vulcan
   m_EditorClassIdentifier: 
-  gunName: M65B Vulcan
+  turretName: M65 Vulcan
+  turretPrice: 0
+  upgradePrice: 0
   prefabOfTurret: {fileID: 3091681938102966070, guid: f5d3533b60e487b4a86308ffc97ba82b, type: 3}
   modifications:
   - {fileID: 11400000, guid: 60e002f5ceaeca5458517211a986e7f5, type: 2}

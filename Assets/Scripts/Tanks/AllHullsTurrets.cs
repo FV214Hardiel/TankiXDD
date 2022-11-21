@@ -31,7 +31,7 @@ public class AllHullsTurrets : ScriptableObject
             unlockedHulls = new();
             foreach (string item in uHulls) 
             {
-                unlockedHulls.Add(allHulls.Find(x => x.hullName == item)); //for each existing string finding and adding hull in 'unlocked' list
+                unlockedHulls.Add(allHulls.Find(x => x.Name == item)); //for each existing string finding and adding hull in 'unlocked' list
             }
         }
         else //if no save file then create and save
@@ -51,7 +51,7 @@ public class AllHullsTurrets : ScriptableObject
             unlockedTurrets = new();
             foreach (string item in uTurrets)
             {
-                unlockedTurrets.Add(allTurrets.Find(x => x.gunName == item));
+                unlockedTurrets.Add(allTurrets.Find(x => x.Name == item));
             }
         }
         else //if no save file then create and save
@@ -70,7 +70,7 @@ public class AllHullsTurrets : ScriptableObject
         {
             if (item != null)
             {
-                textNames.Add(item.hullName); //adding items to buffer
+                textNames.Add(item.Name); //adding items to buffer
             }
 
         }
@@ -89,7 +89,7 @@ public class AllHullsTurrets : ScriptableObject
         {
             if (item != null)
             {
-                textNames.Add(item.gunName); //adding items to buffer
+                textNames.Add(item.Name); //adding items to buffer
             }
 
         }
@@ -223,7 +223,7 @@ public class AllHullsTurrets : ScriptableObject
         return tunk;
     }
 
-    public static GameObject CreateDecorative(Transform parent, TankHull chosenHull, byte hullTier, TankTurret chosenTurret, byte turretTier, Texture2D skin)
+    public static GameObject CreateDecorative(Transform parent, TankHull chosenHull, byte hullTier, TankTurret chosenTurret, byte turretTier, SkinCard skin)
     {
         GameObject tunk = Instantiate(chosenHull.prefabOfHull);
         tunk.transform.SetParent(parent);
@@ -248,7 +248,7 @@ public class AllHullsTurrets : ScriptableObject
         eh.hullMod = chosenHull.modifications[hullTier];
         eh.turretCard = chosenTurret;
         eh.turretMod = chosenTurret.modifications[turretTier];
-        eh.skinTexture = skin;
+        eh.skin = skin;
         
         eh.DecorativeSetup();
 

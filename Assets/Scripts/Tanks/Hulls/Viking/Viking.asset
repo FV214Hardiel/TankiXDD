@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Viking
   m_EditorClassIdentifier: 
   hullName: Viking
+  hullPrice: 266
+  upgradePrice: 0
   prefabOfHull: {fileID: 5424178672194485764, guid: 3b9c54ccfd9995542b5b09030bb9a2ee, type: 3}
   baseHP: 200
   hullSpeed: 26

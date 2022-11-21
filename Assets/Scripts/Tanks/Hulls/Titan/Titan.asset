@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Titan
   m_EditorClassIdentifier: 
   hullName: Titan
+  hullPrice: 133
+  upgradePrice: 0
   prefabOfHull: {fileID: 762698576338350277, guid: 8ac5367434dfa774ca8b187d3d6bbfe9, type: 3}
   baseHP: 200
   hullSpeed: 18

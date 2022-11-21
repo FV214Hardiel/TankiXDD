@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a855e5fc56132674fbaf91304076cb45, type: 3}
   m_Name: Smoky
   m_EditorClassIdentifier: 
-  gunName: Smoky
+  turretName: Smoky
+  turretPrice: 10
+  upgradePrice: 10
   prefabOfTurret: {fileID: 286798274692133482, guid: c5063c474e230124b9817cfe783d5281, type: 3}
   modifications:
   - {fileID: 11400000, guid: fcbd2497966b7af4f9b6b33ee0383f58, type: 2}

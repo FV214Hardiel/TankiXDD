@@ -4,9 +4,28 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [CreateAssetMenu(fileName = "Hull", menuName = "Tanks/Hulls")]
-public class TankHull : ScriptableObject
+public class TankHull : ScriptableObject, IShopItem
 {
     public string hullName;
+    public string Name
+    {
+        get
+        {
+            return hullName;
+        }
+
+    }
+
+    public ushort hullPrice;
+    public ushort Price
+    {
+        get
+        {
+            return hullPrice;
+        }
+    }
+
+    public ushort upgradePrice;
     
     public GameObject prefabOfHull;
 
@@ -22,72 +41,17 @@ public class TankHull : ScriptableObject
 
     public List<AudioClip> voiceover;
 
+    public void BuyItem()
+    {
+        if (!GameInfoSaver.instance.tanksList.unlockedHulls.Contains(this))
+        {
+            GameInfoSaver.instance.tanksList.unlockedHulls.Add(this);
+        }
 
-    //public GameObject CreateEnemyTank(Vector3 spawnPosition, Quaternion spawnRotation)
-    //{
-    //    GameObject tunk = Instantiate(prefabOfHull); //instantiate корпус
+        GameInfoSaver.instance.tanksList.SaveHulls();
 
-    //    tunk.transform.SetPositionAndRotation(spawnPosition, spawnRotation);
+        Debug.Log("Item bought");
+    }
 
-    //    //Adding EH
-    //    EntityHandler eh = tunk.AddComponent<EntityHandler>();
-    //    eh.hullCard = this;
-    //    eh.AITankSetup();
-
-
-    //    //Enabling Shield and Health
-    //    tunk.AddComponent<AIShield>();
-    //    tunk.GetComponent<HealthEnemy>().enabled = true;
-
-    //    //Enabling Movement
-    //    tunk.GetComponent<AIMove>().enabled = true;
-    //    tunk.GetComponent<NavMeshAgent>().enabled = true;
-
-    //    //Destroying Player scripts
-    //    Destroy(tunk.GetComponent<PlayerMove>());
-    //    Destroy(tunk.GetComponent<HealthPlayer>());
-    //    Destroy(tunk.GetComponent<AbilityHandler>());
-
-    //    return tunk;
-    //}
-
-    //public GameObject CreatePlayerTank(Vector3 spawnPosition, Quaternion spawnRotation)
-    //{
-    //    GameObject tunk = Instantiate(prefabOfHull);
-    //    tunk.name = "PlayerHull";
-    //    tunk.transform.SetPositionAndRotation(spawnPosition, spawnRotation);
-
-    //    //Adding EH
-    //    EntityHandler eh = tunk.AddComponent<EntityHandler>();
-    //    eh.hullCard = this;
-    //    eh.PlayerTankSetup();
-
-    //    //Enabling Shield and Health
-    //    //tunk.GetComponent<Shield>().enabled = true;
-    //    tunk.AddComponent<PlayerShield>();
-    //    tunk.GetComponent<HealthPlayer>().enabled = true;
-
-    //    //Enabling Movement
-    //    tunk.GetComponent<PlayerMove>().enabled = true;
-
-    //    //Enabling Abilities        
-    //    tunk.GetComponent<AbilityHandler>().enabled = true;
-
-
-    //    tunk.GetComponent<Rigidbody>().interpolation = RigidbodyInterpolation.Interpolate;
-
-    //    Destroy(tunk.GetComponent<AIMove>());
-    //    Destroy(tunk.GetComponent<HealthEnemy>());
-    //    Destroy(tunk.GetComponent<NavMeshAgent>());
-    //    Destroy(tunk.transform.Find("enemyHealthBar").gameObject);
-
-
-
-    //    Player.instance.ChangePlayerHull(tunk);
-
-
-
-    //    return tunk;
-    //}
 
 }

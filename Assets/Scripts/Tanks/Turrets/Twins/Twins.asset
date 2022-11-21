@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a855e5fc56132674fbaf91304076cb45, type: 3}
   m_Name: Twins
   m_EditorClassIdentifier: 
-  gunName: Twins
+  turretName: Twins
+  turretPrice: 0
+  upgradePrice: 0
   prefabOfTurret: {fileID: 7939966477284449060, guid: 7175b6150fb1b38418006fd9c5f1078e, type: 3}
   modifications:
   - {fileID: 11400000, guid: b5b40929a0caab74684892b65a16d198, type: 2}

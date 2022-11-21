@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Dictator
   m_EditorClassIdentifier: 
   hullName: Dictator
+  hullPrice: 228
+  upgradePrice: 0
   prefabOfHull: {fileID: 3287245049808975158, guid: 693429f58e7ced146a27f3cf4f948f90, type: 3}
   baseHP: 170
   hullSpeed: 19

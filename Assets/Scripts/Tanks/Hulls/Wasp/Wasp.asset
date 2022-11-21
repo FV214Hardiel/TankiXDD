@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Wasp
   m_EditorClassIdentifier: 
   hullName: Wasp
+  hullPrice: 111
+  upgradePrice: 0
   prefabOfHull: {fileID: 5120222304445047940, guid: 1c1425d083bdd424f8f2a5cf2452d121, type: 3}
   baseHP: 90
   hullSpeed: 25
