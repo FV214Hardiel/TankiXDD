@@ -7,7 +7,7 @@ public class ThunderShell : MonoBehaviour
     float timeOfLife;
     float timer;
 
-    public EntityHandler source;
+    public IEntity source;
     public float expForce;
     public float expRadius;
     public float damage;
@@ -67,20 +67,16 @@ public class ThunderShell : MonoBehaviour
         exp.GetComponent<AudioSource>().Play();
 
         //EMP
-        List<EntityHandler> alreadyHit = new();
-        List<Collider> hitList = new (Physics.OverlapSphere(transform.position, expRadius, source.enemiesMask));
+        List<IDamagable> alreadyHit = new();
+        List<Collider> hitList = new (Physics.OverlapSphere(transform.position, expRadius, source.EnemiesMasks));
         foreach (Collider item in hitList)
-        {
-            EntityHandler eh = item.GetComponent<EntityHandler>();
-            if (eh)
+        {            
+
+            if (item.TryGetComponent(out IDamagable damagable))
             {
-                if (!alreadyHit.Contains(eh)) //if DOES NOT contain then DAMAGE
-                {
-                    eh.DealEMP(damage, source);
-                    //eh.DealDamage(damage, source);
-                    alreadyHit.Add(eh);
-                }
-                
+                damagable.DealEMP(damage, source);
+               
+                alreadyHit.Add(damagable);
             }
             
         }
@@ -97,14 +93,19 @@ public class ThunderShell : MonoBehaviour
 
                 
                 WeaponTrail.Create(trail, transform.position, hit.point);
-                EntityHandler eh = hit.collider.GetComponentInParent<EntityHandler>(false);
-                if (eh != null)
-                {
-                    if (!eh.isDead) //Checking if target is alive and wasnt already hit by this shot
-                    {
-                        eh.DealDamage(pelletDamage, source);
+                //EntityHandler eh = hit.collider.GetComponentInParent<EntityHandler>(false);
+                //if (eh != null)
+                //{
+                //    if (!eh.IsDead) //Checking if target is alive and wasnt already hit by this shot
+                //    {
+                //        eh.DealDamage(pelletDamage, source);
 
-                    }
+                //    }
+                //}
+
+                if (hit.collider.TryGetComponent(out IDamagable damagable))
+                {
+                    damagable.DealDamage(pelletDamage, source);                   
                 }
 
 
@@ -119,8 +120,8 @@ public class ThunderShell : MonoBehaviour
     }
 
 
-    // Update is called once per frame
-    public static void CreateShot(GameObject prefab, Vector3 pos, Vector3 velocityVector, EntityHandler source, float dmg, float tol)
+    
+    public static void CreateShot(GameObject prefab, Vector3 pos, Vector3 velocityVector, IEntity source, float dmg, float tol)
     {
         GameObject go = Instantiate(prefab, pos, Camera.main.transform.rotation);
         go.GetComponent<Rigidbody>().velocity = velocityVector;

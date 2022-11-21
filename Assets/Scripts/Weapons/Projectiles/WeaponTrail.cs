@@ -36,7 +36,7 @@ public class WeaponTrail : MonoBehaviour
 
     public static void Create(GameObject prefab, Vector3 origin, Vector3 end)
     {
-        LineRenderer lr = Instantiate(prefab).GetComponent<LineRenderer>();
+        LineRenderer lr = Instantiate(prefab, origin, Quaternion.identity).GetComponent<LineRenderer>();
         lr.SetPosition(0, origin);
         lr.SetPosition(1, end);
     }

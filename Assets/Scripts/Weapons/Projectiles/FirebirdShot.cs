@@ -14,7 +14,7 @@ public class FirebirdShot : MonoBehaviour
     GameObject alreadyHit;
 
     float damage;
-    EntityHandler source;
+    IEntity source;
     
     void OnEnable()
     {
@@ -40,18 +40,18 @@ public class FirebirdShot : MonoBehaviour
     {
         
         //Getting GodClass
-        EntityHandler eh = other.gameObject.GetComponentInParent<EntityHandler>(false);
+        IDamagable eh = other.gameObject.GetComponentInParent<IDamagable>(false);
         if (eh != null)
         {
 
-            if (eh.gameObject == source) //Collision with player (after the shot for example)
+            if (eh.Gameobject == source.Gameobject) //Collision with player (after the shot for example)
                 return;
 
-            if (eh.gameObject != alreadyHit && !eh.isDead) //Checking if target is alive and wasnt already hit by this shot
+            if (eh.Gameobject != alreadyHit && !eh.IsDead) //Checking if target is alive and wasnt already hit by this shot
             {
                 eh.DealDamage(damage, source);
                 
-                alreadyHit = eh.gameObject; //Setting hit gameobject as already hit for fixing double damaging one target by a single shot
+                alreadyHit = eh.Gameobject; //Setting hit gameobject as already hit for fixing double damaging one target by a single shot
                 
             }
             
@@ -67,7 +67,7 @@ public class FirebirdShot : MonoBehaviour
     }
 
     //Creating the shot prefab 
-    public static void CreateShot(GameObject prefab, Vector3 pos, Vector3 velocityVector, EntityHandler source, float dmg, float tol)
+    public static void CreateShot(GameObject prefab, Vector3 pos, Vector3 velocityVector, IEntity source, float dmg, float tol)
     {
         GameObject go = Instantiate(prefab, pos, Camera.main.transform.rotation);
         go.GetComponent<Rigidbody>().velocity = velocityVector;
