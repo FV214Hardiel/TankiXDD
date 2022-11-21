@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d9ebf1bf66a3bc498b33607c00b422b, type: 3}
+  m_Name: Skins
+  m_EditorClassIdentifier: 
+  allSkins:
+  - {fileID: 11400000, guid: 4c74c90f7ee255442b054103458dec9a, type: 2}
+  - {fileID: 11400000, guid: 017dedfda714ce5478941f26ef19eaed, type: 2}
+  - {fileID: 11400000, guid: 5a4492ba9838761489df4e3f5871c5f1, type: 2}
+  - {fileID: 11400000, guid: 73b6177c79808404b9017a99c28eaeed, type: 2}
+  unlockedSkins:
+  - {fileID: 0}
+  - {fileID: 11400000, guid: 5a4492ba9838761489df4e3f5871c5f1, type: 2}
