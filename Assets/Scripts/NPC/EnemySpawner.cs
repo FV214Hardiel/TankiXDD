@@ -52,15 +52,15 @@ public class EnemySpawner : MonoBehaviour
             if (!CDready)
             {
                 yield return new WaitForSeconds(timeDelta);
-                print("not ready");
+                //print("not ready");
                 continue;
             }
             if (Physics.OverlapSphereNonAlloc(transform.position, detectionRange, colliders, enemyLayers) > 0 || spawnWithoutPlayerNear)
             {
-                print("enemy detected");
+                //print("enemy detected");
                 if (availableSpawns > 0)
                 {
-                    print("spawning");
+                   // print("spawning");
                     enemy = AllHullsTurrets.CreateEnemyTank(transform.position, transform.rotation, Hull[Random.Range(0, Hull.Length)], 0, Turret[Random.Range(0, Turret.Length)], 0);
 
                     availableSpawns--;
