@@ -11,7 +11,7 @@ public class PauseMenu : MonoBehaviour
 
     private void Start()
     {
-        GameHandler.GameIsPaused = false;
+        GameHandler.instance.GameIsPaused = false;
 
         inputActions = new();
         inputActions.PlayerTankControl.Enable();
@@ -19,9 +19,9 @@ public class PauseMenu : MonoBehaviour
 
     public void Update()
     {
-        if (inputActions.PlayerTankControl.Pause.WasPressedThisFrame() && !GameHandler.GameIsOver) Pause();        
+        if (inputActions.PlayerTankControl.Pause.WasPressedThisFrame() && !GameHandler.instance.GameIsOver) Pause();        
 
-        if (inputActions.PauseMenu.ExitPause.WasPressedThisFrame() && !GameHandler.GameIsOver) Resume();
+        if (inputActions.PauseMenu.ExitPause.WasPressedThisFrame() && !GameHandler.instance.GameIsOver) Resume();
     }
 
     
@@ -35,7 +35,7 @@ public class PauseMenu : MonoBehaviour
 
         //Stopping time
         Time.timeScale = 0f;
-        GameHandler.GameIsPaused = true;
+        GameHandler.instance.GameIsPaused = true;
     }
 
     public void Resume()
@@ -48,14 +48,14 @@ public class PauseMenu : MonoBehaviour
 
         //Unstopping time
         Time.timeScale = 1f;
-        GameHandler.GameIsPaused = false;
+        GameHandler.instance.GameIsPaused = false;
     }
 
     //Exiting to main menu
     public void Home(int sceneID)
     {
         Time.timeScale = 1f;
-        GameHandler.GameIsPaused = false;
+        GameHandler.instance.GameIsPaused = false;
         SceneManager.LoadScene(sceneID);
         
     }
@@ -64,7 +64,7 @@ public class PauseMenu : MonoBehaviour
     {
         Scene scene = SceneManager.GetActiveScene(); SceneManager.LoadScene(scene.name);
         Time.timeScale = 1;
-        GameHandler.GameIsPaused = false;
+        GameHandler.instance.GameIsPaused = false;
 
     }
 }
