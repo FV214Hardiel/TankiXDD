@@ -68,6 +68,28 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
+                    ""name"": """",
+                    ""id"": ""bf5c97cf-9e2c-4139-a7e0-e8b15e96b819"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Fire"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ca90ad4b-301e-4a0a-aa2b-33486230b915"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Fire"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
                     ""name"": ""2D Vector"",
                     ""id"": ""158a6028-0db4-4940-8b12-b124208a0dfb"",
                     ""path"": ""2DVector"",
@@ -123,9 +145,53 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
+                    ""name"": ""up"",
+                    ""id"": ""edf1365c-3be9-4ddf-9b5b-6477c20e9b82"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""5120feaf-de14-4b9e-9501-11b48cbc573f"",
+                    ""path"": ""<Gamepad>/leftStick/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""e57f316a-626e-42e5-933b-2fa00b4f0b72"",
+                    ""path"": ""<Gamepad>/leftStick/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
                     ""name"": """",
                     ""id"": ""6ea8abe2-e74c-4221-964f-70337263a97c"",
                     ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9f1f50b4-9d62-4d73-986c-41c79ed10fbf"",
+                    ""path"": ""<Gamepad>/start"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -199,7 +265,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
             ""id"": ""60388193-2bca-422c-9d2d-e3ba19dc3008"",
             ""actions"": [
                 {
-                    ""name"": ""Action1"",
+                    ""name"": ""Action A"",
                     ""type"": ""Button"",
                     ""id"": ""103d5f67-983d-4cf2-a967-280fc7a6ef97"",
                     ""expectedControlType"": ""Button"",
@@ -208,7 +274,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Action2"",
+                    ""name"": ""Action S"",
                     ""type"": ""Button"",
                     ""id"": ""0db36421-fbf1-4184-992b-315e22cfe0f5"",
                     ""expectedControlType"": ""Button"",
@@ -217,13 +283,22 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Load"",
+                    ""name"": ""Action L"",
                     ""type"": ""Button"",
                     ""id"": ""3d29b425-6352-407a-8fb0-9a8265f26c05"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Action R"",
+                    ""type"": ""Value"",
+                    ""id"": ""ca44ba74-cd3f-445d-ae10-5b7f8fbc71ab"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -234,7 +309,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Action1"",
+                    ""action"": ""Action A"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -245,7 +320,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Action2"",
+                    ""action"": ""Action S"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -256,7 +331,77 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Load"",
+                    ""action"": ""Action L"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f6e639a1-967d-4fd2-bdf3-42b6ce932ccb"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Action R"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Look"",
+            ""id"": ""91ce7b9c-7822-4f7a-afe9-9f0329d6483a"",
+            ""actions"": [
+                {
+                    ""name"": ""MouseLook"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""ad83834e-75ec-40f8-821d-da03e4aa44ce"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Zoom"",
+                    ""type"": ""Value"",
+                    ""id"": ""eb4424d4-f38a-4647-abde-f2c42037b994"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""7bbd9e50-c734-41b3-8327-6ddd42894301"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": ""ScaleVector2(x=0.08,y=0.0005)"",
+                    ""groups"": """",
+                    ""action"": ""MouseLook"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""85bf20fd-268f-45d6-8998-42ab10cf7eb8"",
+                    ""path"": ""<Gamepad>/rightStick"",
+                    ""interactions"": """",
+                    ""processors"": ""ScaleVector2(x=0.7,y=0.003)"",
+                    ""groups"": """",
+                    ""action"": ""MouseLook"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ede93ff3-fd66-4dc6-b14c-84667978178f"",
+                    ""path"": ""<Mouse>/scroll"",
+                    ""interactions"": """",
+                    ""processors"": ""NormalizeVector2"",
+                    ""groups"": """",
+                    ""action"": ""Zoom"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -276,9 +421,14 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_PauseMenu_ExitPause = m_PauseMenu.FindAction("ExitPause", throwIfNotFound: true);
         // Test
         m_Test = asset.FindActionMap("Test", throwIfNotFound: true);
-        m_Test_Action1 = m_Test.FindAction("Action1", throwIfNotFound: true);
-        m_Test_Action2 = m_Test.FindAction("Action2", throwIfNotFound: true);
-        m_Test_Load = m_Test.FindAction("Load", throwIfNotFound: true);
+        m_Test_ActionA = m_Test.FindAction("Action A", throwIfNotFound: true);
+        m_Test_ActionS = m_Test.FindAction("Action S", throwIfNotFound: true);
+        m_Test_ActionL = m_Test.FindAction("Action L", throwIfNotFound: true);
+        m_Test_ActionR = m_Test.FindAction("Action R", throwIfNotFound: true);
+        // Look
+        m_Look = asset.FindActionMap("Look", throwIfNotFound: true);
+        m_Look_MouseLook = m_Look.FindAction("MouseLook", throwIfNotFound: true);
+        m_Look_Zoom = m_Look.FindAction("Zoom", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -428,16 +578,18 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     // Test
     private readonly InputActionMap m_Test;
     private ITestActions m_TestActionsCallbackInterface;
-    private readonly InputAction m_Test_Action1;
-    private readonly InputAction m_Test_Action2;
-    private readonly InputAction m_Test_Load;
+    private readonly InputAction m_Test_ActionA;
+    private readonly InputAction m_Test_ActionS;
+    private readonly InputAction m_Test_ActionL;
+    private readonly InputAction m_Test_ActionR;
     public struct TestActions
     {
         private @PlayerInputActions m_Wrapper;
         public TestActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Action1 => m_Wrapper.m_Test_Action1;
-        public InputAction @Action2 => m_Wrapper.m_Test_Action2;
-        public InputAction @Load => m_Wrapper.m_Test_Load;
+        public InputAction @ActionA => m_Wrapper.m_Test_ActionA;
+        public InputAction @ActionS => m_Wrapper.m_Test_ActionS;
+        public InputAction @ActionL => m_Wrapper.m_Test_ActionL;
+        public InputAction @ActionR => m_Wrapper.m_Test_ActionR;
         public InputActionMap Get() { return m_Wrapper.m_Test; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -447,32 +599,79 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         {
             if (m_Wrapper.m_TestActionsCallbackInterface != null)
             {
-                @Action1.started -= m_Wrapper.m_TestActionsCallbackInterface.OnAction1;
-                @Action1.performed -= m_Wrapper.m_TestActionsCallbackInterface.OnAction1;
-                @Action1.canceled -= m_Wrapper.m_TestActionsCallbackInterface.OnAction1;
-                @Action2.started -= m_Wrapper.m_TestActionsCallbackInterface.OnAction2;
-                @Action2.performed -= m_Wrapper.m_TestActionsCallbackInterface.OnAction2;
-                @Action2.canceled -= m_Wrapper.m_TestActionsCallbackInterface.OnAction2;
-                @Load.started -= m_Wrapper.m_TestActionsCallbackInterface.OnLoad;
-                @Load.performed -= m_Wrapper.m_TestActionsCallbackInterface.OnLoad;
-                @Load.canceled -= m_Wrapper.m_TestActionsCallbackInterface.OnLoad;
+                @ActionA.started -= m_Wrapper.m_TestActionsCallbackInterface.OnActionA;
+                @ActionA.performed -= m_Wrapper.m_TestActionsCallbackInterface.OnActionA;
+                @ActionA.canceled -= m_Wrapper.m_TestActionsCallbackInterface.OnActionA;
+                @ActionS.started -= m_Wrapper.m_TestActionsCallbackInterface.OnActionS;
+                @ActionS.performed -= m_Wrapper.m_TestActionsCallbackInterface.OnActionS;
+                @ActionS.canceled -= m_Wrapper.m_TestActionsCallbackInterface.OnActionS;
+                @ActionL.started -= m_Wrapper.m_TestActionsCallbackInterface.OnActionL;
+                @ActionL.performed -= m_Wrapper.m_TestActionsCallbackInterface.OnActionL;
+                @ActionL.canceled -= m_Wrapper.m_TestActionsCallbackInterface.OnActionL;
+                @ActionR.started -= m_Wrapper.m_TestActionsCallbackInterface.OnActionR;
+                @ActionR.performed -= m_Wrapper.m_TestActionsCallbackInterface.OnActionR;
+                @ActionR.canceled -= m_Wrapper.m_TestActionsCallbackInterface.OnActionR;
             }
             m_Wrapper.m_TestActionsCallbackInterface = instance;
             if (instance != null)
             {
-                @Action1.started += instance.OnAction1;
-                @Action1.performed += instance.OnAction1;
-                @Action1.canceled += instance.OnAction1;
-                @Action2.started += instance.OnAction2;
-                @Action2.performed += instance.OnAction2;
-                @Action2.canceled += instance.OnAction2;
-                @Load.started += instance.OnLoad;
-                @Load.performed += instance.OnLoad;
-                @Load.canceled += instance.OnLoad;
+                @ActionA.started += instance.OnActionA;
+                @ActionA.performed += instance.OnActionA;
+                @ActionA.canceled += instance.OnActionA;
+                @ActionS.started += instance.OnActionS;
+                @ActionS.performed += instance.OnActionS;
+                @ActionS.canceled += instance.OnActionS;
+                @ActionL.started += instance.OnActionL;
+                @ActionL.performed += instance.OnActionL;
+                @ActionL.canceled += instance.OnActionL;
+                @ActionR.started += instance.OnActionR;
+                @ActionR.performed += instance.OnActionR;
+                @ActionR.canceled += instance.OnActionR;
             }
         }
     }
     public TestActions @Test => new TestActions(this);
+
+    // Look
+    private readonly InputActionMap m_Look;
+    private ILookActions m_LookActionsCallbackInterface;
+    private readonly InputAction m_Look_MouseLook;
+    private readonly InputAction m_Look_Zoom;
+    public struct LookActions
+    {
+        private @PlayerInputActions m_Wrapper;
+        public LookActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @MouseLook => m_Wrapper.m_Look_MouseLook;
+        public InputAction @Zoom => m_Wrapper.m_Look_Zoom;
+        public InputActionMap Get() { return m_Wrapper.m_Look; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(LookActions set) { return set.Get(); }
+        public void SetCallbacks(ILookActions instance)
+        {
+            if (m_Wrapper.m_LookActionsCallbackInterface != null)
+            {
+                @MouseLook.started -= m_Wrapper.m_LookActionsCallbackInterface.OnMouseLook;
+                @MouseLook.performed -= m_Wrapper.m_LookActionsCallbackInterface.OnMouseLook;
+                @MouseLook.canceled -= m_Wrapper.m_LookActionsCallbackInterface.OnMouseLook;
+                @Zoom.started -= m_Wrapper.m_LookActionsCallbackInterface.OnZoom;
+                @Zoom.performed -= m_Wrapper.m_LookActionsCallbackInterface.OnZoom;
+                @Zoom.canceled -= m_Wrapper.m_LookActionsCallbackInterface.OnZoom;
+            }
+            m_Wrapper.m_LookActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @MouseLook.started += instance.OnMouseLook;
+                @MouseLook.performed += instance.OnMouseLook;
+                @MouseLook.canceled += instance.OnMouseLook;
+                @Zoom.started += instance.OnZoom;
+                @Zoom.performed += instance.OnZoom;
+                @Zoom.canceled += instance.OnZoom;
+            }
+        }
+    }
+    public LookActions @Look => new LookActions(this);
     public interface IPlayerTankControlActions
     {
         void OnFire(InputAction.CallbackContext context);
@@ -486,8 +685,14 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     }
     public interface ITestActions
     {
-        void OnAction1(InputAction.CallbackContext context);
-        void OnAction2(InputAction.CallbackContext context);
-        void OnLoad(InputAction.CallbackContext context);
+        void OnActionA(InputAction.CallbackContext context);
+        void OnActionS(InputAction.CallbackContext context);
+        void OnActionL(InputAction.CallbackContext context);
+        void OnActionR(InputAction.CallbackContext context);
+    }
+    public interface ILookActions
+    {
+        void OnMouseLook(InputAction.CallbackContext context);
+        void OnZoom(InputAction.CallbackContext context);
     }
 }
