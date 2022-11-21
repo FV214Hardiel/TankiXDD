@@ -15,47 +15,77 @@ public class TankSelectionMenu : MonoBehaviour
     public Transform tankPreview;
     public TankHull hullPreview;
     public TankTurret turretPreview;
-    public Texture2D skinPreview;
+    public SkinCard skinPreview;
     public static List<int> abilitiesValues;
 
     GameObject createdPreview;
 
-    // Start is called before the first frame update
-    void Start()
+    
+    void OnEnable()
     {
         abilitiesValues = new();
         foreach (TMP_Dropdown item in abilitiesDropdowns)
         {
             abilitiesValues.Add(item.value);
-        }
-
-        hullPreview = GameInfoSaver.instance.tanksList.unlockedHulls[0];
-        turretPreview = GameInfoSaver.instance.tanksList.unlockedTurrets[0];
+        }       
+        
         skinPreview = GameInfoSaver.instance.skinsList.unlockedSkins[0];
+
+
+        //HULLS
 
         List<string> list = new();
         foreach (TankHull item in GameInfoSaver.instance.tanksList.unlockedHulls)
-        {
-            list.Add(item.hullName);
+        {           
+            list.Add(item.Name);
         }
+        
         hullsDropdown.AddOptions(list);
         list.Clear();
 
+        if (GameInfoSaver.instance.chosenHull != null)
+        {
+            int i = hullsDropdown.options.FindIndex(x => x.text == GameInfoSaver.instance.chosenHull.Name);
+            //print(i);
+            hullsDropdown.SetValueWithoutNotify(i);
+            hullPreview = GameInfoSaver.instance.tanksList.unlockedHulls[i];
+        }        
+        else
+        {
+            hullPreview = GameInfoSaver.instance.tanksList.unlockedHulls[0];
+        }
+
+
+        //GUNS
         
         foreach (TankTurret item in GameInfoSaver.instance.tanksList.unlockedTurrets)
         {
-            list.Add(item.gunName);
+            list.Add(item.Name);
         }
         gunsDropdown.AddOptions(list);
         list.Clear();
 
-        foreach (Texture2D item in GameInfoSaver.instance.skinsList.unlockedSkins)
+        if (GameInfoSaver.instance.chosenTurret != null)
+        {
+            int i = gunsDropdown.options.FindIndex(x => x.text == GameInfoSaver.instance.chosenTurret.Name);
+            print(i);
+            gunsDropdown.SetValueWithoutNotify(i);
+            turretPreview = GameInfoSaver.instance.tanksList.unlockedTurrets[i];
+        }
+        else
+        {
+            turretPreview = GameInfoSaver.instance.tanksList.unlockedTurrets[0];
+        }
+
+        //SKINS
+
+        foreach (SkinCard item in GameInfoSaver.instance.skinsList.unlockedSkins)
         {
             if (item == null)
             {
                 list.Add("No skin");
             }
-            else { list.Add(item.name); }
+            else { list.Add(item.Name); }
             
         }
         skinsDropdown.AddOptions(list);
@@ -103,5 +133,15 @@ public class TankSelectionMenu : MonoBehaviour
         Destroy(createdPreview);
         skinPreview = GameInfoSaver.instance.skinsList.unlockedSkins[index];
         createdPreview = AllHullsTurrets.CreateDecorative(tankPreview, hullPreview, 0, turretPreview, 0, skinPreview);
+    }
+
+    private void OnDisable()
+    {
+        hullsDropdown.ClearOptions();
+        gunsDropdown.ClearOptions();
+        skinsDropdown.ClearOptions();
+
+        Destroy(createdPreview);
+
     }
 }

@@ -24,7 +24,7 @@ public class GunSelectButton : MonoBehaviour
 
     public void ClickBlin()
     {       
-        nameText.text = gunInfo.gunName;
+        nameText.text = gunInfo.Name;
         infoText.text = "Base DMG = " + "\n";
 
         okbutton.chosenTurret = gunInfo;       

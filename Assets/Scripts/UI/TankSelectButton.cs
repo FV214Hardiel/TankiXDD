@@ -35,7 +35,7 @@ public class TankSelectButton : MonoBehaviour
     {
         voiceover.clip = RandomAudioClip(voices);
         voiceover.Play();
-        nameText.text = hullInfo.hullName;
+        nameText.text = hullInfo.Name;
        
         infoText.text = "Base HP = " + hullInfo.baseHP.ToString() + "\n" + hullInfo.hullSpeed.ToString();
         okbutton.chosenHull = hullInfo;
