@@ -8,7 +8,7 @@ public class PiecesDamageReduction : Effect
     public PiecesDamageReduction(float effDur)
     {
 
-        effectID = 3;
+        effectID = "flatDR";
         effectDuration = effDur;
         remainingDuration = effectDuration;
 
@@ -38,7 +38,7 @@ public class PiecesDamageReduction : Effect
 
     public override void InitEffect()
     {
-        affectedObject.receivingDamageEffects += PiecesApplyEffect;
+        affectedObject.PropertyReceivingDamageEffects += PiecesApplyEffect;
         Debug.Log("Pieces started");
     }
 
@@ -58,7 +58,7 @@ public class PiecesDamageReduction : Effect
 
     public override void EndEffect()
     {
-        affectedObject.receivingDamageEffects -= PiecesApplyEffect;
+        affectedObject.PropertyReceivingDamageEffects -= PiecesApplyEffect;
         Debug.Log("Pieces stopped");
     }
 

@@ -36,13 +36,14 @@ using UnityEngine;
 //}
 public abstract class Effect
 {
-
+    public string effectName;
     public enum EffectTypes { Buff, Debuff }
     public EffectTypes effectType;
 
-    public EntityHandler affectedObject;
+    public IEntity affectedObject;
+    public bool isPlayer;
 
-    public ushort effectID;
+    public string effectID;
 
     public float effectPower;
     public float effectDuration;

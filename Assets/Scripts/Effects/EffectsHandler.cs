@@ -68,7 +68,7 @@ public class EffectsHandler : MonoBehaviour
     }
 
     //Returns effect if its already on target or NULL if not
-    public Effect GetEffect(ushort effectID)
+    public Effect GetEffect(string effectID)
     {        
         return activeEffects.Find(x => x.effectID == effectID);
     }

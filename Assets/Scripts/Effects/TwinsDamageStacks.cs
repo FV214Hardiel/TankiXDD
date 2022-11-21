@@ -5,20 +5,7 @@ using UnityEngine;
 public class TwinsDamageStacks : Effect
 {
     
-    //public TwinsDamageStacks(float duration, float power, GameObject obj)
-    //{
-    //    effectDuration = duration;
-    //    effectPower = power;
-    //    remainingDuration = duration;
-
-    //    affectedObject = obj;
-
-    //    effectID = 2;
-
-    //    isEffectStackable = true;
-
-    //    effectStacks = 1;
-    //}
+    
 
     public TwinsDamageStacks(float duration, float power)
     {
@@ -28,7 +15,7 @@ public class TwinsDamageStacks : Effect
 
         //affectedObject = null;
 
-        effectID = 2;
+        effectID = "twinsstacks";
 
         isEffectStackable = true;
 

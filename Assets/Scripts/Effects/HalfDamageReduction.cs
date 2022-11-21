@@ -6,7 +6,7 @@ public class HalfDamageReduction : Effect
 {
     public HalfDamageReduction(float effDur)
     {
-        effectID = 4;
+        effectID = "percentDR";
 
         effectDuration = effDur;
         remainingDuration = effectDuration;
@@ -37,7 +37,7 @@ public class HalfDamageReduction : Effect
 
     public override void InitEffect()
     {
-        affectedObject.receivingDamageEffects += HalfApplyEffect;
+        affectedObject.PropertyReceivingDamageEffects += HalfApplyEffect;
         Debug.Log("HalfReduction started");
     }
 
@@ -48,7 +48,7 @@ public class HalfDamageReduction : Effect
 
     public override void EndEffect()
     {
-        affectedObject.receivingDamageEffects -= HalfApplyEffect;
+        affectedObject.PropertyReceivingDamageEffects -= HalfApplyEffect;
         Debug.Log("HalfReduction stopped");
     }
 }

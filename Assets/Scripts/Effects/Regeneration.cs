@@ -8,16 +8,19 @@ public class Regeneration : Effect
     public float innerBaseCD;
     float innerCD;
     Health heatlh;
+
+    LevelStatisticsManager statsInstance;
     public Regeneration(float duration, float power)
     {
+        effectName = "Regeneration";
+
         effectDuration = duration;
         effectPower = power;
-        remainingDuration = duration;
-        
+        remainingDuration = duration;       
         
 
         innerBaseCD = 0.5f;
-        effectID = 1;
+        effectID = "id_regeneration";
 
         isEffectStackable = true;
         isTimeStackable = false;
@@ -52,14 +55,27 @@ public class Regeneration : Effect
 
     public override void InitEffect()
     {
-        heatlh = affectedObject.health;
-    }
-        
+        //Finding HP script
+        heatlh = affectedObject.HealthScript;
 
-    //
+              
+
+        if (affectedObject == Player.PlayerEntity)
+        {
+            isPlayer = true;
+            statsInstance = LevelStatisticsManager.instance;
+        }
+
+    }
+   
+    
     public void UseEffect()
     {        
-        heatlh.Heal(effectPower * effectStacks, affectedObject);       
+        float heal = heatlh.Heal(effectPower * effectStacks, affectedObject);
+
+        if (isPlayer) statsInstance.AddValue(effectID, heal);
+
+
     }
 
     public override void EndEffect()
