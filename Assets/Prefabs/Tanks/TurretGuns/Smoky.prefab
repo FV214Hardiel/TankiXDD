@@ -322,7 +322,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   source: {fileID: 0}
   weapRange: 50
-  damage: 200
+  damage: 10
   angle: 0
   delayBetweenShots: 1
   shotEffect: {fileID: 8145522921419673881}
@@ -340,12 +340,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   source: {fileID: 0}
-  damage: 5
-  delayBetweenShots: 1.2
-  muzzle: {fileID: 0}
   weapRange: 50
+  damage: 5
   angle: 0
-  prefabOfShot: {fileID: 0}
+  delayBetweenShots: 1.2
+  isTargetLocked: 0
   shotEffect: {fileID: 8145522921419673881}
   hitEffect: {fileID: 3748262256023914457}
 --- !u!82 &4209149796619469078
