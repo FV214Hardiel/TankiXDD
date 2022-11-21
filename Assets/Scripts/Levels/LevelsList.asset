@@ -12,10 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 952bdfa10fb8e1f4d88330a1035b81e5, type: 3}
   m_Name: LevelsList
   m_EditorClassIdentifier: 
-  levelNames:
-  - Level One
-  - Testing Polygon
-  levelIndexes: 0100000002000000
+  allLevels:
+  - Level 1
+  - Level 2
   unlockedLevels:
-  - Level One
-  - Testing Polygon
+  - Level 1
+  - Level 2
