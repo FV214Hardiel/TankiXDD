@@ -22,7 +22,7 @@ public class GameInfoSaver : MonoBehaviour
     [Space]   
     public TankHull chosenHull;
     public TankTurret chosenTurret;
-    public Texture2D chosenSkin;
+    public SkinCard chosenSkin;
     public List<AbilityCard> chosenAbilities;
 
     [Space]
@@ -69,15 +69,27 @@ public class GameInfoSaver : MonoBehaviour
         SaveGame();
     }
 
-    public void SetCurrency(ushort money)
+    public void AddCurrency(ushort money)
     {
         Currency += money;
         CurrencyChanged?.Invoke();
     }
+    public void SubtractCurrency(ushort money)
+    {
+        Currency -= money;
+        CurrencyChanged?.Invoke();
+    }
+    public void SetCurrency(ushort money)
+    {
+        Currency = money;
+        CurrencyChanged?.Invoke();
+    }
+
+
 
     public void Test()
     {
-        SetCurrency(15);
+        AddCurrency(45);
     }
 
     void Load()
