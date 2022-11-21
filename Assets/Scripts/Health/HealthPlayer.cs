@@ -16,6 +16,8 @@ public class HealthPlayer : Health
     Transform damagePopupPrefab;
     Camera mainCamera;
 
+    DamageNumbersPopup popup;
+
 
     public static event Action playerIsDead;
 
@@ -25,7 +27,7 @@ public class HealthPlayer : Health
         mainCamera = Camera.main;
 
         baseHP = GetComponent<EntityHandler>().hullMod.baseHP; // Getting Base Health from tank card
-        GetComponent<EntityHandler>().health = this;
+        GetComponent<IEntity>().HealthScript = this;
        
         maxHP = baseHP;
         HP = maxHP;
@@ -61,7 +63,7 @@ public class HealthPlayer : Health
 
     }
 
-    public override void TakingDMG(float damage, EntityHandler source)
+    public override void TakingDMG(float damage, IEntity source)
     {
         takingHitSound.Play();
 
@@ -77,29 +79,33 @@ public class HealthPlayer : Health
 
     }
 
-    public override void Heal(float amount, EntityHandler source)
+    public override float Heal(float amount, IEntity source)
     {
        
         if (HP >= maxHP) 
         {
-            return;
+            return 0;
         }
 
         HP += amount;
 
-        DamageNumbersPopup.Create(damagePopupPrefab, transform.position + Vector3.up * 2, mainCamera.transform.right, amount, Color.green);
+        //DamageNumbersPopup.Create(damagePopupPrefab, transform.position + Vector3.up * 2, mainCamera.transform.right, amount, Color.green);
 
-        HP = Mathf.Clamp(HP, 0, maxHP);
+        if (HP > maxHP)
+        {
+
+            amount -= (HP - maxHP);
+            print(amount);
+            HP = maxHP;
+        }
+        
         hb.UpdateBar(HP);
 
-        if (HP == 0 && Alive)
-        {
-            Dying(source);
-        }
+        return amount;
 
     }
 
-    public override void OverDamage(float overdmg, EntityHandler source)
+    public override void OverDamage(float overdmg, IEntity source)
     {
         Debug.Log("OverdamagePlayer");
 
@@ -114,7 +120,7 @@ public class HealthPlayer : Health
         }
     }
 
-    public override void Dying(EntityHandler killer)
+    public override void Dying(IEntity killer)
     {
         GetComponent<EntityHandler>().Die();
 

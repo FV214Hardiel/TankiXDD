@@ -5,7 +5,7 @@ using UnityEngine;
 public class ObjectiveHandler : MonoBehaviour
 {
     public int ObjectivesBaseCount;
-    public GameObject winScreen;
+   
     void Start()
     {
         
@@ -34,16 +34,7 @@ public class ObjectiveHandler : MonoBehaviour
        
     }
 
-    void OnObjectivesComplete()
-    {
-        //Debug.Log("pobeda");        
-        Time.timeScale = 1;
-        StartCoroutine(LevelEnding());
-        GameHandler.GameIsOver = true;
-        GameHandler.GameIsPaused = true;
-        winScreen.SetActive(true);
-
-    }
+    
     private IEnumerator LevelEnding()
     {
         yield return new WaitForSeconds(1f);
@@ -58,6 +49,6 @@ public class ObjectiveHandler : MonoBehaviour
 
     public void OnFlagCapture()
     {
-        OnObjectivesComplete();
+        LevelHandler.instance.OnObjectivesComplete();
     }
 }

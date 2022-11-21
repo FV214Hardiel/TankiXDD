@@ -13,20 +13,23 @@ public class HealthEnemy : Health
     //AIShooting shotScript;
     MonoBehaviour[] scrs;
     NavMeshAgent agent;
+
     Slider enemyHealthBar;
+    Transform healthBarTransform;
 
     float takenDamageSum;
 
     Transform sounds;    
 
     Transform damagePopupPrefab;
+    public DamageNumbersPopup popup;
 
-    Camera mainCamera;
+    Transform mainCamera;
 
     public event Action EnemyDestroyed;
     void Start()
     {
-        GetComponent<EntityHandler>().health = this; //Adding this instance to EH
+        GetComponent<IEntity>().HealthScript = this; //Adding this instance to EH
 
         baseHP = GetComponent<EntityHandler>().hullMod.baseHP; // Getting Base Health from tank card
         maxHP = baseHP;
@@ -39,6 +42,8 @@ public class HealthEnemy : Health
         enemyHealthBar.transform.parent.gameObject.SetActive(true);        
         enemyHealthBar.maxValue = maxHP;
         enemyHealthBar.value = HP;
+
+        healthBarTransform = enemyHealthBar.transform;
 
         Hull = gameObject;
         Turret = GetComponentInChildren<Turret>().gameObject;
@@ -53,7 +58,7 @@ public class HealthEnemy : Health
         
 
         damagePopupPrefab = Resources.Load<Transform>("DamageNumbersPopup");
-        mainCamera = Camera.main;
+        mainCamera = Camera.main.transform;
 
         ExplosionPoint = transform.Find("ExplosionPoint");
 
@@ -67,7 +72,7 @@ public class HealthEnemy : Health
 
    
 
-    public override void TakingDMG(float damage, EntityHandler source)
+    public override void TakingDMG(float damage, IEntity source)
     {
         takingHitSound.Play();
 
@@ -76,12 +81,14 @@ public class HealthEnemy : Health
         HP = Mathf.Clamp(HP, 0, maxHP);
         enemyHealthBar.value = HP;
 
-        if (takenDamageSum == 0)
-        {
-            StartCoroutine(AccumulateDMG());
+        //if (takenDamageSum == 0)
+        //{
+        //    StartCoroutine(AccumulateDMG());
 
-        }
-        takenDamageSum += damage;
+        //}
+        //takenDamageSum += damage;
+
+        PopupCreate(damage);
 
         //daed
         if (HP <= 0 && Alive)
@@ -90,41 +97,58 @@ public class HealthEnemy : Health
         }
     }
 
-    //Coroutine for displaying damage
-    //Needed for multiple instances of damage in one frame (shotgun for example)
-    System.Collections.IEnumerator AccumulateDMG()
+    void PopupCreate(float damage)
     {
-        yield return new WaitForEndOfFrame(); //Waiting for end of frame
-
-        DamageNumbersPopup.Create(damagePopupPrefab, transform.position + Vector3.up * 2, mainCamera.transform.right, takenDamageSum, Color.red); 
-        takenDamageSum = 0; //zeroing damage for next frame
-
+        
+        if (popup == null)
+        {
+            popup = DamageNumbersPopup.CreateStatic(damagePopupPrefab, healthBarTransform.position + transform.up + mainCamera.right * -1, damage, Color.red);
+            popup.transform.SetParent(gameObject.transform);
+        }
+        else
+        {
+            popup.ChangeText(damage);
+        }
     }
 
-    public override void Heal(float amount, EntityHandler source)
+    //Coroutine for displaying damage
+    //Needed for multiple instances of damage in one frame (shotgun for example)
+    //System.Collections.IEnumerator AccumulateDMG()
+    //{
+    //    yield return new WaitForEndOfFrame(); //Waiting for end of frame
+
+    //    DamageNumbersPopup.Create(damagePopupPrefab, transform.position + Vector3.up * 2, mainCamera.transform.right, takenDamageSum, Color.red); 
+    //    takenDamageSum = 0; //zeroing damage for next frame
+
+    //}
+
+    public override float Heal(float amount, IEntity source)
     {
         if (HP >= maxHP) //No heal above full HP
         {
-            return;
+            return 0;
         }
 
         HP += amount;
 
-        DamageNumbersPopup.Create(damagePopupPrefab, transform.position + Vector3.up * 2, mainCamera.transform.right, amount, Color.green);
+        //DamageNumbersPopup.Create(damagePopupPrefab, transform.position + Vector3.up * 2, mainCamera.right, amount, Color.green);
 
-        HP = Mathf.Clamp(HP, 0, maxHP);
-        enemyHealthBar.value = HP;
-
-        //daed
-        if (HP == 0 && Alive)
+        if (HP > maxHP)
         {
-            Dying(source);
-        }
+
+            amount -= (maxHP - HP);
+            HP = maxHP;
+        }        
+
+        
+        enemyHealthBar.value = HP;
+        
+        return amount;
 
     }
 
     //Method for excessive shield damage
-    public override void OverDamage(float overdmg, EntityHandler source)
+    public override void OverDamage(float overdmg, IEntity source)
     {
        
         HP -= overdmg;
@@ -132,7 +156,7 @@ public class HealthEnemy : Health
         HP = Mathf.Clamp(HP, 0, maxHP);
         enemyHealthBar.value = HP;
 
-        DamageNumbersPopup.Create(damagePopupPrefab, transform.position + Vector3.up * 2, mainCamera.transform.right, overdmg, Color.red);
+        PopupCreate(overdmg);
 
         if (HP <= 0 && Alive)
         {
@@ -140,7 +164,7 @@ public class HealthEnemy : Health
         }
     }
 
-    public override void Dying(EntityHandler killer)
+    public override void Dying(IEntity killer)
     {
 
         GetComponent<EntityHandler>().Die(); //Some Die method from EH
@@ -188,6 +212,10 @@ public class HealthEnemy : Health
 
 
         //Debug.Log(killer.name + " killed " + gameObject.name);
+        if (killer == Player.PlayerEntity)
+        {
+            print("player killed an enemy");
+        }
         EnemyDestroyed?.Invoke(); //If anyone is interested
 
         Destroy(gameObject, 8); //Destroying corpse after some time

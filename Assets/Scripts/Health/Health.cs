@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public delegate float ReceivingDamageEffects(float x);
+
 public class Health : MonoBehaviour
 {
     public float baseHP;
@@ -25,26 +27,27 @@ public class Health : MonoBehaviour
 
     public bool Alive;
 
-    
+    public ReceivingDamageEffects receivingDamageEffects;
 
-    public virtual void TakingDMG(float damage, EntityHandler source)
+
+    public virtual void TakingDMG(float damage, IEntity source)
     {
 
     }
 
-    public virtual void Heal(float amount, EntityHandler source)
+    public virtual float Heal(float amount, IEntity source)
     {
-
+        return 0;
     }
 
 
 
-    public virtual void Dying(EntityHandler source)
+    public virtual void Dying(IEntity killer)
     {
 
     }
 
-    public virtual void OverDamage(float overdmg, EntityHandler source)
+    public virtual void OverDamage(float overdmg, IEntity source)
     {
 
     }
