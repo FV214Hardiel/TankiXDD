@@ -5,7 +5,7 @@ using UnityEngine;
 public class MissileScript : MonoBehaviour
 {
     public GameObject explosion;
-    EntityHandler source;
+    IEntity source;
     float damage;
     float area;
     Rigidbody rb;
@@ -31,7 +31,7 @@ public class MissileScript : MonoBehaviour
     }
         
 
-    public static void LaunchMissile(GameObject missilePrefab, Vector3 target, float dmg, float aoe, EntityHandler source)
+    public static void LaunchMissile(GameObject missilePrefab, Vector3 target, float dmg, float aoe, IEntity source)
     {
         MissileScript newMissile = Instantiate(missilePrefab, target + Vector3.up * 120, Quaternion.identity).GetComponent<MissileScript>();
         newMissile.damage = dmg;
@@ -42,19 +42,19 @@ public class MissileScript : MonoBehaviour
     }
     void EXPLOSON111()
     {
-        List<EntityHandler> alreadyHit = new();
+        List<IDamagable> alreadyHit = new();
 
-        List<Collider> hitList = new(Physics.OverlapSphere(transform.position, area, source.enemiesMask));
+        List<Collider> hitList = new(Physics.OverlapSphere(transform.position, area, source.EnemiesMasks));
 
         foreach (Collider item in hitList)
         {            
-            EntityHandler eh = item.GetComponent<EntityHandler>();
-            if (eh)
+            
+            if (TryGetComponent(out IDamagable damagable))
             {
-                if (!alreadyHit.Contains(eh))
+                if (!alreadyHit.Contains(damagable))
                 {
-                    eh.DealDamage(damage, source);
-                    alreadyHit.Add(eh);
+                    damagable.DealDamage(damage, source);
+                    alreadyHit.Add(damagable);
                 }
             }
 

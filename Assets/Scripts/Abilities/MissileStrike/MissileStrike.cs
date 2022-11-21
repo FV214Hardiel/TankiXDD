@@ -5,9 +5,7 @@ using UnityEngine.UI;
 
 
 public class MissileStrike : AbilityBase
-{
-    
-
+{    
     enum AbilityState { ready, aiming, cooldown}
     AbilityState state = AbilityState.ready;
 
@@ -37,8 +35,6 @@ public class MissileStrike : AbilityBase
         groundArea.SetActive(false);
 
         pointer = GameObject.Find("Poinet").transform;
-
-
         
     }
 
@@ -92,14 +88,7 @@ public class MissileStrike : AbilityBase
     public float GetCD()
     {
         return remainingCooldown;
-    }
-    public void Launch()
-    {
-       //GameObject newMissile = Instantiate(Missile, target + Vector3.up  * spawnHeight, transform.rotation);
-       //newMissile.transform.LookAt(target, Vector3.up);
-       //newMissile.GetComponent<MissileCollideScript>().MissileStats(abilityDamage, abilityArea, target, Player.PlayerHull);
-
-    }
+    }    
     
     Vector3 Aim(float range)
     {
