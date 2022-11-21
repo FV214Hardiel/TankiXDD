@@ -89,7 +89,7 @@ public class AIFirebird : AIShooting
     // Update is called once per frame
     void Update()
     {
-        if (GameHandler.GameIsPaused || isStunned) //Checking pause
+        if (GameHandler.instance.GameIsPaused || isStunned) //Checking pause
         {
             shotSound.pitch = 0;
             return;

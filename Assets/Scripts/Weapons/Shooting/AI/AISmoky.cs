@@ -66,7 +66,7 @@ public class AISmoky : AIShooting
 
     void Update()
     {
-        if (GameHandler.GameIsPaused || isStunned) return; //Checking pause
+        if (GameHandler.instance.GameIsPaused || isStunned) return; //Checking pause
 
         if (remainingDelay > 0) //Decreasing delay timer  
         {
@@ -109,15 +109,15 @@ public class AISmoky : AIShooting
         RaycastHit hit;
         if (Physics.Raycast(muzzle.position, shotVector, out hit, weapRange))
         {
-            EntityHandler eh = hit.collider.GetComponentInParent<EntityHandler>(false);
-            if (eh != null)
+            IDamagable damagable = hit.collider.GetComponentInParent<IDamagable>();
+            if (damagable != null)
             {
-                if (!eh.isDead) //Checking if target is alive and wasnt already hit by this shot
+                if (!damagable.IsDead)
                 {
-                    eh.DealDamage(damage, source);
-
+                    damagable.DealDamage(damage, source);
                 }
             }
+
             hitEffect.transform.position = hit.point;
             hitEffect.Play();
 

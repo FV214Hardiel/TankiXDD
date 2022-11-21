@@ -76,7 +76,7 @@ public class AIRailgun : AIShooting
 
     void Update()
     {
-        if (GameHandler.GameIsPaused || isStunned) return; //Checking pause
+        if (GameHandler.instance.GameIsPaused || isStunned) return; //Checking pause
 
         if (remainingDelay > 0) //Decreasing delay timer  
         {
@@ -85,12 +85,16 @@ public class AIRailgun : AIShooting
         }
 
         if (isTargetLocked) //Shot
-        {                        
-            StartCoroutine(Shot());
+        {
+            Shot();
         }
     }
 
-    IEnumerator Shot()
+    protected override void Shot()
+    {
+        StartCoroutine(ShotCoroutine());
+    }
+    IEnumerator ShotCoroutine()
     {
         remainingDelay = delayBetweenShots;
         chargeSound.Play();
@@ -105,14 +109,13 @@ public class AIRailgun : AIShooting
 
         if (Physics.Raycast(muzzle.position, muzzle.forward, out hit, weapRange))
         {
-           
-            EntityHandler eh = hit.collider.GetComponentInParent<EntityHandler>(false);
-            if (eh != null)
-            {
 
-                if (!eh.isDead) //Checking if target is alive
+            IDamagable damagable = hit.collider.GetComponentInParent<IDamagable>();
+            if (damagable != null)
+            {
+                if (!damagable.IsDead)
                 {
-                    eh.DealDamage(damage, source);
+                    damagable.DealDamage(damage, source);
                 }
             }
 

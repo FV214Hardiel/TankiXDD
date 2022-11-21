@@ -21,13 +21,13 @@ public class PlayerThunder : PlayerShooting
         remainingDelay = 0;
 
         inputActions = new();
-        if (!GameHandler.GameIsPaused) inputActions.PlayerTankControl.Enable();
+        if (!(GameHandler.instance.GameIsPaused)) inputActions.PlayerTankControl.Enable();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (GameHandler.GameIsPaused) return; //Checking pause
+        if (GameHandler.instance.GameIsPaused) return; //Checking pause
 
         if (remainingDelay > 0) //Decreasing delay timer  
         {
@@ -45,7 +45,7 @@ public class PlayerThunder : PlayerShooting
 
     }
 
-    void Shot()
+    protected override void Shot()
     {
         shotSound.Play();
         ThunderShell.CreateShot(shellPref, muzzle.position, muzzle.forward * projectileSpeed, source, damage, timeOfLife);

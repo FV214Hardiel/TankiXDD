@@ -18,7 +18,7 @@ public class PlayerFirebird : PlayerShooting
         muzzle = transform.Find("muzzle");
 
         inputActions = new();
-        if (!GameHandler.GameIsPaused) inputActions.PlayerTankControl.Enable();
+        if (!GameHandler.instance.GameIsPaused) inputActions.PlayerTankControl.Enable();
 
         timeOfLife = weapRange / projectileSpeed;
 
@@ -44,7 +44,7 @@ public class PlayerFirebird : PlayerShooting
     // Update is called once per frame
     void Update()
     {
-        if (GameHandler.GameIsPaused) //Checking pause
+        if (GameHandler.instance.GameIsPaused) //Checking pause
         {
             shotSound.pitch = 0;
             return;
@@ -63,14 +63,20 @@ public class PlayerFirebird : PlayerShooting
         //Making a shot
         if (inputValue > 0)
         {
-            shotVector = DisperseVector(muzzle.forward, angle) * projectileSpeed;
-
-            FirebirdShot.CreateShot(prefab, muzzle.position, shotVector, source, damage, timeOfLife);
-
-            remainingDelay = delayBetweenShots;
+            Shot();
         }
         
     }
 
+    protected override void Shot()
+    {
+        shotVector = DisperseVector(muzzle.forward, angle) * projectileSpeed;
+
+        FirebirdShot.CreateShot(prefab, muzzle.position, shotVector, source, damage, timeOfLife);
+
+        remainingDelay = delayBetweenShots;
+    }
     
+
+
 }

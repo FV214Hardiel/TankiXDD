@@ -30,7 +30,7 @@ public class AIShooting : Shooting
 
     protected Ray lineOfFire;
     protected RaycastHit hit;
-    protected LayerMask enemyMask;
+    
 
     protected virtual void OnStun()
     {       

@@ -86,7 +86,7 @@ public class AITwins : AIShooting
 
     void Update()
     {
-        if (GameHandler.GameIsPaused || isStunned) return; //Checking pause
+        if (GameHandler.instance.GameIsPaused || isStunned) return; //Checking pause
 
         if (remainingDelay > 0) //Checking and decreasing weapon CD
         {

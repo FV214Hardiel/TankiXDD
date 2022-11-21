@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerShooting : Shooting
 {
-    public EntityHandler source;
+    public IEntity source;
 
     public float weapRange;
     public float damage;

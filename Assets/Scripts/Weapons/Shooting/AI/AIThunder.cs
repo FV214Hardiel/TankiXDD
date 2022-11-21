@@ -66,7 +66,7 @@ public class AIThunder : AIShooting
 
     private void Update()
     {
-        if (GameHandler.GameIsPaused || isStunned) //Checking pause
+        if (GameHandler.instance.GameIsPaused || isStunned) //Checking pause
         {            
             return;
         }
@@ -83,7 +83,7 @@ public class AIThunder : AIShooting
         }
     }
 
-    void Shot()
+    protected override void Shot()
     {
         shotSound.Play();
         ThunderShell.CreateShot(shellPref, muzzle.position, muzzle.forward * projectileSpeed, source, damage, timeOfLife);

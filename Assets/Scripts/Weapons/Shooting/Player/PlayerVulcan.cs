@@ -11,8 +11,8 @@ public class PlayerVulcan : PlayerShooting
     float stackTimer;
     float modifiedDelay;   
 
-    Vector3 shotVector;    
-    
+    Vector3 shotVector;
+
     AudioSource chargeSound;
 
     public GameObject prefabOfShot;
@@ -20,16 +20,18 @@ public class PlayerVulcan : PlayerShooting
 
     void Start()
     {
-        source = GetComponentInParent<EntityHandler>();
+        source = GetComponentInParent<IEntity>();
         muzzle = transform.Find("muzzle");       
 
         inputActions = new();
-        if (!GameHandler.GameIsPaused) inputActions.PlayerTankControl.Enable();
+        if (!GameHandler.instance.GameIsPaused) inputActions.PlayerTankControl.Enable();
 
-        shotSound = GetComponent<AudioSource>();
+        //shotSound = GetComponent<AudioSource>();
         chargeSound = transform.Find("ChargesSound").GetComponent<AudioSource>();
 
-        remainingDelay = 0;        
+        remainingDelay = 0;
+
+        friendlyMask = source.FriendlyMasks;
 
         disperseAngles = new();
         for (int _ = 0; _ < 50; _++)
@@ -49,11 +51,10 @@ public class PlayerVulcan : PlayerShooting
         stackTimer = 0;
         
     }
-
-    // Update is called once per frame
+    
     void Update()
     {
-        if (GameHandler.GameIsPaused) return; //Checking pause
+        if (GameHandler.instance.GameIsPaused) return; //Checking pause
 
         chargeSound.pitch = stacks > 0 ? (0.4f + stacks * 0.03f) : 0;
 
@@ -85,19 +86,28 @@ public class PlayerVulcan : PlayerShooting
 
     void Shot(Vector3 shotVector)
     {        
-        shotSound.Play();
+        
         shotEffect.Play();
         
-        if (Physics.Raycast(muzzle.position, shotVector, out RaycastHit hit, weapRange))
+        if (Physics.Raycast(muzzle.position, shotVector, out RaycastHit hit, weapRange, ~friendlyMask))
         {
-            EntityHandler eh = hit.collider.GetComponentInParent<EntityHandler>(false);
-            if (eh != null)
-            {                
-                if (!eh.isDead) //Checking if target is alive and wasnt already hit by this shot
+            IDamagable damagable = hit.collider.GetComponentInParent<IDamagable>();
+            if (damagable != null)
+            {
+                
+                if (!damagable.IsDead)
                 {
-                    eh.DealDamage(damage, source);                    
+                    
+                    damagable.DealDamage(damage, source);
                 }
             }
+            //if (hit.collider.TryGetComponent(out IDamagable damagable))
+            //{
+            //    if (!damagable.IsDead)
+            //    {
+            //        damagable.DealDamage(damage, source);
+            //    }
+            //}                
 
             WeaponTrail.Create(prefabOfShot, muzzle.position, hit.point); //Shot VFX if hit
         }

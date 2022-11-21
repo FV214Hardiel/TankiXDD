@@ -14,7 +14,7 @@ public class PlayerSmoky : PlayerShooting
         muzzle = transform.Find("muzzle");
 
         inputActions = new();
-        if (!GameHandler.GameIsPaused) inputActions.PlayerTankControl.Enable();
+        if (!GameHandler.instance.GameIsPaused) inputActions.PlayerTankControl.Enable();
 
         shotSound = GetComponent<AudioSource>();
         //chargeSound = transform.Find("ChargesSound").GetComponent<AudioSource>();
@@ -30,7 +30,7 @@ public class PlayerSmoky : PlayerShooting
     // Update is called once per frame
     void Update()
     {
-        if (GameHandler.GameIsPaused) return; //Checking pause
+        if (GameHandler.instance.GameIsPaused) return; //Checking pause
                
         if (remainingDelay > 0) //Decreasing delay timer  
         {
@@ -57,13 +57,12 @@ public class PlayerSmoky : PlayerShooting
         RaycastHit hit;
         if (Physics.Raycast(muzzle.position, shotVector, out hit, weapRange))
         {
-            EntityHandler eh = hit.collider.GetComponentInParent<EntityHandler>(false);
-            if (eh != null)
+            IDamagable damagable = hit.collider.GetComponentInParent<IDamagable>();
+            if (damagable != null)
             {
-                if (!eh.isDead) //Checking if target is alive and wasnt already hit by this shot
+                if (!damagable.IsDead)
                 {
-                    eh.DealDamage(damage, source);
-                    
+                    damagable.DealDamage(damage, source);
                 }
             }
             hitEffect.transform.position = hit.point;
@@ -114,7 +113,7 @@ public class PlayerSmoky : PlayerShooting
 //            remCD -= Time.deltaTime;
 //        }
 
-//        if (!GameHandler.GameIsPaused && Input.GetButtonDown("Fire1") && remCD <= 0)
+//        if (!(GameHandler.instance.GameIsPaused && Input.GetButtonDown("Fire1") && remCD <= 0)
 //        {
 //            remCD = reloadTime;
 //            StartCoroutine(ShotEffect());

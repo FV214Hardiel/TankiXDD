@@ -21,7 +21,7 @@ public class AIVulcan : AIShooting
         source = GetComponentInParent<EntityHandler>();
         muzzle = transform.Find("muzzle");        
 
-        shotSound = GetComponent<AudioSource>();
+        //shotSound = GetComponent<AudioSource>();
         chargeSound = transform.Find("ChargesSound").GetComponent<AudioSource>();
 
         remainingDelay = 0;
@@ -56,7 +56,7 @@ public class AIVulcan : AIShooting
     {
         source.TankStunned -= OnStun;
         source.TankAwaken -= OnUnStun;
-        shotSound.Stop();
+        //shotSound.Stop();
         chargeSound.Stop();
 
     }
@@ -95,7 +95,7 @@ public class AIVulcan : AIShooting
     
     void Update()
     {
-        if (GameHandler.GameIsPaused || isStunned) //Checking pause
+        if (GameHandler.instance.GameIsPaused || isStunned) //Checking pause
         {
             stacks = 0;
             return;
@@ -149,17 +149,17 @@ public class AIVulcan : AIShooting
 
     void Shot(Vector3 shotVector)
     {
-        shotSound.Play();
+        //shotSound.Play();
         shotEffect.Play();
 
         if (Physics.Raycast(muzzle.position, shotVector, out RaycastHit hit, weapRange))
         {
-            EntityHandler eh = hit.collider.GetComponentInParent<EntityHandler>(false);
-            if (eh != null)
+            IDamagable damagable = hit.collider.GetComponentInParent<IDamagable>();
+            if (damagable != null)
             {
-                if (!eh.isDead) //Checking if target is alive and wasnt already hit by this shot
+                if (!damagable.IsDead)
                 {
-                    eh.DealDamage(damage, source);
+                    damagable.DealDamage(damage, source);
                 }
             }
 
