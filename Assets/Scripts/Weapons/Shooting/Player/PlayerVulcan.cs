@@ -101,13 +101,7 @@ public class PlayerVulcan : PlayerShooting
                     damagable.DealDamage(damage, source);
                 }
             }
-            //if (hit.collider.TryGetComponent(out IDamagable damagable))
-            //{
-            //    if (!damagable.IsDead)
-            //    {
-            //        damagable.DealDamage(damage, source);
-            //    }
-            //}                
+                        
 
             WeaponTrail.Create(prefabOfShot, muzzle.position, hit.point); //Shot VFX if hit
         }

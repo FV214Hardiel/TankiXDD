@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a855e5fc56132674fbaf91304076cb45, type: 3}
+  m_Name: Stormbreaker
+  m_EditorClassIdentifier: 
+  turretName: Stormbreaker
+  turretPrice: 200
+  upgradePrice: 20
+  prefabOfTurret: {fileID: 3146413932230863815, guid: 5d90ce735b874a94f881ef0d970ed3e4, type: 3}
+  modifications:
+  - {fileID: 11400000, guid: 77e43ede5effcc24baea5224fb149a2c, type: 2}
+  - {fileID: 11400000, guid: 33acc2630e2106443a3127c40a5e0cda, type: 2}
+  - {fileID: 11400000, guid: 95e10e26cc1bb66459c770c4761ab6ab, type: 2}
+  - {fileID: 11400000, guid: da3e0160ca3289247b53b6284b079889, type: 2}
