@@ -115,7 +115,7 @@ public class AIRailgun : AIShooting
             {
                 if (!damagable.IsDead)
                 {
-                    damagable.DealDamage(damage, source);
+                    damagable.DealDamage(new Damage(damage, source)) ;
                 }
             }
 

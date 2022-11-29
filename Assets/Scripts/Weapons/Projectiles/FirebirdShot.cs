@@ -11,7 +11,7 @@ public class FirebirdShot : MonoBehaviour
     float scaleCurrent;
     float scaleIncrement;
 
-    GameObject alreadyHit;
+    IEntity alreadyHit;
 
     float damage;
     IEntity source;
@@ -43,15 +43,16 @@ public class FirebirdShot : MonoBehaviour
         IDamagable eh = other.gameObject.GetComponentInParent<IDamagable>(false);
         if (eh != null)
         {
+            Damage damageInstance = new(damage, source);
 
-            if (eh.Gameobject == source.Gameobject) //Collision with player (after the shot for example)
+            if (eh.Entity == source) //Collision with player (after the shot for example)
                 return;
 
-            if (eh.Gameobject != alreadyHit && !eh.IsDead) //Checking if target is alive and wasnt already hit by this shot
+            if (eh.Entity != alreadyHit && !eh.IsDead) //Checking if target is alive and wasnt already hit by this shot
             {
-                eh.DealDamage(damage, source);
+                eh.DealDamage(damageInstance);
                 
-                alreadyHit = eh.Gameobject; //Setting hit gameobject as already hit for fixing double damaging one target by a single shot
+                alreadyHit = eh.Entity; //Setting hit gameobject as already hit for fixing double damaging one target by a single shot
                 
             }
             

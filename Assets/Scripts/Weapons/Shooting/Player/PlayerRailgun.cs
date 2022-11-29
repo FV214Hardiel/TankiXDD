@@ -77,7 +77,7 @@ public class PlayerRailgun : PlayerShooting
             {
                 if (!damagable.IsDead)
                 {
-                    damagable.DealDamage(damage, source);
+                    damagable.DealDamage(new Damage(damage, source)) ;
                 }
             }
 

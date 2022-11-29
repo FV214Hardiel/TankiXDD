@@ -37,12 +37,12 @@ public class Shield : MonoBehaviour
 
     }
 
-    public virtual void TakingDMG(float damage, IEntity source)
+    public virtual void TakingDMG(Damage dmgInstance)
     {
 
     }
 
-    public virtual void TakingEMP(float damage, IEntity source)
+    public virtual void TakingEMP(Damage dmgInstance)
     {
 
     }

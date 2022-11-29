@@ -72,11 +72,11 @@ public class HealthEnemy : Health
 
    
 
-    public override void TakingDMG(float damage, IEntity source)
+    public override void TakingDMG(Damage dmgInstance)
     {
         takingHitSound.Play();
 
-        HP -= damage;
+        HP -= dmgInstance.damage;
 
         HP = Mathf.Clamp(HP, 0, maxHP);
         enemyHealthBar.value = HP;
@@ -88,12 +88,12 @@ public class HealthEnemy : Health
         //}
         //takenDamageSum += damage;
 
-        PopupCreate(damage);
+        PopupCreate(dmgInstance.damage);
 
         //daed
         if (HP <= 0 && Alive)
         {
-            Dying(source);
+            Dying(dmgInstance.source);
         }
     }
 
@@ -148,19 +148,19 @@ public class HealthEnemy : Health
     }
 
     //Method for excessive shield damage
-    public override void OverDamage(float overdmg, IEntity source)
+    public override void OverDamage(Damage dmgInstance)
     {
        
-        HP -= overdmg;
+        HP -= dmgInstance.damage;
 
         HP = Mathf.Clamp(HP, 0, maxHP);
         enemyHealthBar.value = HP;
 
-        PopupCreate(overdmg);
+        PopupCreate(dmgInstance.damage);
 
         if (HP <= 0 && Alive)
         {
-            Dying(source);
+            Dying(dmgInstance.source);
         }
     }
 

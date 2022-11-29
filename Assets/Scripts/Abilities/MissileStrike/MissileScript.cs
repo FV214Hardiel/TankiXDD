@@ -53,7 +53,7 @@ public class MissileScript : MonoBehaviour
             {
                 if (!alreadyHit.Contains(damagable))
                 {
-                    damagable.DealDamage(damage, source);
+                    damagable.DealAOE(new Damage(damage, source));
                     alreadyHit.Add(damagable);
                 }
             }

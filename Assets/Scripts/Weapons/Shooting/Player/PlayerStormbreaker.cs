@@ -100,28 +100,29 @@ public class PlayerStormbreaker : PlayerShooting
         Vector3 endOfLine = transform.position + transform.forward * weapRange;
         newList.Sort((x, y) => x.distance.CompareTo(y.distance));
 
-        List<IDamagable> hitList = new();
+        List<IEntity> hitList = new();
 
         foreach (RaycastHit item in newList)
         {
-            
+            IDamagable damagable = item.collider.GetComponent<IDamagable>();
+            //print(item.collider.name);
+            if (damagable != null)
+            {
+                //print(damagable.Gameobject.name);
+                if (!hitList.Contains(damagable.Entity))
+                {
+                    //damagable.DealDamage(new Damage(damage, source)) ;
+                    damagable.DealDamage(new Damage(10, source)) ;
+                    hitList.Add(damagable.Entity);
+                }
+                
+
+            }
+
             if (item.transform.gameObject.layer == stoppingLayers)
             {
                 endOfLine = item.point;
                 break;
-            }
-
-            IDamagable damagable = item.transform.GetComponentInParent<IDamagable>();
-
-            if (damagable != null)
-            {
-                if (!hitList.Contains(damagable))
-                {
-                    damagable.DealDamage(damage, source);
-                    hitList.Add(damagable);
-                }
-                
-
             }
         }
 

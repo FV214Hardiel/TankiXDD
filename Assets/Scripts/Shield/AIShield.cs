@@ -70,7 +70,7 @@ public class AIShield : Shield
 
   
 
-    public override void TakingDMG(float damage, IEntity source)
+    public override void TakingDMG(Damage dmgInstance)
     {
         takingHitSound.Play();
         StopShieldRecharge();
@@ -82,16 +82,16 @@ public class AIShield : Shield
         //}
         //takenDamageSum += Mathf.Clamp(damage, 0, currentSP);
 
-        PopupCreate(damage);
+        PopupCreate(dmgInstance.damage);
 
-        currentSP -= damage;  
+        currentSP -= dmgInstance.damage;  
 
         if (currentSP <= 0)
         {
             shieldBrokenSound.Play();
             DisableShieldShader();
 
-            eh.HealthScript.OverDamage(0 - currentSP, source);
+            eh.HealthScript.OverDamage(new Damage(0 - currentSP, dmgInstance.source));
             //eh.health.popup = popup;
             
             currentSP = 0;
@@ -100,21 +100,21 @@ public class AIShield : Shield
 
     }
 
-    public override void TakingEMP(float damage, IEntity source)
+    public override void TakingEMP(Damage dmgInstance)
     {
         takingEMPSound.Play();
         StopShieldRecharge();
 
-        PopupCreate(damage);
+        PopupCreate(dmgInstance.damage);
 
-        currentSP -= damage;        
+        currentSP -= dmgInstance.damage;
 
         if (currentSP <= 0)
         {
             shieldBrokenSound.Play();
             DisableShieldShader();
 
-            eh.LoseEMPTenacity(0 - currentSP, source);
+            eh.LoseEMPTenacity(new Damage(0 - currentSP, dmgInstance.source));
 
             currentSP = 0;
         }

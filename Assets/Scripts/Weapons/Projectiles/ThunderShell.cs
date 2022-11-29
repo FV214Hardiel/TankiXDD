@@ -52,7 +52,7 @@ public class ThunderShell : MonoBehaviour
         if (alreadyHit) return;
         if (other.GetComponentInParent<EntityHandler>())
         {
-            other.GetComponentInParent<EntityHandler>().DealDamage(30, source);
+            other.GetComponentInParent<EntityHandler>().DealDamage(new Damage(30, source));
             alreadyHit = true;
         }
         Destroy(gameObject);
@@ -67,16 +67,18 @@ public class ThunderShell : MonoBehaviour
         exp.GetComponent<AudioSource>().Play();
 
         //EMP
-        List<IDamagable> alreadyHit = new();
+        List<IEntity> alreadyHit = new();
         List<Collider> hitList = new (Physics.OverlapSphere(transform.position, expRadius, source.EnemiesMasks));
         foreach (Collider item in hitList)
         {            
 
             if (item.TryGetComponent(out IDamagable damagable))
             {
-                damagable.DealEMP(damage, source);
+
+
+                damagable.DealEMP(new Damage(damage, source));
                
-                alreadyHit.Add(damagable);
+                alreadyHit.Add(damagable.Entity);
             }
             
         }
@@ -105,7 +107,7 @@ public class ThunderShell : MonoBehaviour
 
                 if (hit.collider.TryGetComponent(out IDamagable damagable))
                 {
-                    damagable.DealDamage(pelletDamage, source);                   
+                    damagable.DealDamage(new Damage(damage, source));                   
                 }
 
 

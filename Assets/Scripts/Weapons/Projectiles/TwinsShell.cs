@@ -28,7 +28,7 @@ public class TwinsShell : MonoBehaviour
         if (damagable != null)
         {
             
-            if (damagable.Gameobject == source.Gameobject)
+            if (damagable.Entity == source)
             {
                 return;
             }
@@ -36,18 +36,18 @@ public class TwinsShell : MonoBehaviour
             if (damagable != alreadyHit && !damagable.IsDead)
             {
                 
-                Effect twinsEffect = damagable.EffH.GetEffect(debuff.effectID);
+                Effect twinsEffect = damagable.Entity.EffH.GetEffect(debuff.effectID);
                 if (twinsEffect == null)
                 {
-                    damagable.EffH.AddEffect(debuff);
+                    damagable.Entity.EffH.AddEffect(debuff);
                 }
                 else
                 {
                     damage += 3 * twinsEffect.effectStacks;
-                    damagable.EffH.AddEffect(debuff);
+                    damagable.Entity.EffH.AddEffect(debuff);
                 }
 
-                damagable.DealDamage(damage, source);
+                damagable.DealDamage(new Damage(damage, source));
                 alreadyHit = damagable; //Setting hit gameobject as already hit for fixing double damaging one target by a single shot
                 Destroy(gameObject);
             }

@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class HealthBuildong : Health, IDamagable
+public class HealthBuildong : Health
 {
     public GameObject Gameobject { get { return gameObject; } }
     public bool IsDead { get { return !Alive; } set { Alive = !value; } }
@@ -34,35 +34,35 @@ public class HealthBuildong : Health, IDamagable
         Debris = BuildingNeOk.GetComponentsInChildren<Collider>(true);
 
     }
-    public void DealDamage(float damage, IEntity source)
-    {
-        float newDmg = damage; //Applying defence buffs and debuffs
-        if (receivingDamageEffects != null)
-        {
-            foreach (ReceivingDamageEffects item in receivingDamageEffects.GetInvocationList())
-            {
-                newDmg = item.Invoke(newDmg);
-            }
-        }
+    //public void DealDamage(float damage, IEntity source)
+    //{
+    //    float newDmg = damage; //Applying defence buffs and debuffs
+    //    if (receivingDamageEffects != null)
+    //    {
+    //        foreach (ReceivingDamageEffects item in receivingDamageEffects.GetInvocationList())
+    //        {
+    //            newDmg = item.Invoke(newDmg);
+    //        }
+    //    }
 
-        TakingDMG(newDmg, source);
+    //    TakingDMG(newDmg, source);
         
-        if (source == Player.PlayerEntity) //Playing hit sound only for player
-        {
+    //    if (source == Player.PlayerEntity) //Playing hit sound only for player
+    //    {
             
-            UIHitmarkerScript.instance.CreateHitmarker();
+    //        UIHitmarkerScript.instance.CreateHitmarker();
 
-        }
-    }
-    public void DealEMP(float damage, IEntity entity)
-    {
-        TakingDMG(damage/10, entity);
-    }
-    public override void TakingDMG(float damage, IEntity source)
+    //    }
+    //}
+    //public void DealEMP(float damage, IEntity entity)
+    //{
+    //    TakingDMG(damage/10, entity);
+    //}
+    public override void TakingDMG(Damage dmgInstance)
     {
         hitSound.Play();
 
-        HP -= damage;
+        HP -= dmgInstance.damage;
         HP = Mathf.Clamp(HP, 0, maxHP);
         if (HP <= 0 && Alive)
         {

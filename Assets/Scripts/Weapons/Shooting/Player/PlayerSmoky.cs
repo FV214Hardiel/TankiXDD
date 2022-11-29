@@ -57,12 +57,13 @@ public class PlayerSmoky : PlayerShooting
         RaycastHit hit;
         if (Physics.Raycast(muzzle.position, shotVector, out hit, weapRange))
         {
-            IDamagable damagable = hit.collider.GetComponentInParent<IDamagable>();
+            //IDamagable damagable = hit.collider.GetComponentInParent<IDamagable>();
+            IDamagable damagable = hit.collider.GetComponent<IDamagable>();
             if (damagable != null)
             {
                 if (!damagable.IsDead)
                 {
-                    damagable.DealDamage(damage, source);
+                    damagable.DealDamage(new Damage(damage, source));
                 }
             }
             hitEffect.transform.position = hit.point;

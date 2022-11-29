@@ -65,19 +65,19 @@ public class PlayerShield : Shield
         }
     }
 
-    public override void TakingDMG(float damage, IEntity source)
+    public override void TakingDMG(Damage dmgInstance)
     {
         takingHitSound.Play();
         StopShieldRecharge();
         
 
-        currentSP -= damage;
+        currentSP -= dmgInstance.damage;
         if (currentSP <= 0)
         {
             shieldBrokenSound.Play();
             DisableShieldShader();
             
-            eh.HealthScript.OverDamage(0 - currentSP, source);
+            eh.HealthScript.OverDamage(new Damage(0 - currentSP, dmgInstance.source));
 
             currentSP = 0;
         }
@@ -86,18 +86,18 @@ public class PlayerShield : Shield
 
     }
 
-    public override void TakingEMP(float damage, IEntity source)
+    public override void TakingEMP(Damage dmgInstance)
     {
         takingHitSound.Play();
         StopShieldRecharge();
 
-        currentSP -= damage;
+        currentSP -= dmgInstance.damage;
         if (currentSP <= 0)
         {
             shieldBrokenSound.Play();
             DisableShieldShader();
 
-            eh.LoseEMPTenacity(0 - currentSP, source);
+            eh.LoseEMPTenacity(new Damage(0 - currentSP, dmgInstance.source));
 
             currentSP = 0;
         }

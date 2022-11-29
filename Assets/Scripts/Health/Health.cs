@@ -30,7 +30,7 @@ public class Health : MonoBehaviour
     public ReceivingDamageEffects receivingDamageEffects;
 
 
-    public virtual void TakingDMG(float damage, IEntity source)
+    public virtual void TakingDMG(Damage dmgInstance)
     {
 
     }
@@ -47,7 +47,7 @@ public class Health : MonoBehaviour
 
     }
 
-    public virtual void OverDamage(float overdmg, IEntity source)
+    public virtual void OverDamage(Damage dmgInstance)
     {
 
     }
