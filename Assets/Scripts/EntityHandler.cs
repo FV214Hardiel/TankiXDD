@@ -6,11 +6,15 @@ using UnityEngine;
 
 public interface IDamagable
 {
+    IEntity Entity { get; }
+
     GameObject Gameobject { get; }
     bool IsDead { get; set; }
-    void DealDamage(float damage, IEntity entity);
-    void DealEMP(float damage, IEntity entity);
-    EffectsHandler EffH { get;}
+    void DealDamage(Damage dmgInstance);
+    void DealEMP(Damage dmgInstance);
+
+    void DealAOE(Damage dmgInstance);
+    
 
     
 
@@ -34,6 +38,11 @@ public interface IEntity
 
     ReceivingDamageEffects PropertyReceivingDamageEffects { get; set; }
 
+    void DealDamage(Damage dmgInstance);
+    void DealEMP(Damage dmgInstance);
+
+    void DealAOE(Damage dmgInstance);
+
 
 
 
@@ -46,6 +55,8 @@ public class EntityHandler : MonoBehaviour, IDamagable, IEntity
     public Health HealthScript { get { return health; } set { health = value; } }
     public Shield ShieldScript { get { return shield; } set { shield = value; } }
     public GameObject Gameobject { get { return gameObject; } }
+
+    public IEntity Entity { get { return this; } }
 
     public bool IsDead
     {
@@ -79,12 +90,7 @@ public class EntityHandler : MonoBehaviour, IDamagable, IEntity
 
     Health health;
     Shield shield;
-    public EffectsHandler effh;
-
-    
-
-   
-    
+    public EffectsHandler effh;    
 
     public ReceivingDamageEffects PropertyReceivingDamageEffects { get { return health.receivingDamageEffects; } set { health.receivingDamageEffects = value; } }
 
@@ -160,7 +166,7 @@ public class EntityHandler : MonoBehaviour, IDamagable, IEntity
         {
             print("test1");
             
-            DealDamage(307, this);
+            DealDamage(new Damage(307, this));
         }
 
         if (Input.GetKeyUp(KeyCode.L))
@@ -172,7 +178,7 @@ public class EntityHandler : MonoBehaviour, IDamagable, IEntity
 
 
 
-    public void DealDamage(float dmg, IEntity source)
+    public void DealDamage(Damage dmgInstance)
     {
         if (isDead)
         {
@@ -180,34 +186,34 @@ public class EntityHandler : MonoBehaviour, IDamagable, IEntity
         }
         outOfDamage = 0; //On every attempt of dealing dmg timer resets
         
-        float newDmg = dmg; //Applying defence buffs and debuffs
+        Damage newDmgInstance = dmgInstance; //Applying defence buffs and debuffs
         if (health.receivingDamageEffects != null)
         {
             foreach (ReceivingDamageEffects item in health.receivingDamageEffects.GetInvocationList())
             {
-                newDmg = item.Invoke(newDmg);
+                newDmgInstance.damage = item.Invoke(newDmgInstance.damage);
             }
         }
 
 
         if (shield.currentSP > 0)
         {
-            shield.TakingDMG(newDmg, source);
+            shield.TakingDMG(newDmgInstance);
         }
         else
         {
-            health.TakingDMG(newDmg, source);
+            health.TakingDMG(newDmgInstance);
         }
-        if (source == Player.PlayerEntity) //Playing hit sound only for player
+        if (newDmgInstance.source == Player.PlayerEntity) //Playing hit sound only for player
         {
             //hitMarker.Play();
             UIHitmarkerScript.instance.CreateHitmarker();
-            LevelStatisticsManager.instance.AddValue("player_damage", newDmg);
+            LevelStatisticsManager.instance.AddValue("player_damage", newDmgInstance.damage);
 
         }
     }
 
-    public void DealEMP(float dmg, IEntity source)
+    public void DealEMP(Damage dmgInstance)
     {
         if (isDead)
         {
@@ -217,23 +223,27 @@ public class EntityHandler : MonoBehaviour, IDamagable, IEntity
 
         if (shield.currentSP > 0)
         {
-            shield.TakingEMP(dmg, source);
+            shield.TakingEMP(dmgInstance);
         }
         else
         {
-            LoseEMPTenacity(dmg, source);
+            LoseEMPTenacity(dmgInstance);
         }
         
 
-        if (source == Player.PlayerEntity) //Playing hit sound only for player
+        if (dmgInstance.source == Player.PlayerEntity) //Playing hit sound only for player
         {
             hitMarker.Play();
         }
     }
 
-    public void LoseEMPTenacity(float dmg, IEntity source)
+    public void DealAOE(Damage dmgInstance)
     {
-        empTenacity -= dmg;
+
+    }
+    public void LoseEMPTenacity(Damage dmgInstance)
+    {
+        empTenacity -= dmgInstance.damage;
         if (empTenacity < 0 && !isStunned)
         {
             Stun();
