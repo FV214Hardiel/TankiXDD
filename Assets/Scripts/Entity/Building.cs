@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(EffectsHandler))]
-public class Building : MonoBehaviour, IEntity
+public class Building : MonoBehaviour, IEntity, IDamagable
 {
     public Health HealthScript { get { return health; } set { health = value; } }
     public Shield ShieldScript { get { return shield; } set { shield = value; } }
     public GameObject Gameobject { get { return gameObject; } }
-    public bool IsDead {get {return health.Alive; } set { health.Alive = value; } }
+
+    public IEntity Entity { get { return this; } }
+    public bool IsDead {get {return !health.Alive; } set { health.Alive = !value; } }
 
     public EffectsHandler EffH { get { return effh; } set { effh = value; } }
 
@@ -56,5 +58,35 @@ public class Building : MonoBehaviour, IEntity
             }
         }
         enemiesMask = LayerMask.GetMask(oppTeams.ToArray());
+    }
+
+    public void DealDamage(Damage dmgInstance)
+    {
+        Damage newDmgInstance = dmgInstance; //Applying defence buffs and debuffs
+        if (PropertyReceivingDamageEffects != null)
+        {
+            foreach (ReceivingDamageEffects item in PropertyReceivingDamageEffects.GetInvocationList())
+            {
+                newDmgInstance.damage = item.Invoke(newDmgInstance.damage);
+            }
+        }
+
+        health.TakingDMG(newDmgInstance);
+
+        if (dmgInstance.source == Player.PlayerEntity) //Playing hit sound only for player
+        {
+
+            UIHitmarkerScript.instance.CreateHitmarker();
+
+        }
+    }
+    public void DealEMP(Damage dmgInstance)
+    {
+        //TakingDMG(damage / 10, entity);
+    }
+
+    public void DealAOE(Damage dmgInstance)
+    {
+
     }
 }
