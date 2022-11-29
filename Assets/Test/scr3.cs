@@ -6,68 +6,35 @@ using UnityEngine;
 public class scr3 : MonoBehaviour
 #pragma warning restore IDE1006 // Naming Styles
 {
-    [SerializeField]
-    int index;
-    [SerializeField]
-    string textString;
-
-    public List<string> allTests;
-    public List<string> unlockedTests;
-
-    public int[] unlockedIndex;
-    public string[] loadedString;
-
+    
     void Start()
     {
-        //print(PlayerPrefsX.GetStringArray("Popa").Length);
 
+       Material mat = GetComponent<Renderer>().sharedMaterials[1];
+        //print(mat);
 
-        unlockedTests = new();
-        //foreach (int item in unlockedIndex)
-        //{
-        //    unlockedTests.Add(allTests[item]);
-        //}
+        //Invoke("TurnOff", 1);
 
-        
-
-        //index = 1;
-        //textString = "a";
-
-        //int[] arr/* = new int[3] { 0, 3, 5 }*/;
-
-        //PlayerPrefsX.SetIntArray("uSkins", arr);
-
-        //arr = PlayerPrefsX.GetIntArray("uSkins");
-        //Debug.Log(PlayerPrefsX.GetIntArray("uSkins")[2]);
-
-
+        //Invoke("TurnOn", 6);
     }
 
-    
-
-    public void Test()
+    private void Update()
     {
-        unlockedTests.Clear();
-        foreach (string item in loadedString)
-        {
-            unlockedTests.Add(allTests.Find(x => x == item));
-        }
-
+        //print("test");
     }
 
-    public void Save()
+    void TurnOff()
     {
-        PlayerPrefsX.SetStringArray("uTests", unlockedTests.ToArray());
-        print("Save");
+        this.enabled = false;
     }
 
-    public void Load()
+    void TurnOn()
     {
-        loadedString = PlayerPrefsX.GetStringArray("uTests");
-        print("Load");
-        print(loadedString);
-
+        this.enabled = true;
     }
+
+
+
 
 
 
