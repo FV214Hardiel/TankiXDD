@@ -29,7 +29,7 @@ public class LevelStatisticsManager : MonoBehaviour
         {
             dictOfStats.Add(key, value);
         }
-        print(key + ": " + dictOfStats[key]);
+        //print(key + ": " + dictOfStats[key]);
 
     }
 }
