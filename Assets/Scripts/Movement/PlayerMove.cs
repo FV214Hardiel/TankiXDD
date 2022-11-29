@@ -25,8 +25,14 @@ public class PlayerMove : Move
     PlayerInput playerInput;
     PlayerInputActions playerInputActions;
 
+    Material trackShader;
+
+    public float multiplierForShader; 
+
     private void Start()
     {
+        maxSpeed = Speed;
+
         TurnSpeed *= Time.fixedDeltaTime;
 
         rb = GetComponent<Rigidbody>();
@@ -37,10 +43,13 @@ public class PlayerMove : Move
         playerInputActions = new();
         playerInputActions.PlayerTankControl.Enable();
         playerInputActions.PlayerTankControl.Movement.started += AddTorque;
-        playerInputActions.PlayerTankControl.Movement.canceled += ZeroTorque;
-        
+        playerInputActions.PlayerTankControl.Movement.canceled += ZeroTorque;        
 
         StartCoroutine(CustomUpdate(0.2f));
+
+       trackShader = GetComponent<Renderer>().sharedMaterials[1];
+       
+       trackShader.SetFloat("_speed", 0f);
 
     }
     private void Update()
@@ -56,6 +65,9 @@ public class PlayerMove : Move
         PlayerMoveInput = Input.GetAxisRaw("Vertical");        
         EngineSoundInput = Input.GetAxis("Vertical");
         PlayerRotInput = Input.GetAxis("Horizontal");
+
+        trackShader.SetFloat("_speed", -EngineSoundInput* multiplierForShader * maxSpeed - PlayerRotInput * 0.01f * maxSpeed);
+
 
         //Setting audio frequency
         engineAudio.pitch = 0.2f + Mathf.Clamp01(Mathf.Abs(EngineSoundInput) + Mathf.Abs(PlayerRotInput)) * 0.4f;
@@ -113,7 +125,7 @@ public class PlayerMove : Move
 
     void AddTorque(InputAction.CallbackContext callback)
     {
-
+        //trackShader.SetFloat("_speed", maxSpeed*0.034f);
         //print("AddTorque");
         foreach (WheelCollider item in wheels)
         {
@@ -125,6 +137,7 @@ public class PlayerMove : Move
 
     void ZeroTorque(InputAction.CallbackContext callback)
     {
+        //trackShader.SetFloat("_speed", 0);
         //print("ZeroTorque");
         foreach (WheelCollider item in wheels)
         {
