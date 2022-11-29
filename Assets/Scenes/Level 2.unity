@@ -1818,7 +1818,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 2.1459694, y: 1}
+    m_SensorSize: {x: 2.1721132, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -2133,7 +2133,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 2.1459694, y: 1}
+    m_SensorSize: {x: 2.1721132, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -3327,7 +3327,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 2.1459694, y: 1}
+    m_SensorSize: {x: 2.1721132, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -5662,6 +5662,11 @@ MonoBehaviour:
   teams:
   - GreenTeam
   - RedTeam
+  score: 0
+  lives: 0
+  seconds: 0
+  minutes: 0
+  timerText: 
 --- !u!114 &2105637637
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5698,10 +5703,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0911a29203101546b579d982ead99c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  winScreen: {fileID: 0}
   loseScreen: {fileID: 1522627298}
-  pausa: 0
-  geymOver: 0
-  lives: 3
+  GameIsPaused: 0
+  GameIsOver: 0
 --- !u!4 &2105637640
 Transform:
   m_ObjectHideFlags: 0
@@ -5906,7 +5911,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 2.1459694, y: 1}
+    m_SensorSize: {x: 2.1721132, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
