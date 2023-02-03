@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -35,6 +36,7 @@ public class PlayerStormbreaker : PlayerShooting
         inputActions = new();
         if (!GameHandler.instance.GameIsPaused) inputActions.PlayerTankControl.Enable();
 
+        shotDelegate = Shot;
        
         inputActions.PlayerTankControl.Fire.started += FireButtonStarted;
         inputActions.PlayerTankControl.Fire.canceled += FireButtonCanceled;
@@ -84,13 +86,12 @@ public class PlayerStormbreaker : PlayerShooting
 
     }
 
-    void Shot(Vector3 shotVector)
-    {
-               
+    protected override void Shot()
+    {               
         shotSound.Play();
         shotEffect.Play();
 
-        Ray ray = new(muzzle.position, shotVector);
+        Ray ray = new(muzzle.position, muzzle.forward);
 
         RaycastHit[] hit = Physics.RaycastAll(ray, weapRange, affectedLayers);
 
@@ -105,17 +106,13 @@ public class PlayerStormbreaker : PlayerShooting
         foreach (RaycastHit item in newList)
         {
             IDamagable damagable = item.collider.GetComponent<IDamagable>();
-            //print(item.collider.name);
             if (damagable != null)
             {
-                //print(damagable.Gameobject.name);
                 if (!hitList.Contains(damagable.Entity))
                 {
-                    //damagable.DealDamage(new Damage(damage, source)) ;
-                    damagable.DealDamage(new Damage(10, source)) ;
+                    damagable.DealDamage(new Damage(damage, source));
                     hitList.Add(damagable.Entity);
-                }
-                
+                }                
 
             }
 
@@ -127,9 +124,67 @@ public class PlayerStormbreaker : PlayerShooting
         }
 
         WeaponTrail.Create(prefabOfShot, muzzle.position, endOfLine);
-
+        print(damage);
         remainingDelay = delayBetweenShots;
 
+    }
+
+    protected override void OverloadShot()
+    {
+        shotSound.Play();
+        shotEffect.Play();
+
+        Ray ray = new(muzzle.position, muzzle.forward);
+
+        RaycastHit[] hit = Physics.RaycastAll(ray, weapRange, affectedLayers);
+
+        List<RaycastHit> newList = new();
+        newList.AddRange(hit);
+
+        Vector3 endOfLine = transform.position + transform.forward * weapRange;
+        newList.Sort((x, y) => x.distance.CompareTo(y.distance));
+
+        List<IEntity> hitList = new();
+
+        byte mult = 0;
+
+        foreach (RaycastHit item in newList)
+        {
+            IDamagable damagable = item.transform.GetComponent<IDamagable>();
+
+            if (damagable != null)
+                if (!hitList.Contains(damagable.Entity))
+                {
+                   mult++;
+                    hitList.Add(damagable.Entity);
+                }
+        }
+
+        hitList = new();
+        foreach (RaycastHit item in newList)
+        {
+            IDamagable damagable = item.collider.GetComponent<IDamagable>();
+
+            if (damagable != null)
+            {
+                if (!hitList.Contains(damagable.Entity))
+                {
+                    damagable.DealDamage(new Damage(damage*mult, source));
+                    hitList.Add(damagable.Entity);
+                }
+            }            
+
+            if (item.transform.gameObject.layer == stoppingLayers)
+            {
+                endOfLine = item.point;
+                break;
+            }
+        }
+        print(mult);
+        print(damage * mult);
+        WeaponTrail.Create(prefabOfShot, muzzle.position, endOfLine);
+
+        remainingDelay = delayBetweenShots;
     }
 
     private void OnEnable()
@@ -147,7 +202,6 @@ public class PlayerStormbreaker : PlayerShooting
     {
         if (remainingDelay > 0) return;
 
-        //print("charging started");
         
         isCharging = true;
         chargingSound.Play();
@@ -155,14 +209,13 @@ public class PlayerStormbreaker : PlayerShooting
 
     void FireButtonCanceled(InputAction.CallbackContext context)
     {
-       // print("charging canceled");
 
         chargingSound.Stop();
         isCharging = false;
         if (chargeEnergy >= maxCharge)
         {
             chargedSound.Stop();
-            Shot(muzzle.forward);            
+            shotDelegate();            
             
         }
         chargeEnergy = 0;

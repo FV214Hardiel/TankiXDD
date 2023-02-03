@@ -14,7 +14,7 @@ public class AIRailgun : AIShooting
 
     void Start()
     {
-        source = GetComponentInParent<EntityHandler>();
+        source = GetComponentInParent<IEntity>();
         muzzle = transform.Find("muzzle");
 
         ai = gameObject.GetComponentInParent<AIMove>();
@@ -27,8 +27,8 @@ public class AIRailgun : AIShooting
 
         remainingDelay = 0;
 
-        source.TankStunned += OnStun;
-        source.TankAwaken += OnUnStun;
+        source.EntityStunned += OnStun;
+        source.EntityAwaken += OnUnStun;
 
         StartCoroutine(CustomUpdate(0.3f));
     }
@@ -37,8 +37,8 @@ public class AIRailgun : AIShooting
 
     private void OnDisable()
     {
-        source.TankStunned -= OnStun;
-        source.TankAwaken -= OnUnStun;
+        source.EntityStunned -= OnStun;
+        source.EntityAwaken -= OnUnStun;
 
     }
 

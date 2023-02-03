@@ -23,15 +23,15 @@ public class AIThunder : AIShooting
         ai = gameObject.GetComponentInParent<AIMove>();
         enemyMask = ai.enemyLayers;
 
-        source.TankStunned += OnStun;
-        source.TankAwaken += OnUnStun;
+        source.EntityStunned += OnStun;
+        source.EntityAwaken += OnUnStun;
 
         StartCoroutine(CustomUpdate(0.3f));
     }
     private void OnDisable()
     {
-        source.TankStunned -= OnStun;
-        source.TankAwaken -= OnUnStun;
+        source.EntityStunned -= OnStun;
+        source.EntityAwaken -= OnUnStun;
 
     }
 

@@ -20,7 +20,7 @@ public class AITwins : AIShooting
     void Start()
     {
 
-        source = GetComponentInParent<EntityHandler>();
+        source = GetComponentInParent<IEntity>();
         muzzleL = transform.Find("muzzleL");
         muzzleR = transform.Find("muzzleR");
 
@@ -38,8 +38,8 @@ public class AITwins : AIShooting
         debuffPower = 3;
         debuffDuration = 10;
 
-        source.TankStunned += OnStun;
-        source.TankAwaken += OnUnStun;
+        source.EntityStunned += OnStun;
+        source.EntityAwaken += OnUnStun;
 
         StartCoroutine(CustomUpdate(0.3f));
 
@@ -48,8 +48,8 @@ public class AITwins : AIShooting
 
     private void OnDisable()
     {
-        source.TankStunned -= OnStun;
-        source.TankAwaken -= OnUnStun;
+        source.EntityStunned -= OnStun;
+        source.EntityAwaken -= OnUnStun;
 
     }
 

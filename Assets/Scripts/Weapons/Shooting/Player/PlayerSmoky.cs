@@ -6,7 +6,9 @@ public class PlayerSmoky : PlayerShooting
 {           
     public ParticleSystem shotEffect;
     public ParticleSystem hitEffect;
-    
+
+    [SerializeField]
+    Health health;
 
     void Start()
     {
@@ -16,15 +18,24 @@ public class PlayerSmoky : PlayerShooting
         inputActions = new();
         if (!GameHandler.instance.GameIsPaused) inputActions.PlayerTankControl.Enable();
 
+        shotDelegate = Shot;
+
         shotSound = GetComponent<AudioSource>();
         //chargeSound = transform.Find("ChargesSound").GetComponent<AudioSource>();
 
+        health = source.HealthScript;
+
         remainingDelay = 0;
 
-        
+    }
 
-
-
+    public override void EnableOverload()
+    {
+        base.EnableOverload();
+        //if (health!= null)
+        //{
+        //    health = GetComponentInParent<Health>(true);
+        //}
     }
 
     // Update is called once per frame
@@ -43,27 +54,31 @@ public class PlayerSmoky : PlayerShooting
         if (inputValue > 0) //Shot
         {
             //shotVector = DisperseVector(muzzle.forward, angle);
-            Shot(muzzle.forward);
+            shotDelegate();
         }
     }
 
     
 
-    void Shot(Vector3 shotVector)
+    protected override void Shot()
     {
+        base.Shot();
+
         shotSound.Play();
         shotEffect.Play();
 
         RaycastHit hit;
-        if (Physics.Raycast(muzzle.position, shotVector, out hit, weapRange))
+        if (Physics.Raycast(muzzle.position, muzzle.forward, out hit, weapRange))
         {
-            //IDamagable damagable = hit.collider.GetComponentInParent<IDamagable>();
-            IDamagable damagable = hit.collider.GetComponent<IDamagable>();
+            
+            IDamagable damagable = hit.collider.GetComponentInParent<IDamagable>();
             if (damagable != null)
             {
+                //print("Damageble");
                 if (!damagable.IsDead)
                 {
-                    damagable.DealDamage(new Damage(damage, source));
+                    damagable.DealDamage(new Damage(shotDamage, source));
+                   
                 }
             }
             hitEffect.transform.position = hit.point;
@@ -71,10 +86,19 @@ public class PlayerSmoky : PlayerShooting
             
         }
         remainingDelay = delayBetweenShots;
+    }
 
+    protected override void OverloadShot()
+    {
+        base.OverloadShot();
+        Shot();
 
+        health.Heal(damage * 0.5f, source);
+        
     }
 }
+
+
 
     
 

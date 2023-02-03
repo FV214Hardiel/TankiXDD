@@ -4,22 +4,11 @@ using UnityEngine;
 
 public class PlayerShooting : Shooting
 {
-    public IEntity source;
-
-    public float weapRange;
-    public float damage;
-
+   
     public float angle;
     protected List<ushort> disperseAngles;
     protected List<float> disperseLengths;
     protected int index;
-
-    protected Transform muzzle;
-
-    protected AudioSource shotSound;
-
-    public float delayBetweenShots;
-    protected float remainingDelay;
 
     protected PlayerInputActions inputActions;
     protected float inputValue;

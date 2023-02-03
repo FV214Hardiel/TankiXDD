@@ -19,8 +19,8 @@ public class AISmoky : AIShooting
 
         remainingDelay = 0;
 
-        source.TankStunned += OnStun;
-        source.TankAwaken += OnUnStun;
+        source.EntityStunned += OnStun;
+        source.EntityAwaken += OnUnStun;
 
         StartCoroutine(CustomUpdate(0.3f));
 
@@ -28,8 +28,8 @@ public class AISmoky : AIShooting
 
     private void OnDisable()
     {
-        source.TankStunned -= OnStun;
-        source.TankAwaken -= OnUnStun;
+        source.EntityStunned -= OnStun;
+        source.EntityAwaken -= OnUnStun;
 
     }
 

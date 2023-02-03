@@ -8,6 +8,7 @@ public class PlayerVulcan : PlayerShooting
 
     [SerializeField] byte stacks;
     public float stackDuration;
+    float baseStackDur;
     float stackTimer;
     float modifiedDelay;   
 
@@ -30,6 +31,9 @@ public class PlayerVulcan : PlayerShooting
         chargeSound = transform.Find("ChargesSound").GetComponent<AudioSource>();
 
         remainingDelay = 0;
+        baseStackDur = stackDuration;
+
+        shotDelegate = Shot;
 
         friendlyMask = source.FriendlyMasks;
 
@@ -77,31 +81,44 @@ public class PlayerVulcan : PlayerShooting
         if (inputValue > 0) //Shot
         {
             shotVector = DisperseVector(muzzle.forward, angle);
-            Shot(shotVector);
+            shotDelegate();
         }
         
     }
 
-    
+    public override void EnableOverload()
+    {
+        base.EnableOverload();
+        stacks = 17;
+        stackDuration = 10;
+        stackTimer = 10;
 
-    void Shot(Vector3 shotVector)
-    {        
-        
+    }
+
+    public override void DisableOverload()
+    {
+        base.DisableOverload();
+        stackDuration = baseStackDur;
+        stackTimer = baseStackDur;
+    }
+
+
+
+    protected override void Shot()
+    { 
         shotEffect.Play();
         
         if (Physics.Raycast(muzzle.position, shotVector, out RaycastHit hit, weapRange, ~friendlyMask))
         {
             IDamagable damagable = hit.collider.GetComponentInParent<IDamagable>();
             if (damagable != null)
-            {
-                
+            {                
                 if (!damagable.IsDead)
                 {
                     
                     damagable.DealDamage(new Damage(damage, source));
                 }
-            }
-                        
+            }                        
 
             WeaponTrail.Create(prefabOfShot, muzzle.position, hit.point); //Shot VFX if hit
         }
@@ -116,6 +133,37 @@ public class PlayerVulcan : PlayerShooting
 
         stacks += 1;
         stacks = (byte)(Mathf.Clamp(stacks, 0, 17));
+        stackTimer = stackDuration;
+    }
+
+    protected override void OverloadShot()
+    {
+        shotEffect.Play();
+
+        if (Physics.Raycast(muzzle.position, shotVector, out RaycastHit hit, weapRange, ~friendlyMask))
+        {
+            IDamagable damagable = hit.collider.GetComponentInParent<IDamagable>();
+            if (damagable != null)
+            {
+                if (!damagable.IsDead)
+                {
+                    damagable.DealDamage(new Damage(damage, source));
+                }
+            }
+
+            WeaponTrail.Create(prefabOfShot, muzzle.position, hit.point); //Shot VFX if hit
+        }
+        else
+        {
+            WeaponTrail.Create(prefabOfShot, muzzle.position, muzzle.position + shotVector * weapRange); //Shot VFX if no hit
+        }
+
+        //Increasing Attack Speed
+        modifiedDelay = (delayBetweenShots * 1.8f) / (stacks + 1 + 0.8f);
+        remainingDelay = modifiedDelay;
+
+        stacks = 17;
+        
         stackTimer = stackDuration;
     }
 }

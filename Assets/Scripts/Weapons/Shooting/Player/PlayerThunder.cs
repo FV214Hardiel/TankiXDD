@@ -20,6 +20,8 @@ public class PlayerThunder : PlayerShooting
 
         remainingDelay = 0;
 
+        shotDelegate = Shot;
+
         inputActions = new();
         if (!(GameHandler.instance.GameIsPaused)) inputActions.PlayerTankControl.Enable();
     }
@@ -40,7 +42,7 @@ public class PlayerThunder : PlayerShooting
         //Making a shot
         if (inputValue > 0)
         {
-            Shot();
+            shotDelegate();
         }
 
     }
@@ -50,5 +52,11 @@ public class PlayerThunder : PlayerShooting
         shotSound.Play();
         ThunderShell.CreateShot(shellPref, muzzle.position, muzzle.forward * projectileSpeed, source, damage, timeOfLife);
         remainingDelay = delayBetweenShots;
+    }
+
+    protected override void OverloadShot()
+    {
+        print("OVERLOAD");
+        Shot();
     }
 }

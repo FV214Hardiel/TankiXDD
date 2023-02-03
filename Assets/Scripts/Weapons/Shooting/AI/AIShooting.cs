@@ -4,26 +4,19 @@ using UnityEngine;
 
 public class AIShooting : Shooting
 {
-    public EntityHandler source;
+      
 
-    public float weapRange;
-    public float damage;
-
-    public float angle;
+   
     protected Vector3 shotVector;
 
+    public float angle;
     protected List<ushort> disperseAngles;
     protected List<float> disperseLengths;
     protected int index;
 
-    protected Transform muzzle;
+    
 
-    protected AudioSource shotSound;
-
-    public float delayBetweenShots;
-    protected float remainingDelay;
-
-    protected bool isStunned;
+   
 
     protected AIMove ai;
     public bool isTargetLocked;

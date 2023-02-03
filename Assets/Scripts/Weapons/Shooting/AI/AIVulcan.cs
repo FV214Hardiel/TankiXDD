@@ -18,7 +18,7 @@ public class AIVulcan : AIShooting
 
     void Start()
     {
-        source = GetComponentInParent<EntityHandler>();
+        source = GetComponentInParent<IEntity>();
         muzzle = transform.Find("muzzle");        
 
         //shotSound = GetComponent<AudioSource>();
@@ -43,8 +43,8 @@ public class AIVulcan : AIShooting
         stacks = 0;
         stackTimer = 0;
 
-        source.TankStunned += OnStun;
-        source.TankAwaken += OnUnStun;
+        source.EntityStunned += OnStun;
+        source.EntityStunned += OnUnStun;
 
         ai = gameObject.GetComponentInParent<AIMove>();
         enemyMask = ai.enemyLayers;
@@ -54,8 +54,8 @@ public class AIVulcan : AIShooting
 
     private void OnDisable()
     {
-        source.TankStunned -= OnStun;
-        source.TankAwaken -= OnUnStun;
+        source.EntityStunned -= OnStun;
+        source.EntityStunned -= OnUnStun;
         //shotSound.Stop();
         chargeSound.Stop();
 
