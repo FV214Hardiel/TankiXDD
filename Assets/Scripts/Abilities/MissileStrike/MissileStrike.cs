@@ -16,7 +16,7 @@ public class MissileStrike : AbilityBase
     Vector3 target;
     public Transform pointer;
 
-    EntityHandler source;
+    IEntity source;
 
     public float spawnHeight = 100;
     
@@ -26,7 +26,7 @@ public class MissileStrike : AbilityBase
 
         SetIcon();
 
-        source = GetComponent<EntityHandler>();
+        source = GetComponent<IEntity>();
         //Debug.Log(abilitySlot);
         Missile = Resources.Load<GameObject>("Weaponry/Abilities/missile");        
 
