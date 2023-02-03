@@ -81,19 +81,20 @@ public class HealthPlayer : Health
 
     public override float Heal(float amount, IEntity source)
     {
-       
+        print("HEAL START");
         if (HP >= maxHP) 
         {
+            print("FULL HP");
             return 0;
         }
 
         HP += amount;
-
+        print("HEALED " + amount);
         //DamageNumbersPopup.Create(damagePopupPrefab, transform.position + Vector3.up * 2, mainCamera.transform.right, amount, Color.green);
 
         if (HP > maxHP)
         {
-
+            print("HEAL aa");
             amount -= (HP - maxHP);
             print(amount);
             HP = maxHP;
@@ -107,7 +108,7 @@ public class HealthPlayer : Health
 
     public override void OverDamage(Damage dmgInstance)
     {
-        Debug.Log("OverdamagePlayer");
+        //Debug.Log("OverdamagePlayer");
 
         HP -= dmgInstance.damage;
         

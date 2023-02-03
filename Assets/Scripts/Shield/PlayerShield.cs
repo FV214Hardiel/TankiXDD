@@ -102,6 +102,16 @@ public class PlayerShield : Shield
             currentSP = 0;
         }
 
+        
+
+    }
+
+    public override void ChangeCurrentSP(float change)
+    {
+        base.ChangeCurrentSP(change);
+
+
+
         sb.UpdateBar(currentSP);
 
     }

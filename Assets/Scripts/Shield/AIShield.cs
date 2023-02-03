@@ -11,7 +11,7 @@ public class AIShield : Shield
     Slider enemyHealthBar;
     Transform healthBarTransform;
 
-    DamageNumbersPopup popup;
+    CumulativeDamageNumbers popup;
 
     float takenDamageSum;
     void OnEnable()
@@ -22,6 +22,8 @@ public class AIShield : Shield
         //Health bar
         enemyHealthBar = GetComponentInChildren<Slider>(true); 
         healthBarTransform = enemyHealthBar.transform;
+
+        popup = GetComponentInChildren<CumulativeDamageNumbers>(true);
 
         materialPropertyBlock = new();
 
@@ -47,7 +49,7 @@ public class AIShield : Shield
         meshRenderers = eh.meshRenderers;
         EnableShieldShader();
     }
-    // Update is called once per frame
+    
     void Update()
     {
        
@@ -75,14 +77,14 @@ public class AIShield : Shield
         takingHitSound.Play();
         StopShieldRecharge();
 
-        //if (takenDamageSum == 0)
-        //{
-        //    StartCoroutine(AccumulateDMG());
+        if (takenDamageSum == 0)
+        {
+            StartCoroutine(AccumulateDMG());
 
-        //}
-        //takenDamageSum += Mathf.Clamp(damage, 0, currentSP);
+        }
+        takenDamageSum += Mathf.Clamp(dmgInstance.damage, 0, currentSP);
 
-        PopupCreate(dmgInstance.damage);
+        PopupAdd(dmgInstance.damage);
 
         currentSP -= dmgInstance.damage;  
 
@@ -105,7 +107,12 @@ public class AIShield : Shield
         takingEMPSound.Play();
         StopShieldRecharge();
 
-        PopupCreate(dmgInstance.damage);
+        if (takenDamageSum == 0)
+        {
+            StartCoroutine(AccumulateDMG());
+        }
+
+        PopupAdd(dmgInstance.damage);
 
         currentSP -= dmgInstance.damage;
 
@@ -123,31 +130,47 @@ public class AIShield : Shield
 
     }
 
-    void PopupCreate(float damage)
+    public override void ChangeCurrentSP(float change)
     {
-        
-        damage = Mathf.Clamp(damage, 0, currentSP);
-        if (popup == null)
-        {
-            //print("null");
-            popup = DamageNumbersPopup.CreateStatic(damagePopupPrefab, healthBarTransform.position + transform.up + mainCamera.right, damage, Color.blue);
-            popup.transform.SetParent(gameObject.transform);
-        }
-        else
-        {
-            //print("NOT null");
-            popup.ChangeText(damage);
-        }
+        base.ChangeCurrentSP(change);
+
     }
 
-    //IEnumerator AccumulateDMG()
+    //void PopupCreate(float damage)
     //{
-    //    yield return new WaitForEndOfFrame();
 
-    //    DamageNumbersPopup.Create(damagePopupPrefab, transform.position + Vector3.up * 2, mainCamera.transform.right, takenDamageSum, Color.blue);
-    //    takenDamageSum = 0;
-
+    //    damage = Mathf.Clamp(damage, 0, currentSP);
+    //    if (popup == null)
+    //    {
+    //        //print("null");
+    //        popup = DamageNumbersPopup.CreateStatic(damagePopupPrefab, healthBarTransform.position + transform.up + mainCamera.right, damage, Color.blue);
+    //        popup.transform.SetParent(gameObject.transform);
+    //    }
+    //    else
+    //    {
+    //        //print("NOT null");
+    //        popup.ChangeText(damage);
+    //    }
     //}
+
+    void PopupAdd(float damage)
+    {
+
+        if (popup.gameObject.activeSelf == false)
+        {
+            popup.gameObject.SetActive(true);
+        }
+        popup.AddValue(damage);
+    }
+
+    IEnumerator AccumulateDMG()
+    {
+        yield return new WaitForEndOfFrame();
+
+        DamageNumbersPopup.CreateStatic(damagePopupPrefab, healthBarTransform, takenDamageSum, Color.blue);
+        takenDamageSum = 0;
+
+    }
 
     public override void StartShieldRecharge()
     {

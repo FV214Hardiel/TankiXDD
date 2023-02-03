@@ -22,7 +22,7 @@ public class HealthEnemy : Health
     Transform sounds;    
 
     Transform damagePopupPrefab;
-    public DamageNumbersPopup popup;
+    public CumulativeDamageNumbers popup;
 
     Transform mainCamera;
 
@@ -55,10 +55,11 @@ public class HealthEnemy : Health
 
         agent = GetComponent<NavMeshAgent>();
 
-        
+        popup = GetComponentInChildren<CumulativeDamageNumbers>(true);
 
         damagePopupPrefab = Resources.Load<Transform>("DamageNumbersPopup");
         mainCamera = Camera.main.transform;
+        
 
         ExplosionPoint = transform.Find("ExplosionPoint");
 
@@ -81,14 +82,14 @@ public class HealthEnemy : Health
         HP = Mathf.Clamp(HP, 0, maxHP);
         enemyHealthBar.value = HP;
 
-        //if (takenDamageSum == 0)
-        //{
-        //    StartCoroutine(AccumulateDMG());
+        if (takenDamageSum == 0)
+        {
+            StartCoroutine(AccumulateDMG());
 
-        //}
-        //takenDamageSum += damage;
+        }
+        takenDamageSum += dmgInstance.damage;
 
-        PopupCreate(dmgInstance.damage);
+        PopupAdd(dmgInstance.damage);
 
         //daed
         if (HP <= 0 && Alive)
@@ -97,30 +98,43 @@ public class HealthEnemy : Health
         }
     }
 
-    void PopupCreate(float damage)
-    {
+    //void PopupCreate(float damage)
+    //{
         
-        if (popup == null)
+    //    if (popup == null)
+    //    {
+    //        popup = DamageNumbersPopup.CreateStatic(damagePopupPrefab, healthBarTransform.position + transform.up + mainCamera.right * -1, damage, Color.red);
+    //        popup.transform.SetParent(gameObject.transform);
+    //    }
+    //    else
+    //    {
+    //        popup.ChangeText(damage);
+    //    }
+    //}
+
+    void PopupAdd(float damage)
+    {
+
+        if (popup.gameObject.activeSelf == false)
         {
-            popup = DamageNumbersPopup.CreateStatic(damagePopupPrefab, healthBarTransform.position + transform.up + mainCamera.right * -1, damage, Color.red);
-            popup.transform.SetParent(gameObject.transform);
+            popup.gameObject.SetActive(true);
         }
         else
         {
-            popup.ChangeText(damage);
+            popup.AddValue(damage);
         }
     }
 
     //Coroutine for displaying damage
-    //Needed for multiple instances of damage in one frame (shotgun for example)
-    //System.Collections.IEnumerator AccumulateDMG()
-    //{
-    //    yield return new WaitForEndOfFrame(); //Waiting for end of frame
+    //Needed for multiple instances of damage in one frame (shotguean for example)
+    System.Collections.IEnumerator AccumulateDMG()
+    {
+        yield return new WaitForEndOfFrame(); //Waiting for end of frame
 
-    //    DamageNumbersPopup.Create(damagePopupPrefab, transform.position + Vector3.up * 2, mainCamera.transform.right, takenDamageSum, Color.red); 
-    //    takenDamageSum = 0; //zeroing damage for next frame
+        DamageNumbersPopup.CreateStatic(damagePopupPrefab, healthBarTransform, takenDamageSum, Color.red);
+        takenDamageSum = 0; //zeroing damage for next frame
 
-    //}
+    }
 
     public override float Heal(float amount, IEntity source)
     {
@@ -156,7 +170,7 @@ public class HealthEnemy : Health
         HP = Mathf.Clamp(HP, 0, maxHP);
         enemyHealthBar.value = HP;
 
-        PopupCreate(dmgInstance.damage);
+        PopupAdd(dmgInstance.damage);
 
         if (HP <= 0 && Alive)
         {
@@ -214,7 +228,7 @@ public class HealthEnemy : Health
         //Debug.Log(killer.name + " killed " + gameObject.name);
         if (killer == Player.PlayerEntity)
         {
-            print("player killed an enemy");
+            //print("player killed an enemy");
         }
         EnemyDestroyed?.Invoke(); //If anyone is interested
 
