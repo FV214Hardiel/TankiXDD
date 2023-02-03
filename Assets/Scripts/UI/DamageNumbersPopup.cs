@@ -10,30 +10,35 @@ public class DamageNumbersPopup : MonoBehaviour
     public float value;
 
     float timer;
+    float speed;
 
     Transform mainCamera;
-    public static void Create(Transform damagePopupPrefab, Vector3 position, Vector3 right, float numbers, Color colour)
+
+    //public static void Create(Transform damagePopupPrefab, Vector3 position, Vector3 right, float numbers, Color colour)
+    //{
+        
+    //    Transform DamageNumbersObject = Instantiate(damagePopupPrefab, position + right * disperse/5, Camera.main.transform.rotation);
+    //    TextMeshPro textMesh = DamageNumbersObject.GetComponent<TextMeshPro>();
+    //    textMesh.text = Mathf.Floor(numbers).ToString();
+    //    textMesh.renderer.material.SetColor("_OutlineColor", colour);
+    //    print("test");
+    //    Destroy(DamageNumbersObject.gameObject, 2);
+    //}
+
+    public static DamageNumbersPopup CreateStatic(Transform damagePopupPrefab, Transform hpBar, float numbers, Color colour)
     {
         int disperse = Random.Range(0, 21);
         disperse -= 10;
-        Transform DamageNumbersObject = Instantiate(damagePopupPrefab, position + right * disperse/5, Camera.main.transform.rotation);
-        TextMeshPro textMesh = DamageNumbersObject.GetComponent<TextMeshPro>();
-        textMesh.text = Mathf.Floor(numbers).ToString();
-        textMesh.renderer.material.SetColor("_OutlineColor", colour);
-        Destroy(DamageNumbersObject.gameObject, 2);
-    }
 
-    public static DamageNumbersPopup CreateStatic(Transform damagePopupPrefab, Vector3 position, float numbers, Color colour)
-    {
-        Transform DamageNumbersObject = Instantiate(damagePopupPrefab, position, Camera.main.transform.rotation);
+        Transform DamageNumbersObject = Instantiate(damagePopupPrefab, hpBar.position + hpBar.right * disperse / 5, Camera.main.transform.rotation);
 
         DamageNumbersPopup popup = DamageNumbersObject.GetComponent<DamageNumbersPopup>();
 
         popup.textMesh = DamageNumbersObject.GetComponent<TextMeshPro>();
-        popup.value = numbers;
-        
 
-        popup.timer = 2;
+        popup.textMesh.text = Mathf.Floor(numbers).ToString();
+
+        popup.timer = 1.5f;
         
         popup.textMesh.renderer.material.SetColor("_OutlineColor", colour);        
 
@@ -41,9 +46,9 @@ public class DamageNumbersPopup : MonoBehaviour
     }
     void Start()
     {        
-        mainCamera = Camera.main.transform; 
+        mainCamera = Camera.main.transform;        
         
-        textMesh.text = Mathf.Floor(value).ToString();
+        speed = 11;
     }
 
     
@@ -54,14 +59,12 @@ public class DamageNumbersPopup : MonoBehaviour
         if (timer < 0)
         {
             Destroy(gameObject);
-        }        
+        }
+
+        transform.position += Time.deltaTime * Vector3.up * speed;
+        speed -= Time.deltaTime * 7;
 
     }
 
-    public void ChangeText(float numbers)
-    {
-        value += numbers;
-        textMesh.text = Mathf.Floor(value).ToString();
-        timer = 2;
-    }
+   
 }
