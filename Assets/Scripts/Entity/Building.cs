@@ -17,6 +17,7 @@ public class Building : MonoBehaviour, IEntity, IDamagable
     public LayerMask EnemiesMasks { get { return enemiesMask; } set { enemiesMask = value; } }
     public LayerMask FriendlyMasks { get { return friendsMask; } set { friendsMask = value; } }
 
+    [SerializeField]
     Health health;
     Shield shield;
 
@@ -27,7 +28,10 @@ public class Building : MonoBehaviour, IEntity, IDamagable
 
     public string team;
 
-    
+    public event System.Action EntityStunned;
+    public event System.Action EntityAwaken;
+
+
 
     public ReceivingDamageEffects PropertyReceivingDamageEffects { get { return health.receivingDamageEffects; } set { health.receivingDamageEffects = value; } }
 
@@ -41,6 +45,8 @@ public class Building : MonoBehaviour, IEntity, IDamagable
         {
             item.gameObject.layer = LayerMask.NameToLayer(team);
         }
+
+        health = GetComponent<Health>();
     }
    
 
