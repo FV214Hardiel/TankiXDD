@@ -39,12 +39,31 @@ public class Shield : MonoBehaviour
 
     public virtual void TakingDMG(Damage dmgInstance)
     {
+        takingHitSound.Play();
+        StopShieldRecharge();
+
 
     }
 
     public virtual void TakingEMP(Damage dmgInstance)
     {
 
+    }
+
+    public virtual void ChangeCurrentSP(float change)
+    {
+        if (change < 0 && currentSP == 0)
+        {
+            return;
+        }
+        currentSP += change;
+        if (currentSP <= 0)
+        {
+            shieldBrokenSound.Play();
+            DisableShieldShader();
+
+            currentSP= 0;
+        }
     }
 
     public virtual void EnableShieldShader() { }
