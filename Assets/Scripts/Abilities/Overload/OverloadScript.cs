@@ -54,6 +54,7 @@ public class OverloadScript : AbilityBase
 
     void UseAbility()
     {
+        print("test overload");
         source.effh.AddEffect(new Overload(abilityDuration));
     }
 }
