@@ -67,8 +67,8 @@ public class AIMove : Move
 
         StartCoroutine(CustomUpdate(1));
 
-        eh.TankStunned += OnStun;
-        eh.TankAwaken += OnUnStun;
+        eh.EntityStunned += OnStun;
+        eh.EntityAwaken += OnUnStun;
 
     }
 
@@ -94,8 +94,8 @@ public class AIMove : Move
         StopAllCoroutines();
         
 
-        eh.TankStunned -= OnStun;
-        eh.TankAwaken -= OnUnStun;
+        eh.EntityStunned -= OnStun;
+        eh.EntityAwaken -= OnUnStun;
     }
 
 

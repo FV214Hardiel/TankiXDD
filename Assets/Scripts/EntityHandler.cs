@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -42,6 +43,9 @@ public interface IEntity
     void DealEMP(Damage dmgInstance);
 
     void DealAOE(Damage dmgInstance);
+
+    event Action EntityStunned;
+    event Action EntityAwaken; 
 
 
 
@@ -113,8 +117,9 @@ public class EntityHandler : MonoBehaviour, IDamagable, IEntity
 
     public List<MeshRenderer> meshRenderers;
 
-    public event System.Action TankStunned;
-    public event System.Action TankAwaken;
+
+    public event System.Action EntityStunned;
+    public event System.Action EntityAwaken;
 
     AudioSource stunSound;
     AudioSource unstunSound;
@@ -256,7 +261,7 @@ public class EntityHandler : MonoBehaviour, IDamagable, IEntity
         isStunned = true;
         stunSound.Play();
 
-        TankStunned?.Invoke();
+        EntityStunned?.Invoke();
 
         foreach (MeshRenderer item in meshRenderers) //Changing shader
         {
@@ -268,7 +273,7 @@ public class EntityHandler : MonoBehaviour, IDamagable, IEntity
 
     void UnStun()
     {
-        TankAwaken?.Invoke();
+        EntityAwaken?.Invoke();
 
         isStunned = false;
         unstunSound.Play();
