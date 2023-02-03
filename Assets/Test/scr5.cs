@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,15 +11,45 @@ public class scr5 : MonoBehaviour
     //RaycastHit hit;
     public LayerMask layers;
 
+    Func<float, float> testFunc;
+
+    float s = 5;
+
     void OnEnable()
     {
         ray = new(transform.position, transform.forward);
 
         
         layers |= (1 << LayerMask.NameToLayer("RedTeam"));
+
         
-        
-        
+        //testFunc += Meth2;
+        testFunc += Meth1;
+
+
+    }
+
+    float Meth1(float x)
+    {
+        return x * 2;
+    }
+
+    float Meth2(float x)
+    {
+        return x + 10;
+    }
+
+    private void Start()
+    {
+        print(s);
+        if (testFunc != null)
+        {
+            foreach (Func<float, float> item in testFunc.GetInvocationList())
+            {
+                s = item.Invoke(s);
+            }
+        }
+        print(s);
     }
 
     private void Update()
