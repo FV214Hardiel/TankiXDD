@@ -24,6 +24,8 @@ public class AbilityBase : MonoBehaviour
     public RectTransform abilityDisplay;
     public RectTransform outline;
 
+
+
     //
     protected float remainingCooldown;
     
