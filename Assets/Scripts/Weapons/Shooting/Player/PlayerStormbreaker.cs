@@ -124,7 +124,7 @@ public class PlayerStormbreaker : PlayerShooting
         }
 
         WeaponTrail.Create(prefabOfShot, muzzle.position, endOfLine);
-        print(damage);
+        //print(damage);
         remainingDelay = delayBetweenShots;
 
     }
