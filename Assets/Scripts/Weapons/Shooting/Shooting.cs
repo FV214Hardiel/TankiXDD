@@ -23,6 +23,7 @@ public class Shooting : MonoBehaviour
 
     protected bool isStunned;
 
+    [SerializeField]
     protected LayerMask enemyMask;
     protected LayerMask friendlyMask;
 
