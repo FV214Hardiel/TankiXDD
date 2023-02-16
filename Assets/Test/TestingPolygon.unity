@@ -7545,8 +7545,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1066573514}
-  m_LocalRotation: {x: 0.16126032, y: 0.48104292, z: -0.09052038, w: 0.85697085}
-  m_LocalPosition: {x: -15.514081, y: 13.876026, z: -0.13031666}
+  m_LocalRotation: {x: -0.08002799, y: 0.7454749, z: -0.09102349, w: -0.6554217}
+  m_LocalPosition: {x: 10.13453, y: 2.89221, z: -9.032585}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8222,6 +8222,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: eb4424d4-f38a-4647-abde-f2c42037b994
     m_ActionName: Look/Zoom[/Mouse/scroll]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 3761ea57-f936-450a-9686-90dccf53a8d5
+    m_ActionName: WeaponChanger/OpenClose[/Keyboard/n]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Test
@@ -9255,7 +9259,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!54 &1790308812
 Rigidbody:
   m_ObjectHideFlags: 0
