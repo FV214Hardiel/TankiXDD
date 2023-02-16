@@ -6,6 +6,7 @@ public class LevelHandler : MonoBehaviour
 {
     public static LevelHandler instance;
     public List<string> teams; //List of teams on the level
+    public LayerMask groundlayers; //Layer mask of objects like walls, ground, deadbodies or buildings 
 
     public float score;
 
