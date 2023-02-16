@@ -9,14 +9,10 @@ public class PlayerMove : Move
     float PlayerRotInput;
     float PlayerMoveInput;
     
-    Rigidbody rb;
-
-    AudioSource engineAudio;
-
-    [SerializeField] float Speed;
-    [SerializeField] float TurnSpeed;
-    public float maxSpeed;
+    
     float EngineSoundInput;
+
+    
 
     public WheelCollider[] wheels;
 
@@ -32,6 +28,8 @@ public class PlayerMove : Move
     private void Start()
     {
         maxSpeed = Speed;
+
+        msMultipliers = new List<float> { 1f };
 
         TurnSpeed *= Time.fixedDeltaTime;
 
@@ -103,6 +101,18 @@ public class PlayerMove : Move
 
     }
 
+    
+
+    public override void RecalculateSpeed()
+    {
+        print("recalc");
+        Speed = maxSpeed;
+        foreach (float item in msMultipliers)
+        {
+            Speed *= item;
+        }
+    }
+
     void FixedUpdate()
     {
         if (!isOnGround) return;
@@ -122,6 +132,8 @@ public class PlayerMove : Move
     {
         Speed *= multiplier;
     }
+
+
 
     void AddTorque(InputAction.CallbackContext callback)
     {
