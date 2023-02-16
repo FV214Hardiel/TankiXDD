@@ -37,7 +37,7 @@ public class PlayerShield : Shield
 
     private void Start()
     {
-        meshRenderers = eh.meshRenderers;
+        //meshRenderers = eh.meshRenderers;
         EnableShieldShader();
     }
     // Update is called once per frame
@@ -137,7 +137,7 @@ public class PlayerShield : Shield
         //materialPropertyBlock.SetFloat("_isShieldUp", 1.0f);
         //meshRenderer.SetPropertyBlock(materialPropertyBlock);
         materialPropertyBlock.SetFloat("_isShieldUp", 1.0f);
-        foreach (MeshRenderer item in meshRenderers)
+        foreach (MeshRenderer item in eh.meshRenderers)
         {
             
             item.SetPropertyBlock(materialPropertyBlock);
@@ -149,7 +149,7 @@ public class PlayerShield : Shield
         //materialPropertyBlock.SetFloat("_isShieldUp", 0.0f);
         //meshRenderer.SetPropertyBlock(materialPropertyBlock);
         materialPropertyBlock.SetFloat("_isShieldUp", 0.0f);
-        foreach (MeshRenderer item in meshRenderers)
+        foreach (MeshRenderer item in eh.meshRenderers)
         {
 
             item.SetPropertyBlock(materialPropertyBlock);

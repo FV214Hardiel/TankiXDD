@@ -46,7 +46,7 @@ public class AIShield : Shield
 
     private void Start()
     {
-        meshRenderers = eh.meshRenderers;
+        //meshRenderers = eh.meshRenderers;
         EnableShieldShader();
     }
     
@@ -84,7 +84,7 @@ public class AIShield : Shield
         }
         takenDamageSum += Mathf.Clamp(dmgInstance.damage, 0, currentSP);
 
-        PopupAdd(dmgInstance.damage);
+        PopupAdd(takenDamageSum);
 
         currentSP -= dmgInstance.damage;  
 
@@ -188,7 +188,7 @@ public class AIShield : Shield
         //materialPropertyBlock.SetFloat("_isShieldUp", 1.0f);
         //meshRenderer.SetPropertyBlock(materialPropertyBlock);
         materialPropertyBlock.SetFloat("_isShieldUp", 1.0f);
-        foreach (MeshRenderer item in meshRenderers)
+        foreach (MeshRenderer item in eh.meshRenderers)
         {
 
             item.SetPropertyBlock(materialPropertyBlock);
@@ -200,7 +200,7 @@ public class AIShield : Shield
         //materialPropertyBlock.SetFloat("_isShieldUp", 0.0f);
         //meshRenderer.SetPropertyBlock(materialPropertyBlock);
         materialPropertyBlock.SetFloat("_isShieldUp", 0.0f);
-        foreach (MeshRenderer item in meshRenderers)
+        foreach (MeshRenderer item in eh.meshRenderers)
         {
 
             item.SetPropertyBlock(materialPropertyBlock);

@@ -23,7 +23,7 @@ public class Shield : MonoBehaviour
     protected AudioSource shieldRechargingSound;
 
     protected List<MaterialPropertyBlock> materialPropertyBlocks;
-    protected List<MeshRenderer> meshRenderers;
+   // protected List<MeshRenderer> meshRenderers;
     protected MaterialPropertyBlock materialPropertyBlock;
 
     public virtual void StartShieldRecharge()
