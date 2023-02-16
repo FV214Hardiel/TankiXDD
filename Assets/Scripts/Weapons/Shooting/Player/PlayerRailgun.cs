@@ -17,6 +17,8 @@ public class PlayerRailgun : PlayerShooting
         source = GetComponentInParent<EntityHandler>();
         muzzle = transform.Find("muzzle");
 
+        shotDelegate = Shot;
+
         inputActions = new();
         if (!GameHandler.instance.GameIsPaused) inputActions.PlayerTankControl.Enable();
 
@@ -24,6 +26,8 @@ public class PlayerRailgun : PlayerShooting
         chargeSound = transform.Find("ChargeSound").GetComponent<AudioSource>();
 
         chargeLight = transform.Find("muzzleFlash").GetComponent<ParticleSystem>();
+
+        enemyMask = source.EnemiesMasks + LevelHandler.instance.groundlayers;
 
         remainingDelay = 0;
     }
@@ -45,7 +49,7 @@ public class PlayerRailgun : PlayerShooting
 
         if (inputValue > 0) //Shot
         {                       
-            StartCoroutine(ShotCoroutine());
+            shotDelegate();
         }
     }
 
@@ -66,15 +70,14 @@ public class PlayerRailgun : PlayerShooting
         shotSound.Play();
 
         
-        if (Physics.Raycast(muzzle.position, muzzle.forward, out RaycastHit hit, weapRange))
+        if (Physics.Raycast(muzzle.position, muzzle.forward, out RaycastHit hit, weapRange, enemyMask))
         {
-            Debug.Log(hit.collider);
-
-
+            //Debug.Log(hit.collider);
 
             IDamagable damagable = hit.collider.GetComponentInParent<IDamagable>();
             if (damagable != null)
             {
+                //print(damagable);
                 if (!damagable.IsDead)
                 {
                     damagable.DealDamage(new Damage(damage, source)) ;
