@@ -11,15 +11,9 @@ public class AbilitiesDropdownScript : MonoBehaviour
     public List<int> oldValues;
     void Start()
     {
-        ////oldValues = new();
-        //////allDDs[0].onValueChanged += Test();
-        ////foreach (TMP_Dropdown item in allDDs)
-        ////{
-        ////    oldValues.Add(item.value);
-        ////}
+        
     }
-
-    // Update is called once per frame
+        
     void Update()
     {
         
