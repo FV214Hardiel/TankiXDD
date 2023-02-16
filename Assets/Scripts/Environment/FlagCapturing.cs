@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class FlagCapturing : MonoBehaviour
+public class FlagCapturing : MonoBehaviour, ISpecialZone
 {
     [SerializeField] float capturingProgress;
     bool capturing;
@@ -67,6 +67,26 @@ public class FlagCapturing : MonoBehaviour
 
     }
 
+    public void TriggerEntered(IEntity other)
+    {
+        if (other.isPlayer) 
+        {
+            progressBarCanvas.SetActive(true);
+            capturingSound.enabled = true;
+            capturing = true;
+        }
+    }
+
+    public void TriggerExited(IEntity other)
+    {
+        if (other.isPlayer)
+        {
+            progressBarCanvas.SetActive(false);
+            capturingSound.enabled = false;
+            capturing = false;
+            if (resetIfPlayerOutOfRange) { capturingProgress = 0; }
+        }
+    }
     
 
     private void OnTriggerStay(Collider other)
