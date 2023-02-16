@@ -91,9 +91,31 @@ public class PlayerSmoky : PlayerShooting
     protected override void OverloadShot()
     {
         base.OverloadShot();
-        Shot();
 
-        health.Heal(damage * 0.5f, source);
+        shotSound.Play();
+        shotEffect.Play();
+
+        RaycastHit hit;
+        if (Physics.Raycast(muzzle.position, muzzle.forward, out hit, weapRange))
+        {
+
+            IDamagable damagable = hit.collider.GetComponentInParent<IDamagable>();
+            if (damagable != null)
+            {
+                //print("Damageble");
+                if (!damagable.IsDead)
+                {
+                    damagable.DealDamage(new Damage(shotDamage, source));
+                    health.Heal(damage * 0.5f, source);
+
+                }
+            }
+            hitEffect.transform.position = hit.point;
+            hitEffect.Play();
+
+        }
+        remainingDelay = delayBetweenShots;
+        
         
     }
 }
