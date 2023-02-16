@@ -20,7 +20,8 @@ public class PlayerRailgun : PlayerShooting
         shotDelegate = Shot;
 
         inputActions = new();
-        if (!GameHandler.instance.GameIsPaused) inputActions.PlayerTankControl.Enable();
+       // if (!GameHandler.instance.GameIsPaused) 
+            inputActions.PlayerTankControl.Enable();
 
         shotSound = GetComponent<AudioSource>();
         chargeSound = transform.Find("ChargeSound").GetComponent<AudioSource>();

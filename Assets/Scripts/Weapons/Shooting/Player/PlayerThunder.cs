@@ -23,7 +23,8 @@ public class PlayerThunder : PlayerShooting
         shotDelegate = Shot;
 
         inputActions = new();
-        if (!(GameHandler.instance.GameIsPaused)) inputActions.PlayerTankControl.Enable();
+        
+            inputActions.PlayerTankControl.Enable();
     }
 
     // Update is called once per frame

@@ -18,7 +18,8 @@ public class PlayerFirebird : PlayerShooting
         muzzle = transform.Find("muzzle");
 
         inputActions = new();
-        if (!GameHandler.instance.GameIsPaused) inputActions.PlayerTankControl.Enable();
+        //if (!GameHandler.instance.GameIsPaused) 
+            inputActions.PlayerTankControl.Enable();
 
         timeOfLife = weapRange / projectileSpeed;
 

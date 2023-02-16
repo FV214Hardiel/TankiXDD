@@ -21,6 +21,8 @@ public class PlayerTwins : PlayerShooting
 
     void Start()
     {
+
+        print("start");
         //Base setup for shooting
         source = GetComponentInParent<EntityHandler>();
 
@@ -34,7 +36,8 @@ public class PlayerTwins : PlayerShooting
         shotDelegate = Shot;
 
         inputActions = new();
-        if (!GameHandler.instance.GameIsPaused) inputActions.PlayerTankControl.Enable();
+       // if (!GameHandler.instance.GameIsPaused) 
+            inputActions.PlayerTankControl.Enable();
 
         //Specific setup
         debuffPower = 3;
@@ -50,6 +53,7 @@ public class PlayerTwins : PlayerShooting
 
     void Update()
     {
+        //print("update start");
         if (GameHandler.instance.GameIsPaused) return; //Checking pause
 
         if (remainingDelay > 0) //Decreasing delay timer  
@@ -60,9 +64,15 @@ public class PlayerTwins : PlayerShooting
 
         inputValue = inputActions.PlayerTankControl.Fire.ReadValue<float>();
 
+        //print(inputValue);
+       // print(inputActions);
+       // print(inputActions.PlayerTankControl);
+
+        //print("read value");
         //Making a shot
         if (inputValue > 0) 
         {
+            
             shotDelegate();           
 
         }
@@ -71,6 +81,8 @@ public class PlayerTwins : PlayerShooting
 
     protected override void Shot()
     {
+
+        print("shot");
         remainingDelay = delayBetweenShots;
 
         if (shotFromRight) //Checking for barrel
@@ -92,7 +104,7 @@ public class PlayerTwins : PlayerShooting
 
     protected override void OverloadShot()
     {
-        
+        print("overshot");
         remainingDelay = delayBetweenShots;
 
         TwinsShell.CreateShot(shellPref, muzzleR.position, muzzleR.forward * projectileSpeed, source, damage, new TwinsDamageStacks(debuffPower, debuffDuration), timeOfLife);

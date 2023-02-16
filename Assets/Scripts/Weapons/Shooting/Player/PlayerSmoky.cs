@@ -16,7 +16,8 @@ public class PlayerSmoky : PlayerShooting
         muzzle = transform.Find("muzzle");
 
         inputActions = new();
-        if (!GameHandler.instance.GameIsPaused) inputActions.PlayerTankControl.Enable();
+       // if (!GameHandler.instance.GameIsPaused) 
+            inputActions.PlayerTankControl.Enable();
 
         shotDelegate = Shot;
 

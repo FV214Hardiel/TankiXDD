@@ -34,7 +34,8 @@ public class PlayerStormbreaker : PlayerShooting
         chargeLight = transform.Find("ChargeLight").GetComponent<Light>();
 
         inputActions = new();
-        if (!GameHandler.instance.GameIsPaused) inputActions.PlayerTankControl.Enable();
+        //if (!GameHandler.instance.GameIsPaused) 
+            inputActions.PlayerTankControl.Enable();
 
         shotDelegate = Shot;
        
