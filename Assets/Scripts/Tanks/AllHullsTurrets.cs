@@ -105,6 +105,12 @@ public class AllHullsTurrets : ScriptableObject
         tunk.name = "PlayerHull";
         tunk.transform.SetPositionAndRotation(spawnPosition, spawnRotation);
 
+        DestroyImmediate(tunk.GetComponent<AIMove>());
+        DestroyImmediate(tunk.GetComponent<HealthEnemy>());
+        DestroyImmediate(tunk.GetComponent<NavMeshAgent>());
+        DestroyImmediate(tunk.transform.Find("enemyHealthBar").gameObject);
+        
+
         //Adding EH
         EntityHandler eh = tunk.AddComponent<EntityHandler>();
         eh.hullCard = chosenHull;
@@ -112,7 +118,6 @@ public class AllHullsTurrets : ScriptableObject
         
 
         //Enabling Shield and Health
-        //tunk.GetComponent<Shield>().enabled = true;
         tunk.AddComponent<PlayerShield>();
         tunk.GetComponent<HealthPlayer>().enabled = true;
 
@@ -121,13 +126,9 @@ public class AllHullsTurrets : ScriptableObject
 
         //Enabling Abilities        
         tunk.AddComponent<AbilityHandler>();
+        
 
-        tunk.GetComponent<Rigidbody>().interpolation = RigidbodyInterpolation.Interpolate;
-
-        Destroy(tunk.GetComponent<AIMove>());
-        Destroy(tunk.GetComponent<HealthEnemy>());
-        Destroy(tunk.GetComponent<NavMeshAgent>());
-        Destroy(tunk.transform.Find("enemyHealthBar").gameObject);
+        tunk.GetComponent<Rigidbody>().interpolation = RigidbodyInterpolation.Interpolate;       
 
         Player.instance.ChangePlayerHull(tunk);
 
@@ -135,10 +136,13 @@ public class AllHullsTurrets : ScriptableObject
         GameObject turret = Instantiate(chosenTurret.prefabOfTurret);
         GameObject gun = turret.GetComponentInChildren<Gun>().gameObject;
 
+        Destroy(gun.GetComponentInChildren<AIShooting>());
+
         turret.transform.SetParent(tunk.transform); //Making created hull parent to turret             
         turret.transform.SetPositionAndRotation(tunk.transform.Find("mount").position, tunk.transform.rotation); //Mounting turret to hull
 
         //Handling the Handler, putting turret meshes to mesh list 
+        eh.meshRenderers.Clear();
         eh.meshRenderers.Add(turret.GetComponent<MeshRenderer>());
         eh.meshRenderers.Add(gun.GetComponent<MeshRenderer>());
 
@@ -148,7 +152,7 @@ public class AllHullsTurrets : ScriptableObject
 
         gun.AddComponent<GunTarget>();
         gun.GetComponentInChildren<PlayerShooting>().enabled = true;
-        Destroy(gun.GetComponentInChildren<AIShooting>());
+        
 
 
         //Putting stats card in EH
@@ -157,7 +161,7 @@ public class AllHullsTurrets : ScriptableObject
 
         eh.team = LevelHandler.instance.teams[team];
 
-        eh.PlayerTankSetup();
+        eh.PlayerTankSetup(true);
 
         //Making record to Player class about changed turret
         Player.instance.ChangePlayerTurret(turret);
@@ -171,6 +175,11 @@ public class AllHullsTurrets : ScriptableObject
         GameObject tunk = Instantiate(chosenHull.prefabOfHull); //instantiate корпус
 
         tunk.transform.SetPositionAndRotation(spawnPosition, spawnRotation);
+
+        //Destroying Player scripts
+        DestroyImmediate(tunk.GetComponent<PlayerMove>());
+        DestroyImmediate(tunk.GetComponent<HealthPlayer>());
+        DestroyImmediate(tunk.GetComponent<AbilityHandler>());
 
         //Adding EH
         EntityHandler eh = tunk.AddComponent<EntityHandler>();
@@ -187,14 +196,17 @@ public class AllHullsTurrets : ScriptableObject
         tunk.GetComponent<AIMove>().enabled = true;
         tunk.GetComponent<NavMeshAgent>().enabled = true;
 
-        //Destroying Player scripts
-        Destroy(tunk.GetComponent<PlayerMove>());
-        Destroy(tunk.GetComponent<HealthPlayer>());
-        Destroy(tunk.GetComponent<AbilityHandler>());
+      
 
         //Creating two GOs from prefabs
         GameObject turret = Instantiate(chosenTurret.prefabOfTurret);
         GameObject gun = turret.GetComponentInChildren<Gun>().gameObject;
+
+        //Enabling AI scripts and deleting Player scripts
+        DestroyImmediate(turret.GetComponentInChildren<Rotation>());
+        DestroyImmediate(gun.GetComponentInChildren<GunTarget>());
+        DestroyImmediate(gun.GetComponentInChildren<PlayerShooting>());
+        gun.GetComponentInChildren<AIShooting>().enabled = true;
 
         turret.transform.SetParent(tunk.transform); //Making created hull parent to turret       
         turret.transform.SetPositionAndRotation(tunk.transform.Find("mount").position, tunk.transform.rotation); //Mounting turret to hull
@@ -203,14 +215,6 @@ public class AllHullsTurrets : ScriptableObject
         //Handling the Handler, putting turret meshes to mesh list        
         eh.meshRenderers.Add(turret.GetComponent<MeshRenderer>());
         eh.meshRenderers.Add(gun.GetComponent<MeshRenderer>());
-
-
-        //Enabling AI scripts and deleting Player scripts
-        Destroy(turret.GetComponentInChildren<Rotation>());
-        Destroy(gun.GetComponentInChildren<GunTarget>());
-        Destroy(gun.GetComponentInChildren<PlayerShooting>());
-        gun.GetComponentInChildren<AIShooting>().enabled = true;
-
 
         //Putting stats card in EH
         eh.turretCard = chosenTurret;
@@ -257,4 +261,43 @@ public class AllHullsTurrets : ScriptableObject
 
     }
 
+    public static GameObject ChangePlayerTurret(Transform parentHull, TankTurret chosenTurret, byte turretTier)
+    {
+        Quaternion oldRot = Player.PlayerTurret.transform.rotation;
+        Destroy(Player.PlayerTurret);
+
+        GameObject turret = Instantiate(chosenTurret.prefabOfTurret);
+        GameObject gun = turret.GetComponentInChildren<Gun>().gameObject;
+
+        turret.transform.SetParent(parentHull); //Making created hull parent to turret             
+        turret.transform.SetPositionAndRotation(parentHull.Find("mount").position, oldRot); //Mounting turret to hull
+
+        EntityHandler eh = parentHull.gameObject.GetComponent<EntityHandler>();
+
+        //Handling the Handler, putting turret meshes to mesh list 
+        eh.meshRenderers.Clear();
+
+        eh.meshRenderers.Add(turret.GetComponent<MeshRenderer>());
+        eh.meshRenderers.Add(gun.GetComponent<MeshRenderer>());
+
+
+        //Enabling Player scripts and deleting AI scripts
+        turret.GetComponentInChildren<Rotation>().enabled = true;
+
+        gun.AddComponent<GunTarget>();
+        gun.GetComponentInChildren<PlayerShooting>().enabled = true;
+        DestroyImmediate(gun.GetComponentInChildren<AIShooting>());
+
+
+        //Putting stats card in EH
+        eh.turretCard = chosenTurret;
+        eh.turretMod = chosenTurret.modifications[turretTier];
+
+        eh.PlayerTankSetup(false);
+
+        Player.instance.ChangePlayerTurret(turret);
+
+        return turret;
+
+    }
 }
