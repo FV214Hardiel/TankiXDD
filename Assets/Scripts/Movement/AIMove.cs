@@ -1,47 +1,44 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class AIMove : Move
 {
-
     
     public Vector3 patrolPoint;
 
     EntityHandler eh;
 
     NavMeshAgent agent;
-    //Ray lineOfSight;
     RaycastHit hit;
 
     
 
     public float areaOfVision;
     public float attackRange;
-    //public bool isTargetLocked;
     
     Transform target;
     Transform newTarget;
 
     float maxBlindChaseDuration;
     float chaseTimer;       
-
-    AudioSource engineAudio;
+    
     public enum AIEnum { Patrol, Chase, Attack}
     public AIEnum AIState;
 
     Transform turret;
 
     Vector3 relPos;
-    Quaternion InnerRotQ;
-
-    [SerializeField] float maxSpeed;
+    Quaternion InnerRotQ;   
 
     public LayerMask enemyLayers;
     public LayerMask ignoringLayers;
 
     bool isStunned;
+
+    Transform muzzle;
 
 
 
@@ -55,15 +52,19 @@ public class AIMove : Move
         maxBlindChaseDuration = 5;
         maxSpeed = 8;
 
+        Speed = maxSpeed;
+
         agent = GetComponent<NavMeshAgent>();
-        agent.speed = maxSpeed;
+        agent.speed = Speed;
 
         engineAudio = GetComponent<AudioSource>();
 
         turret = GetComponentInChildren<Turret>().gameObject.transform;
+        muzzle = turret.Find("muzzle");
 
         AIState = AIEnum.Patrol;
         agent.SetDestination(patrolPoint);
+
 
         StartCoroutine(CustomUpdate(1));
 
@@ -124,12 +125,13 @@ public class AIMove : Move
     {
         while (true)
         {
+           // print(AIState);
             if (isStunned)
             {
                 yield return new WaitForSeconds(timeDelta);
                 continue;
             }
-                //Debug.Log(AIState);
+               
                 chaseTimer -= timeDelta; //decreasing chase timer
             switch (AIState)
             {
@@ -160,7 +162,8 @@ public class AIMove : Move
 
 
     Transform SearchForEnemies()
-    {        
+    {
+       // print("Searching");
         //Searching all colliders in range
         Collider[] colliders = Physics.OverlapSphere(transform.position, areaOfVision / 2, enemyLayers);
 
@@ -174,9 +177,11 @@ public class AIMove : Move
                 if (Vector3.Distance(transform.position, item.transform.position) < distance) //If distance with new item is less than earlier
                 {                           
                     distance = Vector3.Distance(transform.position, item.transform.position); //New least distance                           
-                    newTarget = item.transform; //New target                        
+                    newTarget = item.transform; //New target
+                    
                 }
             }
+            
         }
         else
         {
@@ -185,11 +190,12 @@ public class AIMove : Move
             {
                 if (Physics.Linecast(transform.position, item.transform.position, out RaycastHit hit, ~ignoringLayers)) //Checking direct vision
                 {
-                    if (hit.collider.gameObject == item.gameObject) //If only intersection is with target
+                    if (hit.transform == item.transform) //If only intersection is with target
                     {
                         if (Vector3.Distance(transform.position, item.transform.position) < distance) //If distance with new item is less than earlier
                         {
                             distance = Vector3.Distance(transform.position, item.transform.position); //New least distance
+                           
                             newTarget = item.transform; //New target
                         }
 
@@ -197,11 +203,8 @@ public class AIMove : Move
                 }
             }
         }
-        
-        
-         
 
-        //Debug.Log(newTarget);
+        if (newTarget != null) newTarget = newTarget.GetComponentInParent<IEntity>().Gameobject.transform;
         return newTarget;
     }
 
@@ -287,6 +290,7 @@ public class AIMove : Move
                     AIState = AIEnum.Attack;
                     agent.speed = maxSpeed / 3;
                     engineAudio.pitch = 0.6f;
+                    agent.SetDestination(target.position);
                     //isTargetLocked = true;
                 }
             }
@@ -334,11 +338,12 @@ public class AIMove : Move
             return;
         }
         //if target isnt visible OR out of range then chase
-        Physics.Linecast(transform.position, target.position, out hit, ~enemyLayers);
-        //print(hit.collider);
+        Physics.Linecast(transform.position, target.position, out hit, ~ignoringLayers);   
+       
         
-        if (hit.collider != null || Vector3.Distance(transform.position, target.position) > (attackRange + 3))
+        if (hit.transform != target || Vector3.Distance(transform.position, target.position) > (attackRange + 3))
         {
+            
             newTarget = SearchForEnemies(); //if a new enemy is found then switch on the new target
             if (newTarget != null)
             {
