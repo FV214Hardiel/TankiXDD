@@ -20,6 +20,7 @@ public class CameraFollow : MonoBehaviour
         {
             Pointer.position = hit.point;
             
+            
         }
         else
         {
