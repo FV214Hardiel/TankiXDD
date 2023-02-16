@@ -35,7 +35,7 @@ public class AITwins : AIShooting
         shotFromRight = true;
 
 
-        debuffPower = 3;
+        debuffPower = 1;
         debuffDuration = 10;
 
         source.EntityStunned += OnStun;
@@ -95,7 +95,8 @@ public class AITwins : AIShooting
         }        
 
         if (isTargetLocked) //Shot
-        {            
+        {     
+            //print(debuffDuration);
             if (shotFromRight)
             {
                 TwinsShell.CreateShot(shellPrefab, muzzleR.position, muzzleR.forward * projectileSpeed, source, damage, new TwinsDamageStacks(debuffPower, debuffDuration), timeOfLife);
