@@ -54,6 +54,7 @@ public class AISmoky : AIShooting
             {
                 lineOfFire = new Ray(muzzle.position, muzzle.forward);
                 isTargetLocked = Physics.Raycast(lineOfFire, out hit, weapRange, enemyMask);
+               // print(hit.collider);
             }
             else
             {
