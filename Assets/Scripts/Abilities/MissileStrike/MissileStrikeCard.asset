@@ -22,3 +22,4 @@ MonoBehaviour:
   damage: 260
   range: 50
   radius: 5
+  prefab: {fileID: 115386, guid: 1d37014fd411c524db3696bba6ff1d21, type: 3}

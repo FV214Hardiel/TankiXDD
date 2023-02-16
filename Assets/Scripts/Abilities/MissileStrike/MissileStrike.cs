@@ -18,6 +18,8 @@ public class MissileStrike : AbilityBase
 
     IEntity source;
 
+    [SerializeField] LayerMask layerMask = 3264;
+
     public float spawnHeight = 100;
     
     void Start()
@@ -28,7 +30,8 @@ public class MissileStrike : AbilityBase
 
         source = GetComponent<IEntity>();
         //Debug.Log(abilitySlot);
-        Missile = Resources.Load<GameObject>("Weaponry/Abilities/missile");        
+       // Missile = Resources.Load<GameObject>("Weaponry/Abilities/missile");
+        Missile = abilityPrefab;
 
         groundArea = Instantiate(Resources.Load<GameObject>("Weaponry/Abilities/AbilityAreaVisual"), transform);
         groundArea.transform.localScale *= abilityArea;
@@ -55,6 +58,7 @@ public class MissileStrike : AbilityBase
                 }
                 break;
             case AbilityState.aiming:
+                //print(layerMask.value);
                 target = Aim(abilityRange);
                 groundArea.transform.position = target;
                 if (Input.GetButtonDown(abilityKey))
@@ -95,8 +99,8 @@ public class MissileStrike : AbilityBase
         Vector3 direction = pointer.transform.position - transform.position;
         Ray aimRay = new(transform.position, direction);
        
-        if (Physics.Raycast(aimRay, out RaycastHit hit2, maxDistance: range))
-            {
+        if (Physics.Raycast(aimRay, out RaycastHit hit2, range, layerMask))
+        {
             return hit2.point;
         }
         else
