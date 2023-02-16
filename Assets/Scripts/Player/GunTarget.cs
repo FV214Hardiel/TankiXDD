@@ -19,6 +19,8 @@ public class GunTarget : MonoBehaviour
     int enemyLayer;
     List<int> enemyLayers;
 
+    LayerMask collidingLayersUI;
+
 
     private void Start()
     {        
@@ -34,6 +36,8 @@ public class GunTarget : MonoBehaviour
 
         //enemyLayer = LayerMask.NameToLayer("RedTeam"); //Hardcoded enemy layer
 
+        collidingLayersUI = GetComponentInParent<EntityHandler>().EnemiesMasks + LevelHandler.instance.groundlayers;
+
         enemyLayers = new();
         for (int i = 0; i < LevelHandler.instance.teams.Count; i++)
         {
@@ -47,7 +51,7 @@ public class GunTarget : MonoBehaviour
     }
     void FixedUpdate()
     {
-        if (Physics.Raycast(transform.position, transform.transform.forward, out hit)) 
+        if (Physics.Raycast(transform.position, transform.transform.forward, out hit, 300f, collidingLayersUI)) 
         {
             groundTarget.position = playerCamera.WorldToScreenPoint(hit.point); //If hit something then targeter is put there
 
