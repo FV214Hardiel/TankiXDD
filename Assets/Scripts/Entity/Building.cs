@@ -11,6 +11,9 @@ public class Building : MonoBehaviour, IEntity, IDamagable
 
     public IEntity Entity { get { return this; } }
     public bool IsDead {get {return !health.Alive; } set { health.Alive = !value; } }
+    public bool IsStatusAffectable { get { return effh.isStatusAffectable; } }
+
+   // bool isAffectable = false;
 
     public EffectsHandler EffH { get { return effh; } set { effh = value; } }
 
@@ -31,7 +34,7 @@ public class Building : MonoBehaviour, IEntity, IDamagable
     public event System.Action EntityStunned;
     public event System.Action EntityAwaken;
 
-
+    public bool isPlayer { get { return false; }}
 
     public ReceivingDamageEffects PropertyReceivingDamageEffects { get { return health.receivingDamageEffects; } set { health.receivingDamageEffects = value; } }
 
