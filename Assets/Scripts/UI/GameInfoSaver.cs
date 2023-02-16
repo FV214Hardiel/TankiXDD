@@ -34,10 +34,8 @@ public class GameInfoSaver : MonoBehaviour
 
     void Awake()
     {
-               
-        //Debug.Log(enterName);
-        //playerName = enterName;
-        //Debug.Log(playerName);
+         
+        //Debug.Log("TEST");
         if (instance != null)
         {
             Destroy(gameObject);
@@ -48,6 +46,12 @@ public class GameInfoSaver : MonoBehaviour
             Load();
         }
 
+        //GameObject aui = GameObject.Find("AbilitiesUI");
+        //if (aui != null)
+        //{
+        //    aui.GetComponent<UIAbilityHandler>().enabled = true;
+        //}
+
         GameObject lh = GameObject.Find("LevelHandler");
         if (lh != null)
         {
@@ -55,6 +59,9 @@ public class GameInfoSaver : MonoBehaviour
 
             lh.GetComponent<Player>().enabled = true;
         }
+
+        
+
         DontDestroyOnLoad(gameObject);       
 
     }
