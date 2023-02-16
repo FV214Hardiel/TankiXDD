@@ -4,7 +4,17 @@ using UnityEngine;
 
 public class Move : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public List<float> msMultipliers;
+
+    protected Rigidbody rb;
+
+    protected AudioSource engineAudio;
+
+    public float Speed;
+    public float TurnSpeed;
+    protected float maxSpeed;
+
+
     public virtual float GetMaxSpeed()
     {
         return 0;
@@ -15,9 +25,14 @@ public class Move : MonoBehaviour
        
     }
 
+    public virtual void RecalculateSpeed()
+    {
+        print("virtual rec");
+    }
+
     public virtual IEnumerator Stun()
     {
-        print("virtual move");
+       
         yield return null;
     }
 }
