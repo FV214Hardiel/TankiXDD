@@ -114,15 +114,14 @@ public class HealthEnemy : Health
 
     void PopupAdd(float damage)
     {
+        //print("HP cum added " + damage);
 
         if (popup.gameObject.activeSelf == false)
         {
             popup.gameObject.SetActive(true);
         }
-        else
-        {
-            popup.AddValue(damage);
-        }
+        popup.AddValue(damage);
+        
     }
 
     //Coroutine for displaying damage
@@ -164,6 +163,7 @@ public class HealthEnemy : Health
     //Method for excessive shield damage
     public override void OverDamage(Damage dmgInstance)
     {
+       // print("overdmg");
        
         HP -= dmgInstance.damage;
 
