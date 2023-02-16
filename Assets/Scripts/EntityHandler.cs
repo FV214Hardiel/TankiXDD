@@ -8,16 +8,15 @@ using UnityEngine;
 public interface IDamagable
 {
     IEntity Entity { get; }
-
     GameObject Gameobject { get; }
-    bool IsDead { get; set; }
+
+    bool IsDead { get; }
+    public bool IsStatusAffectable { get; }
+
     void DealDamage(Damage dmgInstance);
     void DealEMP(Damage dmgInstance);
 
-    void DealAOE(Damage dmgInstance);
-    
-
-    
+    void DealAOE(Damage dmgInstance);    
 
 }
 
@@ -29,7 +28,7 @@ public interface IEntity
     Health HealthScript { get; set; }
     Shield ShieldScript { get; set; }
 
-    bool IsDead { get; set; }
+    bool IsDead { get;}
 
     EffectsHandler EffH { get; set; }
 
@@ -45,7 +44,9 @@ public interface IEntity
     void DealAOE(Damage dmgInstance);
 
     event Action EntityStunned;
-    event Action EntityAwaken; 
+    event Action EntityAwaken;
+
+    bool isPlayer { get; }
 
 
 
@@ -68,6 +69,7 @@ public class EntityHandler : MonoBehaviour, IDamagable, IEntity
         set
         { isDead = value; }
     }
+    public bool IsStatusAffectable { get { return effh.isStatusAffectable; } }
 
     public EffectsHandler EffH { get { return effh; } set { effh = value; } }
 
@@ -107,7 +109,7 @@ public class EntityHandler : MonoBehaviour, IDamagable, IEntity
     public List<Component> abilities;
 
     public float outOfDamage;
-    public bool isPlayer;
+    public bool isPlayer { get; set; }
 
     
     bool isDead;
@@ -134,8 +136,10 @@ public class EntityHandler : MonoBehaviour, IDamagable, IEntity
         baseEnemyColor = new Color(0.82f, 0.38f, 0.31f);              
 
         //Mesh Renderers
-        meshRenderers = new();        
-        meshRenderers.Add(GetComponent<MeshRenderer>());
+        meshRenderers = new();
+
+        abilities = new();
+
 
         Transform sounds = transform.Find("Sounds");
         stunSound = sounds.Find("StunnedSound").GetComponent<AudioSource>();
@@ -174,11 +178,11 @@ public class EntityHandler : MonoBehaviour, IDamagable, IEntity
             DealDamage(new Damage(307, this));
         }
 
-        if (Input.GetKeyUp(KeyCode.L))
-        {
-            print("test2");
-            effh.AddEffect(new Regeneration(4, 4));
-        }
+        //if (Input.GetKeyUp(KeyCode.L))
+        //{
+        //    print("test2");
+        //    effh.AddEffect(new Regeneration(4, 4));
+        //}
     }
 
 
@@ -289,6 +293,8 @@ public class EntityHandler : MonoBehaviour, IDamagable, IEntity
     {        
         isPlayer = false;
 
+        meshRenderers.Add(GetComponent<MeshRenderer>());
+
         SetLayermasks();
 
         foreach (MeshRenderer item in meshRenderers)
@@ -307,17 +313,31 @@ public class EntityHandler : MonoBehaviour, IDamagable, IEntity
     }
 
     //Setting some specific values for Player Tank
-    public void PlayerTankSetup()
+    public void PlayerTankSetup(bool isNew)
     {
-        isPlayer = true;
+
+        if (isNew)
+        {            
+
+            if (GameInfoSaver.instance.chosenSkin != null)
+            {
+                isSkin = true;
+                skin = GameInfoSaver.instance.chosenSkin;
+            }
+
+            isPlayer = true;
+
+            effh = gameObject.AddComponent<EffectsHandler>();
+
+            hitMarker = GameObject.Find("HitSFX").GetComponent<AudioSource>();
+
+            Player.PlayerEntity = this;
+        }        
+
+        meshRenderers.Add(GetComponent<MeshRenderer>());
 
         SetLayermasks();
-
-        if (GameInfoSaver.instance.chosenSkin != null)
-        {
-            isSkin = true;
-            skin = GameInfoSaver.instance.chosenSkin;
-        }
+       
 
         foreach (MeshRenderer item in meshRenderers)
         {
@@ -334,15 +354,14 @@ public class EntityHandler : MonoBehaviour, IDamagable, IEntity
 
             item.gameObject.layer = LayerMask.NameToLayer(team);
 
-        }
+            shield.EnableShieldShader();
+
+        }       
+
         
+       
 
-        abilities = new();
-        effh = gameObject.AddComponent<EffectsHandler>();
-
-        hitMarker = GameObject.Find("HitSFX").GetComponent<AudioSource>();
-
-        Player.PlayerEntity = this;
+        
 
 
     }
@@ -386,9 +405,11 @@ public class EntityHandler : MonoBehaviour, IDamagable, IEntity
             if (item != team)
             {
                 oppTeams.Add(item);
+                oppTeams.Add("Shield" + item);
             }
         }
         enemiesMask = LayerMask.GetMask(oppTeams.ToArray());
+        //print(enemiesMask.value);
     }
     public void Die()
     {
