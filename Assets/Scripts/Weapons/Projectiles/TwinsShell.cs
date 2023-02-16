@@ -13,7 +13,7 @@ public class TwinsShell : MonoBehaviour
 
     public Effect debuff;
 
-    IDamagable alreadyHit;
+    IEntity alreadyHit;
 
     //private void OnCollisionEnter(Collision collision)
     //{
@@ -23,6 +23,8 @@ public class TwinsShell : MonoBehaviour
     {
 
         //Getting IDamagable
+
+        //print(collision.name);
         
         IDamagable damagable = collision.GetComponentInParent<IDamagable>();
         if (damagable != null)
@@ -33,62 +35,35 @@ public class TwinsShell : MonoBehaviour
                 return;
             }
 
-            if (damagable != alreadyHit && !damagable.IsDead)
+            if (damagable.Entity != alreadyHit && !damagable.IsDead)
             {
-                
-                Effect twinsEffect = damagable.Entity.EffH.GetEffect(debuff.effectID);
-                if (twinsEffect == null)
+                if (damagable.IsStatusAffectable)
                 {
-                    damagable.Entity.EffH.AddEffect(debuff);
-                }
-                else
-                {
-                    damage += 3 * twinsEffect.effectStacks;
-                    damagable.Entity.EffH.AddEffect(debuff);
-                }
+                    Effect twinsEffect = damagable.Entity.EffH.GetEffect(debuff.effectID);
+                    if (twinsEffect == null)
+                    {
+                        damagable.Entity.EffH.AddEffect(debuff);
 
+                    }
+                    else
+                    {
+                        damage += debuff.effectPower * twinsEffect.effectStacks;
+                        damagable.Entity.EffH.AddEffect(debuff);
+
+                    }
+                }
+                
+                
+
+                
                 damagable.DealDamage(new Damage(damage, source));
-                alreadyHit = damagable; //Setting hit gameobject as already hit for fixing double damaging one target by a single shot
+                //print(damage);
+                alreadyHit = damagable.Entity; //Setting hit gameobject as already hit for fixing double damaging one target by a single shot
                 Destroy(gameObject);
             }
         }
         
         Destroy(gameObject);
-        //IEntity eh = other.gameObject.GetComponentInParent<IEntity>(false);
-        //if (eh != null)
-        //{
-
-        //    if (eh == source) //Collision with player (after the shot for example)
-        //        return;
-
-        //    if (eh.ThisGameobject != alreadyHit && !eh.IsDead) //Checking if target is alive and wasnt already hit by this shot
-        //    {
-
-        //        //Adding debuff and increasing damage if debuff exists on target
-        //        Effect twinsEffect = eh.effh.GetEffect(debuff.effectID);
-        //        if (twinsEffect == null)
-        //        {
-                    
-        //            eh.effh.AddEffect(debuff);
-        //        }
-        //        else
-        //        {                   
-
-        //            damage += 3 * twinsEffect.effectStacks;
-        //            eh.effh.AddEffect(debuff);
-        //        }
-                
-        //        eh.DealDamage(damage, source);
-        //        alreadyHit = eh.gameObject; //Setting hit gameobject as already hit for fixing double damaging one target by a single shot
-        //        Destroy(gameObject);
-
-        //    }
-
-            
-        //}
-
-        
-        
 
     }
 
