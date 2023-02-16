@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1266808787893400132
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 129981660369612884}
+  m_Layer: 0
+  m_Name: muzzle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &129981660369612884
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1266808787893400132}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 1.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3165106459560780724}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1593534449744763263
 GameObject:
   m_ObjectHideFlags: 0
@@ -38,6 +69,7 @@ Transform:
   m_Children:
   - {fileID: 8405378464396021072}
   - {fileID: 580214591729501672}
+  - {fileID: 129981660369612884}
   m_Father: {fileID: 7312647180705907102}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 3, y: 0, z: 0}
@@ -145,15 +177,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46717925b9e181b408f738923cb70312, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  source: {fileID: 0}
   weapRange: 60
   damage: 3
-  angle: 0
   delayBetweenShots: 0.2
+  enemyMask:
+    serializedVersion: 2
+    m_Bits: 0
+  angle: 0
   shellPref: {fileID: 421942829619560955, guid: 24076df6f149c5647b8f99c953d04ebd, type: 3}
   muzzleL: {fileID: 0}
   muzzleR: {fileID: 0}
   projectileSpeed: 60
+  test: 0
 --- !u!114 &3770881703321417766
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -166,13 +201,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42d5707100d934245a5eb3bd22b6d9f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  source: {fileID: 0}
   weapRange: 60
-  damage: 2
+  damage: 0
+  delayBetweenShots: 1
+  enemyMask:
+    serializedVersion: 2
+    m_Bits: 0
   angle: 0
-  delayBetweenShots: 0.5
   isTargetLocked: 0
-  shellPrefab: {fileID: 0}
+  shellPrefab: {fileID: 421942829619560955, guid: 24076df6f149c5647b8f99c953d04ebd, type: 3}
   muzzleL: {fileID: 0}
   muzzleR: {fileID: 0}
   projectileSpeed: 30
