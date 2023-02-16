@@ -406,6 +406,34 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""WeaponChanger"",
+            ""id"": ""539a1211-a2c4-478f-9db2-e82e8d7bd66e"",
+            ""actions"": [
+                {
+                    ""name"": ""OpenClose"",
+                    ""type"": ""Button"",
+                    ""id"": ""3761ea57-f936-450a-9686-90dccf53a8d5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""011f18fb-4396-4529-84c9-bc4d00d06d42"",
+                    ""path"": ""<Keyboard>/n"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""OpenClose"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -429,6 +457,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_Look = asset.FindActionMap("Look", throwIfNotFound: true);
         m_Look_MouseLook = m_Look.FindAction("MouseLook", throwIfNotFound: true);
         m_Look_Zoom = m_Look.FindAction("Zoom", throwIfNotFound: true);
+        // WeaponChanger
+        m_WeaponChanger = asset.FindActionMap("WeaponChanger", throwIfNotFound: true);
+        m_WeaponChanger_OpenClose = m_WeaponChanger.FindAction("OpenClose", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -672,6 +703,39 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         }
     }
     public LookActions @Look => new LookActions(this);
+
+    // WeaponChanger
+    private readonly InputActionMap m_WeaponChanger;
+    private IWeaponChangerActions m_WeaponChangerActionsCallbackInterface;
+    private readonly InputAction m_WeaponChanger_OpenClose;
+    public struct WeaponChangerActions
+    {
+        private @PlayerInputActions m_Wrapper;
+        public WeaponChangerActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @OpenClose => m_Wrapper.m_WeaponChanger_OpenClose;
+        public InputActionMap Get() { return m_Wrapper.m_WeaponChanger; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(WeaponChangerActions set) { return set.Get(); }
+        public void SetCallbacks(IWeaponChangerActions instance)
+        {
+            if (m_Wrapper.m_WeaponChangerActionsCallbackInterface != null)
+            {
+                @OpenClose.started -= m_Wrapper.m_WeaponChangerActionsCallbackInterface.OnOpenClose;
+                @OpenClose.performed -= m_Wrapper.m_WeaponChangerActionsCallbackInterface.OnOpenClose;
+                @OpenClose.canceled -= m_Wrapper.m_WeaponChangerActionsCallbackInterface.OnOpenClose;
+            }
+            m_Wrapper.m_WeaponChangerActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @OpenClose.started += instance.OnOpenClose;
+                @OpenClose.performed += instance.OnOpenClose;
+                @OpenClose.canceled += instance.OnOpenClose;
+            }
+        }
+    }
+    public WeaponChangerActions @WeaponChanger => new WeaponChangerActions(this);
     public interface IPlayerTankControlActions
     {
         void OnFire(InputAction.CallbackContext context);
@@ -694,5 +758,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     {
         void OnMouseLook(InputAction.CallbackContext context);
         void OnZoom(InputAction.CallbackContext context);
+    }
+    public interface IWeaponChangerActions
+    {
+        void OnOpenClose(InputAction.CallbackContext context);
     }
 }
