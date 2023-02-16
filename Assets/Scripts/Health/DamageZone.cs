@@ -14,9 +14,14 @@ public class DamageZone : MonoBehaviour, IDamagable
 
     public bool IsDead { get { return entity.IsDead; } set { return; } }
 
+    public bool IsStatusAffectable { get { return isAffectable; } }
+
+    bool isAffectable;
+
     private void Start()
     {
         entity = GetComponentInParent<IEntity>();
+        isAffectable = entity.EffH.isStatusAffectable;
         gameObject.layer = entity.Gameobject.layer;
         //print(Gameobject.name);
     }
