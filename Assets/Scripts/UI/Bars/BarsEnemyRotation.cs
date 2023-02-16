@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HealthBarEnemyRotation : MonoBehaviour
+public class BarsEnemyRotation : MonoBehaviour
 {
     Transform mainCamera;
     
