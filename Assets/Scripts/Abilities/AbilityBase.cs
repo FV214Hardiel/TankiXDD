@@ -24,7 +24,8 @@ public class AbilityBase : MonoBehaviour
     public RectTransform abilityDisplay;
     public RectTransform outline;
 
-
+    //Misc
+    protected GameObject abilityPrefab;
 
     //
     protected float remainingCooldown;
@@ -39,6 +40,7 @@ public class AbilityBase : MonoBehaviour
         abilityRange = card.range;
         abilityCooldown = card.cooldown;
         abilityIcon = card.image;
+        abilityPrefab= card.prefab;
     }
 
     public void SetIcon()

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "AbilityCard", menuName = "Tanks/Abilities")]
+[CreateAssetMenu(fileName = "AbilityCard", menuName = "Tanks/AbilityCard")]
 public class AbilityCard : ScriptableObject
 {
     public string abilityName;
@@ -18,5 +18,7 @@ public class AbilityCard : ScriptableObject
     public float damage;
     public float range;
     public float radius;
+
+    public GameObject prefab;
 
 }
