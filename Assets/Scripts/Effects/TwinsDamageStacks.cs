@@ -1,3 +1,4 @@
+using LlockhamIndustries.Decals;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,7 +8,7 @@ public class TwinsDamageStacks : Effect
     
     
 
-    public TwinsDamageStacks(float duration, float power)
+    public TwinsDamageStacks(float power, float duration)
     {
         effectDuration = duration;
         effectPower = power;
@@ -30,6 +31,7 @@ public class TwinsDamageStacks : Effect
     {
         //Debug.Log("TICK");
         remainingDuration -= deltatime;
+        
         if (remainingDuration <= 0)
         {
             remainingDuration = 0;
