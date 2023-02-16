@@ -4,8 +4,8 @@ using UnityEngine;
 public class PlayerShield : Shield
 {
 
-    [SerializeField] ShieldBarPlayer sb;
-    // Start is called before the first frame update
+    [SerializeField] IShieldBar sb;
+
     void OnEnable()
     {
         eh = GetComponent<EntityHandler>();
@@ -19,9 +19,10 @@ public class PlayerShield : Shield
 
         //Handling UI ShieldBar
         sb = GameObject.Find("ShieldBarUI").GetComponent<ShieldBarPlayer>();
-        sb.enabled = true;
-
-        sb.maxShield = maxSP;
+        //sb.enabled = true;
+        sb.ConnectShield(this);
+        sb.StartBar();
+        sb.ChangeMaxSP(maxSP);
         sb.UpdateBar(currentSP);
 
         rechargeRate = eh.hullCard.shieldRechargeRate;
@@ -40,7 +41,7 @@ public class PlayerShield : Shield
         //meshRenderers = eh.meshRenderers;
         EnableShieldShader();
     }
-    // Update is called once per frame
+    
     void Update()
     {
         if (eh.outOfDamage > rechargeDelay && !isRecharging && currentSP < maxSP)

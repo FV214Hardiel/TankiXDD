@@ -26,6 +26,8 @@ public class Shield : MonoBehaviour
    // protected List<MeshRenderer> meshRenderers;
     protected MaterialPropertyBlock materialPropertyBlock;
 
+    bool isPlayer;
+
     public virtual void StartShieldRecharge()
     {
 

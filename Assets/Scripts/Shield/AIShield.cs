@@ -14,10 +14,14 @@ public class AIShield : Shield
     CumulativeDamageNumbers popup;
 
     float takenDamageSum;
+
+    [SerializeField] IShieldBar sb;
+
     void OnEnable()
     {
         damagePopupPrefab = Resources.Load<Transform>("DamageNumbersPopup");
-        mainCamera = Camera.main.transform;
+        mainCamera = Camera.main.transform;       
+
 
         //Health bar
         enemyHealthBar = GetComponentInChildren<Slider>(true); 
@@ -36,6 +40,13 @@ public class AIShield : Shield
 
         rechargeRate = eh.hullCard.shieldRechargeRate;
         rechargeDelay = eh.hullCard.shieldRechargeDelay;
+
+        //Shield bar
+        sb = GetComponentInChildren<IShieldBar>(true);
+        sb.StartBar();
+        sb.ConnectShield(this);
+        sb.ChangeMaxSP(maxSP);
+        sb.UpdateBar(currentSP);
 
         sounds = transform.Find("Sounds");
         takingHitSound = sounds.Find("TakingHitSoundShield").GetComponent<AudioSource>();
@@ -67,6 +78,8 @@ public class AIShield : Shield
                 currentSP = maxSP;
                 StopShieldRecharge();
             }
+
+            sb.UpdateBar(currentSP);
         }
     }
 
@@ -98,6 +111,7 @@ public class AIShield : Shield
             
             currentSP = 0;
         }
+        sb.UpdateBar(currentSP);
 
 
     }
@@ -125,14 +139,16 @@ public class AIShield : Shield
 
             currentSP = 0;
         }
+        sb.UpdateBar(currentSP);
 
-        
 
     }
 
     public override void ChangeCurrentSP(float change)
     {
         base.ChangeCurrentSP(change);
+
+        sb.UpdateBar(currentSP);
 
     }
 
