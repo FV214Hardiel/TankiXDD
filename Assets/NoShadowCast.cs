@@ -11,5 +11,10 @@ public class NoShadowCast : MonoBehaviour
         transform.GetComponent<Renderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
     }
 
-   
+    private void OnDisable()
+    {
+        transform.GetComponent<Renderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+    }
+
+
 }
