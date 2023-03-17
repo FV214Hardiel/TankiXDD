@@ -1,18 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class FloatingHPBar : MonoBehaviour
+public class FloatingHPBar : MonoBehaviour, IHealthBar
 {
-    // Start is called before the first frame update
-    void Start()
+    //public Health health;
+
+    public float maxHP;
+
+    Slider barSlider;
+
+    public void StartBar()
     {
-        
+        barSlider = GetComponent<Slider>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void UpdateBar(float newHP)
     {
-        
+        barSlider.value = newHP / maxHP;
     }
+
+    public void ChangeMaxHP(float maxHP)
+    {
+        this.maxHP = maxHP; 
+    }
+
+    //public void ConnectHealth(Health health)
+    //{
+    //    this.health = health;
+    //}
 }

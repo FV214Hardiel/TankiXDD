@@ -7,7 +7,7 @@ public class OverloadScript : AbilityBase
     enum AbilityState { ready, cooldown }
     AbilityState state = AbilityState.ready;
 
-    EntityHandler source;
+    TankEntity source;
 
 
    
@@ -18,7 +18,7 @@ public class OverloadScript : AbilityBase
 
         SetIcon();
 
-        source = GetComponent<EntityHandler>();
+        source = GetComponent<TankEntity>();
 
         //Specific setup
     }

@@ -76,7 +76,7 @@ public class HealthBuildong : Health
         BuildingOk.SetActive(false);
         BuildingNeOk.SetActive(true);
 
-        Destroy(Instantiate(ExpPref, transform), 5);
+        //Destroy(Instantiate(ExpPref, transform), 5);
 
         foreach (MonoBehaviour inthere in GetComponentsInChildren<MonoBehaviour>())
         {

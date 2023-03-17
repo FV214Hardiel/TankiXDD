@@ -14,7 +14,7 @@ public class PlayerRailgun : PlayerShooting
 
     void Start()
     {
-        source = GetComponentInParent<EntityHandler>();
+        source = GetComponentInParent<TankEntity>();
         muzzle = transform.Find("muzzle");
 
         shotDelegate = Shot;

@@ -36,7 +36,7 @@ public class AbilityHandler : MonoBehaviour
                 
                 addedAbility.GetType().GetField("abilityDisplay").SetValue(addedAbility, abilityUI.remCDSlots[slotCount]);
 
-                GetComponent<EntityHandler>().abilities.Add(addedAbility);
+                GetComponent<TankEntity>().abilities.Add(addedAbility);
 
                 slotCount++;
             }

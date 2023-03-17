@@ -7,9 +7,8 @@ public class AIShield : Shield
 {
     Transform damagePopupPrefab;
     Transform mainCamera;
-
-    Slider enemyHealthBar;
-    Transform healthBarTransform;
+    
+    Transform barsTransform;
 
     CumulativeDamageNumbers popup;
 
@@ -20,18 +19,13 @@ public class AIShield : Shield
     void OnEnable()
     {
         damagePopupPrefab = Resources.Load<Transform>("DamageNumbersPopup");
-        mainCamera = Camera.main.transform;       
-
-
-        //Health bar
-        enemyHealthBar = GetComponentInChildren<Slider>(true); 
-        healthBarTransform = enemyHealthBar.transform;
+        mainCamera = Camera.main.transform;
 
         popup = GetComponentInChildren<CumulativeDamageNumbers>(true);
 
         materialPropertyBlock = new();
 
-        eh = GetComponent<EntityHandler>();
+        eh = GetComponent<TankEntity>();
         eh.ShieldScript = this;
 
         baseSP = eh.hullCard.baseSP;
@@ -44,9 +38,11 @@ public class AIShield : Shield
         //Shield bar
         sb = GetComponentInChildren<IShieldBar>(true);
         sb.StartBar();
-        sb.ConnectShield(this);
+        //sb.ConnectShield(this);
         sb.ChangeMaxSP(maxSP);
         sb.UpdateBar(currentSP);
+
+        barsTransform = transform.Find("floatingBars");
 
         sounds = transform.Find("Sounds");
         takingHitSound = sounds.Find("TakingHitSoundShield").GetComponent<AudioSource>();
@@ -62,8 +58,7 @@ public class AIShield : Shield
     }
     
     void Update()
-    {
-       
+    {       
         if (eh.outOfDamage > rechargeDelay && !isRecharging && currentSP < maxSP)
         {
             StartShieldRecharge();
@@ -106,13 +101,12 @@ public class AIShield : Shield
             shieldBrokenSound.Play();
             DisableShieldShader();
 
-            eh.HealthScript.OverDamage(new Damage(0 - currentSP, dmgInstance.source));
-            //eh.health.popup = popup;
+            eh.HealthScript.OverDamage(new Damage(0 - currentSP, dmgInstance.source));            
             
             currentSP = 0;
         }
-        sb.UpdateBar(currentSP);
 
+        sb.UpdateBar(currentSP);
 
     }
 
@@ -147,27 +141,9 @@ public class AIShield : Shield
     public override void ChangeCurrentSP(float change)
     {
         base.ChangeCurrentSP(change);
-
         sb.UpdateBar(currentSP);
 
     }
-
-    //void PopupCreate(float damage)
-    //{
-
-    //    damage = Mathf.Clamp(damage, 0, currentSP);
-    //    if (popup == null)
-    //    {
-    //        //print("null");
-    //        popup = DamageNumbersPopup.CreateStatic(damagePopupPrefab, healthBarTransform.position + transform.up + mainCamera.right, damage, Color.blue);
-    //        popup.transform.SetParent(gameObject.transform);
-    //    }
-    //    else
-    //    {
-    //        //print("NOT null");
-    //        popup.ChangeText(damage);
-    //    }
-    //}
 
     void PopupAdd(float damage)
     {
@@ -183,7 +159,7 @@ public class AIShield : Shield
     {
         yield return new WaitForEndOfFrame();
 
-        DamageNumbersPopup.CreateStatic(damagePopupPrefab, healthBarTransform, takenDamageSum, Color.blue);
+        DamageNumbersPopup.CreateStatic(damagePopupPrefab, barsTransform, takenDamageSum, Color.blue);
         takenDamageSum = 0;
 
     }
@@ -197,28 +173,23 @@ public class AIShield : Shield
     public override void StopShieldRecharge()
     {
         isRecharging = false;
+
     }
 
     public override void EnableShieldShader()
-    {
-        //materialPropertyBlock.SetFloat("_isShieldUp", 1.0f);
-        //meshRenderer.SetPropertyBlock(materialPropertyBlock);
+    {       
         materialPropertyBlock.SetFloat("_isShieldUp", 1.0f);
         foreach (MeshRenderer item in eh.meshRenderers)
         {
-
             item.SetPropertyBlock(materialPropertyBlock);
         }
     }
 
     public override void DisableShieldShader()
     {
-        //materialPropertyBlock.SetFloat("_isShieldUp", 0.0f);
-        //meshRenderer.SetPropertyBlock(materialPropertyBlock);
         materialPropertyBlock.SetFloat("_isShieldUp", 0.0f);
         foreach (MeshRenderer item in eh.meshRenderers)
         {
-
             item.SetPropertyBlock(materialPropertyBlock);
         }
     }

@@ -22,9 +22,9 @@ public class PlayerTwins : PlayerShooting
     void Start()
     {
 
-        print("start");
+       
         //Base setup for shooting
-        source = GetComponentInParent<EntityHandler>();
+        source = GetComponentInParent<TankEntity>();
 
         timeOfLife = weapRange / projectileSpeed;
 
@@ -82,7 +82,7 @@ public class PlayerTwins : PlayerShooting
     protected override void Shot()
     {
 
-        print("shot");
+       // print("shot");
         remainingDelay = delayBetweenShots;
 
         if (shotFromRight) //Checking for barrel

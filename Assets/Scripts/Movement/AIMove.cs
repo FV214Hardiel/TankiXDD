@@ -9,7 +9,7 @@ public class AIMove : Move
     
     public Vector3 patrolPoint;
 
-    EntityHandler eh;
+    TankEntity eh;
 
     NavMeshAgent agent;
     RaycastHit hit;
@@ -45,7 +45,7 @@ public class AIMove : Move
 
     void Start()
     {
-        eh = GetComponent<EntityHandler>();
+        eh = GetComponent<TankEntity>();
 
         ignoringLayers = eh.FriendlyMasks;
 

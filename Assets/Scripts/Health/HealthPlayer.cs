@@ -7,26 +7,16 @@ public class HealthPlayer : Health
    
     public Collider[] Debris;
     
-    public HealthBarPlayer hb;    
+    public IHealthBar hb;       
     
-    MonoBehaviour[] scrs;
 
-    Transform sounds;
+    //Transform sounds;
 
-    Transform damagePopupPrefab;
-    Camera mainCamera;
-
-    DamageNumbersPopup popup;
-
-
-    public static event Action playerIsDead;
+   // public static event Action playerIsDead;
 
     private void OnEnable()
-    {
-        damagePopupPrefab = Resources.Load<Transform>("DamageNumbersPopup");
-        mainCamera = Camera.main;
-
-        baseHP = GetComponent<EntityHandler>().hullMod.baseHP; // Getting Base Health from tank card
+    { 
+        baseHP = GetComponent<TankEntity>().hullMod.baseHP; // Getting Base Health from tank card
         GetComponent<IEntity>().HealthScript = this;
        
         maxHP = baseHP;
@@ -38,27 +28,30 @@ public class HealthPlayer : Health
         
     }
     void Start()
-    {
+    {        
+
+        hb = GameObject.Find("HealthBarUI").GetComponent<IHealthBar>();
+        hb.StartBar();
         
-        
+        hb.ChangeMaxHP(maxHP);
+        hb.UpdateBar(HP);
 
-        hb = GameObject.Find("HealthBarUI").GetComponent<HealthBarPlayer>();
+        //Hull = gameObject;
+        //Turret = gameObject.GetComponentInChildren<Turret>().gameObject;
+        //Gun = gameObject.GetComponentInChildren<Gun>().gameObject;
 
-        Hull = gameObject;
-        Turret = gameObject.GetComponentInChildren<Turret>().gameObject;
-        Gun = gameObject.GetComponentInChildren<Gun>().gameObject;
+        //HullRB = Hull.GetComponent<Rigidbody>();
+        //TurretRB = Turret.GetComponent<Rigidbody>();
+        //GunRB = Gun.GetComponent<Rigidbody>();
 
-        HullRB = Hull.GetComponent<Rigidbody>();
-        TurretRB = Turret.GetComponent<Rigidbody>();
-        GunRB = Gun.GetComponent<Rigidbody>();
+        //ExplosionPoint = transform.Find("ExplosionPoint");
+        //Debris = transform.Find("debris").gameObject.GetComponentsInChildren<Collider>(true);
 
-        ExplosionPoint = transform.Find("ExplosionPoint");
-        Debris = transform.Find("debris").gameObject.GetComponentsInChildren<Collider>(true);
+        //sounds = transform.Find("Sounds");
+        //destructionSound = sounds.Find("DestructionSound").GetComponent<AudioSource>();
+        //takingHitSound = sounds.Find("TakingHitSoundHealth").GetComponent<AudioSource>();
 
-        sounds = transform.Find("Sounds");
-        destructionSound = sounds.Find("DestructionSound").GetComponent<AudioSource>();
-        takingHitSound = sounds.Find("TakingHitSoundHealth").GetComponent<AudioSource>();
-        //hb.UpdateBar(HP);
+       
 
 
     }
@@ -74,7 +67,8 @@ public class HealthPlayer : Health
 
         if (HP == 0 && Alive)
         {
-            Dying(dmgInstance.source);            
+            GetComponent<IDestructible>().Die(dmgInstance.source);
+            //Dying(dmgInstance.source);            
         }
 
     }
@@ -117,61 +111,62 @@ public class HealthPlayer : Health
 
         if (HP == 0 && Alive)
         {
-            Dying(dmgInstance.source);
+             GetComponent<IDestructible>().Die(dmgInstance.source);
+            //Dying(dmgInstance.source);
         }
     }
 
-    public override void Dying(IEntity killer)
-    {
-        GetComponent<EntityHandler>().Die();
+    //public override void Dying(IEntity killer)
+    //{
+    //    //GetComponent<IDestructible>().Die(killer);
 
-        Destroy(Instantiate(ExpPref, transform), 9);
+    //    //Destroy(Instantiate(ExpPref, transform), 9);
 
-        //trying disable all scripts
-        scrs = GetComponentsInChildren<MonoBehaviour>();
+    //    ////trying disable all scripts
+    //    //MonoBehaviour[] scrs = GetComponentsInChildren<MonoBehaviour>();
         
-        foreach (MonoBehaviour mono in scrs)
-        {
-            mono.enabled = false;
+    //    //foreach (MonoBehaviour mono in scrs)
+    //    //{
+    //    //    mono.enabled = false;
             
-        }
+    //    //}
        
 
-        //debris go boom
-        foreach (Collider nearby in Debris)
-        {
-            nearby.gameObject.SetActive(true);
-            nearby.TryGetComponent(out Rigidbody rb);
-            rb.AddExplosionForce(55, ExplosionPoint.transform.position, 10);
+    //    ////debris go boom
+    //    //foreach (Collider nearby in Debris)
+    //    //{
+    //    //    nearby.gameObject.SetActive(true);
+    //    //    nearby.TryGetComponent(out Rigidbody rb);
+    //    //    rb.AddExplosionForce(55, ExplosionPoint.transform.position, 10);
 
-        }
+    //    //}
 
        
-        //grabity and non kinematic for all rb
-        HullRB.useGravity = true;
-        TurretRB.useGravity = true;
-        GunRB.useGravity = true;
+    //    ////grabity and non kinematic for all rb
+    //    //HullRB.useGravity = true;
+    //    //TurretRB.useGravity = true;
+    //    //GunRB.useGravity = true;
 
-        Gun.GetComponent<Collider>().enabled = true;
+    //    //Gun.GetComponent<Collider>().enabled = true;
 
-        HullRB.isKinematic = false;
-        TurretRB.isKinematic = false;
-        GunRB.isKinematic = false;
+    //    //HullRB.isKinematic = false;
+    //    //TurretRB.isKinematic = false;
+    //    //GunRB.isKinematic = false;
 
-        //tank go boom
+    //    ////tank go boom
 
-        HullRB.AddExplosionForce(100, ExplosionPoint.position, 5);
-        TurretRB.AddExplosionForce(90, ExplosionPoint.position, 9);
-        GunRB.AddExplosionForce(30, ExplosionPoint.position, 5);
+    //    //HullRB.AddExplosionForce(100, ExplosionPoint.position, 5);
+    //    //TurretRB.AddExplosionForce(90, ExplosionPoint.position, 9);
+    //    //GunRB.AddExplosionForce(30, ExplosionPoint.position, 5);
 
-        destructionSound.Play();
+    //    //destructionSound.Play();
 
-        Alive = false;
-        playerIsDead?.Invoke();
-
+    //    //Alive = false;
+    //    //playerIsDead?.Invoke();
         
-        enabled = false;
-    }
+
+    //    //enabled = false;
+    //}
 
 
 }

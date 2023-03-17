@@ -1,69 +1,44 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class HealthBarPlayer : MonoBehaviour
+public class HealthBarPlayer : MonoBehaviour, IHealthBar
 {
-    float health;
-    float maxHealth;
-    public RectTransform Bar;
-    float barBaseWidth;
+    public Health health;
+
+    Slider bar;
 
     TMPro.TextMeshProUGUI TextText;
 
-    //public Vector2 huh;
+    float maxHealth;
 
-    private void OnEnable()
+    public void StartBar()
     {
-        barBaseWidth = Bar.rect.width;
-
-        Player.playerIsChanged += OnPlayerChanged; //здесь мы подписываемся
-
-        float perc = barBaseWidth;
-        //Debug.Log(perc);
-        Bar.sizeDelta = new Vector2(perc, 40);
         TextText = GetComponentInChildren<TMPro.TextMeshProUGUI>();
-        TextText.text = maxHealth.ToString();
+        bar = GetComponent<Slider>();
+
+        bar.value = 0;
 
     }
 
-   
-    void OnPlayerChanged()
+    public void ChangeMaxHP(float maxHP)
     {
-        if (Player.PlayerHull.GetComponent<HealthPlayer>() != null)
-        {
-            //Debug.Log(health + "HP");
-            maxHealth = Player.PlayerHull.GetComponent<HealthPlayer>().maxHP;
-            health = Player.PlayerHull.GetComponent<HealthPlayer>().HP;
-            UpdateBar(health);
-        }
-       
+        maxHealth = maxHP;
+    }
         
-
-    }
-    private void OnDisable()
-    {
-        //тут мы отписываемся
-        Player.playerIsChanged -= OnPlayerChanged;
-    }
-    void Start()
-    {
-
-        
-
-        maxHealth = Player.PlayerHull.GetComponent<HealthPlayer>().baseHP;
-        health = Player.PlayerHull.GetComponent<HealthPlayer>().HP;
-        OnPlayerChanged();
-
-    }
-
-    
     public void UpdateBar(float newHP)
     {
-        float perc = barBaseWidth * (newHP / maxHealth);
-        Bar.sizeDelta = new Vector2(perc, 40);
+        bar.value = newHP / maxHealth;
 
         newHP = Mathf.Floor(newHP);
+
         TextText.text = newHP.ToString();
     }
+
+    public void ConnectHealth(Health health)
+    {
+        this.health = health;
+    }
+
 }

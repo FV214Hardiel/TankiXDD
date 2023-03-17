@@ -1,32 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ShieldBarPlayer : MonoBehaviour, IShieldBar
 {
     public Shield shield;
 
-    public RectTransform Bar;
-    float barBaseWidth;
+    public Slider bar;
 
     TMPro.TextMeshProUGUI TextText;
 
     public float maxShield;
 
-    float perc;
-
-
-    void Awake()
-    {
-       // print("awake");
-        
-
-    }
-
     public void StartBar()
     {
-        barBaseWidth = Bar.rect.width;
-        //print("startbar");
+        TextText = GetComponentInChildren<TMPro.TextMeshProUGUI>();
     }
 
     public void ChangeMaxSP(float maxSP)
@@ -35,17 +24,11 @@ public class ShieldBarPlayer : MonoBehaviour, IShieldBar
     }
 
     public void UpdateBar(float newSP) 
-    {
-       // print("update");
-        
-        perc = barBaseWidth * (newSP / maxShield);
+    {        
+        bar.value = newSP / maxShield;
 
-       
-        Bar.sizeDelta = new Vector2(perc, 40);
-        
         newSP = Mathf.Floor(newSP);
-
-        TextText = GetComponentInChildren<TMPro.TextMeshProUGUI>();
+        
         TextText.text = newSP.ToString();
     }
 

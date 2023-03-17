@@ -10,6 +10,6 @@ public interface IShieldBar
 
     void ChangeMaxSP(float maxSP);
 
-    void ConnectShield(Shield shield);
+    //void ConnectShield(Shield shield);
 
 }

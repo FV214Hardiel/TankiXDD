@@ -13,7 +13,7 @@ public class AIFirebird : AIShooting
    
     void Start()
     {
-        source = GetComponentInParent<EntityHandler>();
+        source = GetComponentInParent<TankEntity>();
         muzzle = transform.Find("muzzle");
 
         ai = gameObject.GetComponentInParent<AIMove>();

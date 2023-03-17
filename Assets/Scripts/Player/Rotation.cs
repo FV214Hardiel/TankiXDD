@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Rotation : MonoBehaviour
 {
-    EntityHandler eh;
+    TankEntity eh;
 
     Transform target;
     float rotSpeed;
@@ -21,7 +21,7 @@ public class Rotation : MonoBehaviour
 
     private void Start()
     {
-        eh = GetComponentInParent<EntityHandler>();
+        eh = GetComponentInParent<TankEntity>();
         rotSpeed = eh.turretMod.turretRotationSpeed * Time.fixedDeltaTime; 
 
         target = GameObject.Find("Poinet").transform; //Find invisible helping GO

@@ -14,7 +14,7 @@ public class PlayerFirebird : PlayerShooting
 
     private void Start()
     {
-        source = GetComponentInParent<EntityHandler>();
+        source = GetComponentInParent<TankEntity>();
         muzzle = transform.Find("muzzle");
 
         inputActions = new();

@@ -36,12 +36,12 @@ public class GunTarget : MonoBehaviour
 
         //enemyLayer = LayerMask.NameToLayer("RedTeam"); //Hardcoded enemy layer
 
-        collidingLayersUI = GetComponentInParent<EntityHandler>().EnemiesMasks + LevelHandler.instance.groundlayers;
+        collidingLayersUI = GetComponentInParent<TankEntity>().EnemiesMasks + LevelHandler.instance.groundlayers;
 
         enemyLayers = new();
         for (int i = 0; i < LevelHandler.instance.teams.Count; i++)
         {
-            if (GetComponentInParent<EntityHandler>().team != LevelHandler.instance.teams[i])
+            if (GetComponentInParent<TankEntity>().team != LevelHandler.instance.teams[i])
             {
                 enemyLayers.Add(LayerMask.NameToLayer(LevelHandler.instance.teams[i]));
             }

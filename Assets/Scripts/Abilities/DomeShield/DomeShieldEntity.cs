@@ -20,7 +20,7 @@ public class DomeShieldEntity : MonoBehaviour, IDamagable
 
     void Start()
     {
-        baseEntity = GetComponentInParent<EntityHandler>();
+        baseEntity = GetComponentInParent<TankEntity>();
     }
 
     // Update is called once per frame

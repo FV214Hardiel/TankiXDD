@@ -8,7 +8,7 @@ public class PlayerShield : Shield
 
     void OnEnable()
     {
-        eh = GetComponent<EntityHandler>();
+        eh = GetComponent<TankEntity>();
         eh.ShieldScript = this;
                 
         materialPropertyBlock = new();        
@@ -18,12 +18,7 @@ public class PlayerShield : Shield
         currentSP = maxSP;        
 
         //Handling UI ShieldBar
-        sb = GameObject.Find("ShieldBarUI").GetComponent<ShieldBarPlayer>();
-        //sb.enabled = true;
-        sb.ConnectShield(this);
-        sb.StartBar();
-        sb.ChangeMaxSP(maxSP);
-        sb.UpdateBar(currentSP);
+        
 
         rechargeRate = eh.hullCard.shieldRechargeRate;
         rechargeDelay = eh.hullCard.shieldRechargeDelay;
@@ -57,8 +52,7 @@ public class PlayerShield : Shield
             {
                 currentSP = maxSP;
                 StopShieldRecharge();
-            }
-                        
+            }                        
 
             shieldRechargingSound.pitch = 0.6f + (currentSP / maxSP) * 2;
 
@@ -69,10 +63,10 @@ public class PlayerShield : Shield
     public override void TakingDMG(Damage dmgInstance)
     {
         takingHitSound.Play();
-        StopShieldRecharge();
-        
+        StopShieldRecharge();        
 
         currentSP -= dmgInstance.damage;
+
         if (currentSP <= 0)
         {
             shieldBrokenSound.Play();
@@ -93,6 +87,7 @@ public class PlayerShield : Shield
         StopShieldRecharge();
 
         currentSP -= dmgInstance.damage;
+
         if (currentSP <= 0)
         {
             shieldBrokenSound.Play();
@@ -110,9 +105,6 @@ public class PlayerShield : Shield
     public override void ChangeCurrentSP(float change)
     {
         base.ChangeCurrentSP(change);
-
-
-
         sb.UpdateBar(currentSP);
 
     }
@@ -123,36 +115,27 @@ public class PlayerShield : Shield
         shieldRechargingSound.Play();
 
         EnableShieldShader();
-
-        //Debug.Log("StartRecharge");
     }
     public override void StopShieldRecharge()
     {
         isRecharging = false;
-        shieldRechargingSound.Stop();        
-        //Debug.Log("Stop Recharge");
+        shieldRechargingSound.Stop();   
     }
 
     public override void EnableShieldShader() 
-    {
-        //materialPropertyBlock.SetFloat("_isShieldUp", 1.0f);
-        //meshRenderer.SetPropertyBlock(materialPropertyBlock);
+    {     
         materialPropertyBlock.SetFloat("_isShieldUp", 1.0f);
         foreach (MeshRenderer item in eh.meshRenderers)
-        {
-            
+        {            
             item.SetPropertyBlock(materialPropertyBlock);
         }
     }
 
     public override void DisableShieldShader() 
     {
-        //materialPropertyBlock.SetFloat("_isShieldUp", 0.0f);
-        //meshRenderer.SetPropertyBlock(materialPropertyBlock);
         materialPropertyBlock.SetFloat("_isShieldUp", 0.0f);
         foreach (MeshRenderer item in eh.meshRenderers)
         {
-
             item.SetPropertyBlock(materialPropertyBlock);
         }
     }

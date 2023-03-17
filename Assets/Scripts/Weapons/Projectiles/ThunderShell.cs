@@ -50,9 +50,9 @@ public class ThunderShell : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (alreadyHit) return;
-        if (other.GetComponentInParent<EntityHandler>())
+        if (other.GetComponentInParent<TankEntity>())
         {
-            other.GetComponentInParent<EntityHandler>().DealDamage(new Damage(30, source));
+            other.GetComponentInParent<TankEntity>().DealDamage(new Damage(30, source));
             alreadyHit = true;
         }
         Destroy(gameObject);

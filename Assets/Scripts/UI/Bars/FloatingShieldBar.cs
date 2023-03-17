@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class FloatingShieldBar : MonoBehaviour, IShieldBar
 {
 
-    public Shield shield;
+    //Shield shield;
 
     public float maxShield;
 
@@ -15,8 +15,7 @@ public class FloatingShieldBar : MonoBehaviour, IShieldBar
 
     public void StartBar()
     {
-        barSlider= GetComponent<Slider>();
-        
+        barSlider = GetComponent<Slider>();        
     }
 
     public void ChangeMaxSP(float maxSP)
@@ -26,13 +25,11 @@ public class FloatingShieldBar : MonoBehaviour, IShieldBar
 
     public void UpdateBar(float newSP)
     {
-        barSlider.value= newSP/maxShield;
-
-        
+        barSlider.value = newSP/maxShield;        
     }
 
-    public void ConnectShield(Shield shield)
-    {
-        this.shield = shield;
-    }
+    //public void ConnectShield(Shield shield)
+    //{
+    //    this.shield = shield;
+    //}
 }

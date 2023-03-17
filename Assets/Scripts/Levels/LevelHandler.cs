@@ -24,7 +24,7 @@ public class LevelHandler : MonoBehaviour
     {
         timer = 0;
 
-        HealthPlayer.playerIsDead += OnPlayersDeath;
+        TankEntity.playerIsDead += OnPlayersDeath;
         lives = 3;
     }
 

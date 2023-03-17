@@ -108,18 +108,21 @@ public class AllHullsTurrets : ScriptableObject
         DestroyImmediate(tunk.GetComponent<AIMove>());
         DestroyImmediate(tunk.GetComponent<HealthEnemy>());
         DestroyImmediate(tunk.GetComponent<NavMeshAgent>());
-        DestroyImmediate(tunk.transform.Find("enemyHealthBar").gameObject);
+       // DestroyImmediate(tunk.transform.Find("enemyHealthBar").gameObject);
         
 
         //Adding EH
-        EntityHandler eh = tunk.AddComponent<EntityHandler>();
+        TankEntity eh = tunk.AddComponent<TankEntity>();
         eh.hullCard = chosenHull;
         eh.hullMod = chosenHull.modifications[hullTier];
+        eh.isPlayer = true;
         
 
         //Enabling Shield and Health
-        tunk.AddComponent<PlayerShield>();
-        tunk.GetComponent<HealthPlayer>().enabled = true;
+        //tunk.AddComponent<PlayerShield>();
+        tunk.AddComponent<Shield>();
+        tunk.AddComponent<Health>();
+        //tunk.GetComponent<HealthPlayer>().enabled = true;
 
         //Enabling Movement
         tunk.GetComponent<PlayerMove>().enabled = true;
@@ -182,15 +185,18 @@ public class AllHullsTurrets : ScriptableObject
         DestroyImmediate(tunk.GetComponent<AbilityHandler>());
 
         //Adding EH
-        EntityHandler eh = tunk.AddComponent<EntityHandler>();
+        TankEntity eh = tunk.AddComponent<TankEntity>();
         eh.hullCard = chosenHull;
         eh.hullMod = chosenHull.modifications[hullTier];
-       
+        eh.isPlayer = false;
+
 
 
         //Enabling Shield and Health
-        tunk.AddComponent<AIShield>();
-        tunk.GetComponent<HealthEnemy>().enabled = true;
+        //tunk.AddComponent<AIShield>();
+        tunk.AddComponent<Shield>();
+        tunk.AddComponent<Health>();
+        //tunk.GetComponent<HealthEnemy>().enabled = true;
 
         //Enabling Movement
         tunk.GetComponent<AIMove>().enabled = true;
@@ -245,7 +251,7 @@ public class AllHullsTurrets : ScriptableObject
         tunk.transform.localScale = 60 * Vector3.one;
         tunk.AddComponent<DecorativeRotation>().rotationSpeed = 30;
 
-        EntityHandler eh = tunk.AddComponent<EntityHandler>();
+        TankEntity eh = tunk.AddComponent<TankEntity>();
         eh.meshRenderers.Add(turret.GetComponent<MeshRenderer>());
         eh.meshRenderers.Add(gun.GetComponent<MeshRenderer>());
         eh.hullCard = chosenHull;
@@ -272,7 +278,7 @@ public class AllHullsTurrets : ScriptableObject
         turret.transform.SetParent(parentHull); //Making created hull parent to turret             
         turret.transform.SetPositionAndRotation(parentHull.Find("mount").position, oldRot); //Mounting turret to hull
 
-        EntityHandler eh = parentHull.gameObject.GetComponent<EntityHandler>();
+        TankEntity eh = parentHull.gameObject.GetComponent<TankEntity>();
 
         //Handling the Handler, putting turret meshes to mesh list 
         eh.meshRenderers.Clear();

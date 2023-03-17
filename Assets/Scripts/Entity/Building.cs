@@ -96,6 +96,7 @@ public class Building : MonoBehaviour, IEntity, IDamagable
 
     public void DealAOE(Damage dmgInstance)
     {
-
+        EntityStunned?.Invoke();
+        EntityAwaken?.Invoke();
     }
 }

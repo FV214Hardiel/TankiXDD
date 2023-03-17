@@ -11,7 +11,7 @@ public class AIThunder : AIShooting
     void Start()
     {
         //Base setup for shooting
-        source = GetComponentInParent<EntityHandler>();
+        source = GetComponentInParent<TankEntity>();
         muzzle = transform.Find("muzzle");
 
         timeOfLife = weapRange / projectileSpeed;

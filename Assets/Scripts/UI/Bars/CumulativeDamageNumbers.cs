@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class CumulativeDamageNumbers : MonoBehaviour
 {
@@ -9,9 +10,7 @@ public class CumulativeDamageNumbers : MonoBehaviour
 
     public float value;
 
-    float timer;
-
-    Transform mainCamera;
+    float timer;   
 
     private void Start()
     {
@@ -21,12 +20,9 @@ public class CumulativeDamageNumbers : MonoBehaviour
 
     void Update()
     {
-
-        
         timer -= Time.deltaTime;
         if (timer < 0)
-        {
-            //Destroy(gameObject);
+        {            
             SetValue(0);
             
             gameObject.SetActive(false);
@@ -35,8 +31,6 @@ public class CumulativeDamageNumbers : MonoBehaviour
 
     public void AddValue(float numbers)
     {
-       // print(numbers);
-
         value += numbers;
         textMesh.text = Mathf.Floor(value).ToString();
         timer = 2;
@@ -44,8 +38,6 @@ public class CumulativeDamageNumbers : MonoBehaviour
 
     public void SetValue(float numbers)
     {
-       
-
         value = numbers;
         textMesh.text = Mathf.Floor(value).ToString();
         timer = 2;
