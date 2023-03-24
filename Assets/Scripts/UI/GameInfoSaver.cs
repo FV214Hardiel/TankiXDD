@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class GameInfoSaver : MonoBehaviour
 {
+    //аегслмн лнфмн ашрэ оепбшл
     public static GameInfoSaver instance;
 
     public static string playerName;
