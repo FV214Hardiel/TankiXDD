@@ -270,7 +270,14 @@ public class TankEntity : MonoBehaviour, IDamagable, IEntity, IDestructible
     //Setting some specific values for Player Tank
     public void PlayerTankSetup(bool isNew)
     {
-        Destroy(transform.Find("floatingBars").gameObject);
+        try
+        {
+            Destroy(transform.Find("floatingBars").gameObject);
+        }
+        catch (Exception e)
+        {
+            print(e.Message);
+        }
 
         if (isNew)
         {            
@@ -325,12 +332,23 @@ public class TankEntity : MonoBehaviour, IDamagable, IEntity, IDestructible
     //Setting some specific values for decorative tank
     public void DecorativeSetup()
     {
+        try
+        {
+            Destroy(transform.Find("floatingBars").gameObject);
+        }
+        catch (Exception e) 
+        {
+            print(e.Message);
+        }
+
         foreach (Transform item in GetComponentsInChildren<Transform>(true))
         {
             item.gameObject.layer = LayerMask.NameToLayer("UI");
         }
         isPlayer = false;
         isDead = true;
+
+        meshRenderers.Add(GetComponent<MeshRenderer>());
 
         foreach (MeshRenderer item in meshRenderers) //Changing shader
         {
