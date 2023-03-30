@@ -18,6 +18,8 @@ public class TankSelectionMenu : MonoBehaviour
     public SkinCard skinPreview;
     public static List<int> abilitiesValues;
 
+    SelectMenuInfoPanelScript infoPanel;
+
     GameObject createdPreview;
 
     
@@ -110,6 +112,9 @@ public class TankSelectionMenu : MonoBehaviour
         
         list.Clear();
 
+        infoPanel = GetComponentInChildren<SelectMenuInfoPanelScript>(true);
+        infoPanel.enabled = true;
+
         createdPreview = AllHullsTurrets.CreateDecorative(tankPreview, hullPreview, 0, turretPreview, 0, skinPreview);
     }
         
@@ -119,6 +124,7 @@ public class TankSelectionMenu : MonoBehaviour
         Destroy(createdPreview);
         hullPreview = GameInfoSaver.instance.tanksList.unlockedHulls[index];
         createdPreview = AllHullsTurrets.CreateDecorative(tankPreview, hullPreview, 0, turretPreview, 0, skinPreview);
+        infoPanel.ChangeText(hullPreview);
     }
 
     public void ChangeTurret(int index)
@@ -126,6 +132,7 @@ public class TankSelectionMenu : MonoBehaviour
         Destroy(createdPreview);
         turretPreview = GameInfoSaver.instance.tanksList.unlockedTurrets[index];
         createdPreview = AllHullsTurrets.CreateDecorative(tankPreview, hullPreview, 0, turretPreview, 0, skinPreview);
+        infoPanel.ChangeText(turretPreview);
     }
 
     public void ChangeSkin(int index)
