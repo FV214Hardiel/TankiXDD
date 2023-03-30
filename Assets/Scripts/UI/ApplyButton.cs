@@ -11,7 +11,7 @@ public class ApplyButton : MonoBehaviour
 
     public TMP_Dropdown hullsDropdown;
     public TMP_Dropdown gunsDropdown;
-    public TMP_Dropdown abilitiesDropdown;
+    public TMP_Dropdown[] abilitiesDropdown;
     public TMP_Dropdown skinsDropdown;
 
     public Image flash;
@@ -31,6 +31,12 @@ public class ApplyButton : MonoBehaviour
         GameInfoSaver.instance.chosenTurret = GameInfoSaver.instance.tanksList.unlockedTurrets[gunsDropdown.value];
        // Debug.Log("ApplyClickedTurret + " + GameInfoSaver.instance.chosenTurret);
         GameInfoSaver.instance.chosenSkin = GameInfoSaver.instance.skinsList.unlockedSkins[skinsDropdown.value];
+
+        foreach (TMP_Dropdown item in abilitiesDropdown)
+        {
+            if (item.value == 0) continue;
+            GameInfoSaver.instance.chosenAbilities.Add(GameInfoSaver.instance.abilitiesList.unlockedAbilities[item.value]);
+        }
 
         StartCoroutine(FlashEffect(0.2f, 0.1f));
     }
