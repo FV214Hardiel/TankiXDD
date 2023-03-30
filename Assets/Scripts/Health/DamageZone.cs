@@ -21,6 +21,11 @@ public class DamageZone : MonoBehaviour, IDamagable
     private void Start()
     {
         entity = GetComponentInParent<IEntity>();
+        if (entity.EffH == null) 
+        {
+            Destroy(gameObject);
+            return;
+        }
         isAffectable = entity.EffH.isStatusAffectable;
         gameObject.layer = entity.Gameobject.layer;
         //print(Gameobject.name);
