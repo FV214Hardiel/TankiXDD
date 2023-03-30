@@ -10,6 +10,7 @@ public class AbilitiesList : ScriptableObject
     //private void OnEnable()
     //{
     //    PlayerPrefs.DeleteKey("uAbilities");
+    //    Debug.Log("Abilities cleared");
     //}
 
     public void Load()
