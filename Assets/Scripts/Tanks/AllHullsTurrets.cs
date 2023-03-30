@@ -252,13 +252,14 @@ public class AllHullsTurrets : ScriptableObject
         tunk.AddComponent<DecorativeRotation>().rotationSpeed = 30;
 
         TankEntity eh = tunk.AddComponent<TankEntity>();
+        eh.skin = skin;
         eh.meshRenderers.Add(turret.GetComponent<MeshRenderer>());
         eh.meshRenderers.Add(gun.GetComponent<MeshRenderer>());
         eh.hullCard = chosenHull;
         eh.hullMod = chosenHull.modifications[hullTier];
         eh.turretCard = chosenTurret;
         eh.turretMod = chosenTurret.modifications[turretTier];
-        eh.skin = skin;
+        
         
         eh.DecorativeSetup();
 
