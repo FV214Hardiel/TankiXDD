@@ -25,10 +25,10 @@ public class ShopScript : MonoBehaviour
     private void Start()
     {
         infoName = infoPanel.Find("Name").GetComponent<TextMeshProUGUI>();
-        infoName.text = "Tank Name";
+        infoName.text = "";
 
         infoText= infoPanel.Find("Info").GetComponent<TextMeshProUGUI>();
-        infoText.text = "Info";
+        infoText.text = "";
 
         createdButtons = new();
         dropdownChange(shopDropdown.value);
