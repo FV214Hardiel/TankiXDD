@@ -19,7 +19,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 35e2bdf5a24feaf48be35d2d3191e799, type: 2}
   - {fileID: 11400000, guid: 9891607b9a563724e9b3499a99bb950d, type: 2}
   - {fileID: 11400000, guid: 4f7d1b0d62e7e044b8540203b22c470e, type: 2}
+  - {fileID: 11400000, guid: 4c625a9a2785e0a4a99c21f6b01e1c93, type: 2}
+  - {fileID: 11400000, guid: 1b4f3464182c28744be956cc27e68708, type: 2}
   unlockedAbilities:
   - {fileID: 0}
   - {fileID: 11400000, guid: 348e2b6a096674c4fadc7aac0793709d, type: 2}
-  - {fileID: 11400000, guid: 88d2050beb0eb6d46a8cdbf441bae33a, type: 2}
+  - {fileID: 11400000, guid: 9891607b9a563724e9b3499a99bb950d, type: 2}
+  - {fileID: 11400000, guid: 4c625a9a2785e0a4a99c21f6b01e1c93, type: 2}
+  - {fileID: 11400000, guid: 1b4f3464182c28744be956cc27e68708, type: 2}
