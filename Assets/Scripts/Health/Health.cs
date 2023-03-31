@@ -38,9 +38,11 @@ public class Health : MonoBehaviour
         dmgPops = GetComponentInChildren<DamageNumbersPopup>(true);
 
         //pops.Init();
-
-        //baseHP = GetComponent<TankEntity>().hullMod.baseHP; // Getting Base Health from tank card
-        baseHP = 250;
+        if (GetComponent<TankEntity>() != null)
+        {
+            baseHP = GetComponent<TankEntity>().hullMod.baseHP; // Getting Base Health from tank card
+        }
+        
         maxHP = baseHP;
         HP = maxHP;
         Alive = true;
@@ -62,10 +64,11 @@ public class Health : MonoBehaviour
             damagePopupPrefab = Resources.Load<Transform>("DamageNumbersPopup");
         }
         
-        hb.StartBar();
+        if (hb  != null) {hb.StartBar();
 
         hb.ChangeMaxHP(maxHP);
-        hb.UpdateBar(HP);       
+        hb.UpdateBar(HP);    }
+            
 
         sounds = transform.Find("Sounds");
         takingHitSound = sounds.Find("TakingHitSoundHealth").GetComponent<AudioSource>();
@@ -172,7 +175,7 @@ public class Health : MonoBehaviour
         yield return new WaitForEndOfFrame(); //Waiting for end of frame
 
         //DamageNumbersPopup.CreateStatic(damagePopupPrefab, barsTransform, takenDamageSum, Color.red);
-        print(dmgPops);
+        //print(dmgPops);
         dmgPops?.Init(takenDamageSum, Color.green);
         takenDamageSum = 0; //zeroing damage for next frame
 

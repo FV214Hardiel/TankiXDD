@@ -89,8 +89,6 @@ public class DamageNumbersPopup : MonoBehaviour
         popup.textMesh.renderer.material.SetColor("_OutlineColor", colour);
 
         DamageNumbersObject.SetActive(true);
-
-        print("test");
     }
 
    

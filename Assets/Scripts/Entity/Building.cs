@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 [RequireComponent(typeof(EffectsHandler))]
-public class Building : MonoBehaviour, IEntity, IDamagable
+public class Building : MonoBehaviour, IEntity, IDamagable, IDestructible
 {
     public Health HealthScript { get { return health; } set { health = value; } }
     public Shield ShieldScript { get { return shield; } set { shield = value; } }
@@ -35,6 +36,8 @@ public class Building : MonoBehaviour, IEntity, IDamagable
     public event System.Action EntityAwaken;
 
     public bool isPlayer { get { return false; }}
+    public bool isObjective;
+    public static event System.Action objectiveBuildingDestroyed;
 
     public ReceivingDamageEffects PropertyReceivingDamageEffects { get { return health.receivingDamageEffects; } set { health.receivingDamageEffects = value; } }
 
@@ -96,7 +99,45 @@ public class Building : MonoBehaviour, IEntity, IDamagable
 
     public void DealAOE(Damage dmgInstance)
     {
-        EntityStunned?.Invoke();
-        EntityAwaken?.Invoke();
+        //EntityStunned?.Invoke();
+        //EntityAwaken?.Invoke();
+    }
+
+    GameObject aliveMeshes;
+    GameObject deadMeshes;
+
+    Collider[] debris;
+    Rigidbody rb;
+
+    public void Die(IEntity killer)
+    {
+        aliveMeshes = GetComponentInChildren<BuildingOk>().gameObject;
+        deadMeshes = GetComponentInChildren<BuildingNotOk>(true).gameObject;
+
+        debris = deadMeshes.GetComponentsInChildren<Collider>(true);
+
+        aliveMeshes.SetActive(false);
+        deadMeshes.SetActive(true);
+
+        //Destroy(Instantiate(ExpPref, transform), 5);
+
+        foreach (MonoBehaviour inthere in GetComponentsInChildren<MonoBehaviour>())
+        {
+            Destroy(inthere);
+        }
+
+        foreach (Collider nearby in debris)
+        {
+
+            nearby.TryGetComponent(out rb);
+            rb.AddExplosionForce(80, transform.position + transform.up, 40);
+
+        }
+        health.Alive = false;
+
+        if (isObjective)
+        {
+            objectiveBuildingDestroyed?.Invoke();
+        }
     }
 }
