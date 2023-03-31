@@ -31,17 +31,17 @@ public class DomeShieldEntity : MonoBehaviour, IDamagable
 
     public void DealDamage(Damage dmgInstance)
     {
-        print("shieldDamaged");
+        //print("shieldDamaged");
     }
 
     public void DealEMP(Damage dmgInstance)
     {
-        print("shieldEMPed");
+        //print("shieldEMPed");
     }
 
     public void DealAOE(Damage dmgInstance)
     {
-        print("shieldAOEd");
+        //print("shieldAOEd");
     }
 
     void DisableShield()
