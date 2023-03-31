@@ -70,7 +70,7 @@ public class LevelHandler : MonoBehaviour
         GameHandler.instance.GameIsPaused = true;
         GameHandler.instance.winScreen.SetActive(true);
         ushort earnedMoney = (ushort)Mathf.FloorToInt(TransformScoreToCurrency(score));
-        GameInfoSaver.instance.AddCurrency(earnedMoney);
+        GameInfoSaver.instance.CurrencyProp.AddCurrency(earnedMoney);
 
     }
 

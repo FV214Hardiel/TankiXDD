@@ -11,8 +11,7 @@ public class GameInfoSaver : MonoBehaviour
     public static string playerName;
     public string enterName;
 
-    public ushort Currency { get; private set; }
-    public static event Action CurrencyChanged;
+    public Currency CurrencyProp { get; private set; }
 
     [Space]
     public LevelsList levelsList;    
@@ -77,32 +76,33 @@ public class GameInfoSaver : MonoBehaviour
         SaveGame();
     }
 
-    public void AddCurrency(ushort money)
-    {
-        Currency += money;
-        CurrencyChanged?.Invoke();
-    }
-    public void SubtractCurrency(ushort money)
-    {
-        Currency -= money;
-        CurrencyChanged?.Invoke();
-    }
-    public void SetCurrency(ushort money)
-    {
-        Currency = money;
-        CurrencyChanged?.Invoke();
-    }
+    //public void AddCurrency(ushort money)
+    //{
+    //    Currency += money;
+    //    CurrencyChanged?.Invoke();
+    //}
+    //public void SubtractCurrency(ushort money)
+    //{
+    //    Currency -= money;
+    //    CurrencyChanged?.Invoke();
+    //}
+    //public void SetCurrency(ushort money)
+    //{
+    //    Currency = money;
+    //    CurrencyChanged?.Invoke();
+    //}
 
 
 
-    public void Test()
-    {
-        AddCurrency(45);
-    }
+    //public void Test()
+    //{
+    //    AddCurrency(45);
+    //}
 
     void Load()
     {
-        LoadCurrency();
+        CurrencyProp = new Currency();
+        
 
         tanksList.LoadHulls();
         tanksList.LoadTurrets();
@@ -113,7 +113,7 @@ public class GameInfoSaver : MonoBehaviour
     }
     public void SaveGame()
     {
-        SaveCurrency();
+        CurrencyProp.SaveCurrency();
 
         tanksList.SaveHulls();
         tanksList.SaveTurrets();
@@ -123,23 +123,5 @@ public class GameInfoSaver : MonoBehaviour
         abilitiesList.Save();
     }
 
-    void LoadCurrency()
-    {
-        //int uMoney;
-
-        if (PlayerPrefs.HasKey("uMoney"))
-        {
-            SetCurrency((ushort)PlayerPrefs.GetInt("uMoney"));
-        }
-        else
-        {
-            SaveCurrency();
-        }
-    }
-
-    void SaveCurrency()
-    {
-        PlayerPrefs.SetInt("uMoney", Currency);
-    }
    
 }

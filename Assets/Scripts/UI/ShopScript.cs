@@ -155,14 +155,14 @@ public class ShopScript : MonoBehaviour
     public void BuyButtonClick()
     {
         if (chosenItem == null) return;
-        if (chosenItem.Price > GameInfoSaver.instance.Currency)
+        if (chosenItem.Price > GameInfoSaver.instance.CurrencyProp.Amount)
         {
             Debug.LogWarning("Insufficient funds");
         }
         else
         {
             chosenItem.BuyItem();
-            GameInfoSaver.instance.SubtractCurrency(chosenItem.Price);
+            GameInfoSaver.instance.CurrencyProp.SubtractCurrency(chosenItem.Price);
             if (activeButton == null)
             {
                 print("error");
