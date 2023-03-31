@@ -99,8 +99,8 @@ public class Building : MonoBehaviour, IEntity, IDamagable, IDestructible
 
     public void DealAOE(Damage dmgInstance)
     {
-        //EntityStunned?.Invoke();
-        //EntityAwaken?.Invoke();
+        EntityStunned?.Invoke();
+        EntityAwaken?.Invoke();
     }
 
     GameObject aliveMeshes;
