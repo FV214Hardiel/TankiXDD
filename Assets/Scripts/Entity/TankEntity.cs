@@ -470,6 +470,8 @@ public class TankEntity : MonoBehaviour, IDamagable, IEntity, IDestructible
         Debug.LogWarning(killer.Gameobject.name + " killed " + gameObject.name);
 
         TankDestroyed?.Invoke(); //If anyone is interested
+        if (killer == Player.PlayerEntity) 
+        { GameInfoSaver.instance.CurrencyProp.AddCurrency((ushort)(health.maxHP / 10)); }
 
         Destroy(gameObject, 8); //Destroying corpse after some time
 
