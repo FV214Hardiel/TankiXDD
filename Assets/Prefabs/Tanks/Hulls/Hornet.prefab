@@ -5233,10 +5233,8 @@ GameObject:
   - component: {fileID: 8140378675922324336}
   - component: {fileID: 4656557333619006895}
   - component: {fileID: 8968467095607302778}
-  - component: {fileID: 3259509738659741039}
   - component: {fileID: 4955215934352709924}
   - component: {fileID: 7399319821650958051}
-  - component: {fileID: 7129143171926247418}
   - component: {fileID: 2089256539251504028}
   - component: {fileID: -5234825226473759036}
   m_Layer: 0
@@ -5351,23 +5349,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &3259509738659741039
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7780130218654329509}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bcc438dfd4d1eb841819839db85d6b32, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  baseHP: 200
-  HP: 0
-  maxHP: 0
-  popup: {fileID: 0}
-  Alive: 0
 --- !u!114 &4955215934352709924
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5415,34 +5396,6 @@ NavMeshAgent:
   m_BaseOffset: 0.65
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 2
---- !u!114 &7129143171926247418
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7780130218654329509}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d3d4414e6f9909499516ff4a67c90f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  baseHP: 200
-  HP: 0
-  maxHP: 0
-  popup: {fileID: 0}
-  Alive: 0
-  Debris:
-  - {fileID: 1601847393387120525}
-  - {fileID: 1687709180496637714}
-  - {fileID: 434933872380060070}
-  - {fileID: 8093924918572864486}
-  - {fileID: 4842462155109083340}
-  - {fileID: 1364084049170906903}
-  - {fileID: 5394658820744085337}
-  - {fileID: 4287295075832922674}
-  - {fileID: 4687876438411967137}
-  - {fileID: 1692112687125440845}
 --- !u!114 &2089256539251504028
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5482,7 +5435,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: eec2d8c0743ea544d976dcbafa59b170, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.1
+  m_Volume: 0.4
   m_Pitch: 0
   Loop: 1
   Mute: 0
@@ -6505,11 +6458,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d1c073a670dcad7499a4d83e3b0cd230, type: 3}
---- !u!64 &1692112687125440845 stripped
-MeshCollider:
-  m_CorrespondingSourceObject: {fileID: 5566715551165344432, guid: d1c073a670dcad7499a4d83e3b0cd230, type: 3}
-  m_PrefabInstance: {fileID: 6501902408599290877}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7083030410681449266 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4066925746720192719, guid: d1c073a670dcad7499a4d83e3b0cd230, type: 3}
