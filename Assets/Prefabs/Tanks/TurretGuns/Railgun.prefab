@@ -262,12 +262,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ebf974bbdbcdf748b54a7719d2afb0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  source: {fileID: 0}
-  damage: 30
   weapRange: 50
+  damage: 30
   delayBetweenShots: 2
+  enemyMask:
+    serializedVersion: 2
+    m_Bits: 0
+  angle: 0
+  isTargetLocked: 0
   chargeDuration: 0.8
-  prefabOfShot: {fileID: 213642979737029707, guid: 0afeceafc47c0ff4b86059f6309b3749, type: 3}
+  shellPrefab: {fileID: 213642979737029707, guid: 0afeceafc47c0ff4b86059f6309b3749, type: 3}
 --- !u!114 &893356684044580481
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -292,11 +296,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64d0b2863a755454ebe8e66f77c3027e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  source: {fileID: 0}
   weapRange: 70
   damage: 400
-  angle: 0
   delayBetweenShots: 2
+  enemyMask:
+    serializedVersion: 2
+    m_Bits: 0
+  angle: 0
   chargeDuration: 0.8
   prefabOfShot: {fileID: 213642979737029707, guid: 0afeceafc47c0ff4b86059f6309b3749, type: 3}
 --- !u!82 &3379037883804154634
