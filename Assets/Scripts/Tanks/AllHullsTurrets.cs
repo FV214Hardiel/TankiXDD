@@ -36,6 +36,10 @@ public class AllHullsTurrets : ScriptableObject
         }
         else //if no save file then create and save
         {
+            unlockedHulls = new()
+            {
+                allHulls[0]
+            };
             SaveHulls();
         }
         
@@ -56,6 +60,11 @@ public class AllHullsTurrets : ScriptableObject
         }
         else //if no save file then create and save
         {
+            unlockedTurrets = new()
+            { 
+                allTurrets[0]
+            };
+            
             SaveTurrets();
         }
     }
