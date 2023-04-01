@@ -114,6 +114,7 @@ public class TankSelectionMenu : MonoBehaviour
 
         infoPanel = GetComponentInChildren<SelectMenuInfoPanelScript>(true);
         infoPanel.enabled = true;
+        infoPanel.ChangeText(hullPreview);
 
         createdPreview = AllHullsTurrets.CreateDecorative(tankPreview, hullPreview, 0, turretPreview, 0, skinPreview);
     }
