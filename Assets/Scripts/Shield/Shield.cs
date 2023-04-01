@@ -48,15 +48,19 @@ public class Shield : MonoBehaviour
 
         isPlayer = eh.isPlayer;
 
-        baseSP = 1;
+        //baseSP = 1;
+        if (eh != null )
+        {
+            baseSP = eh.hullCard.baseSP;
+            rechargeRate = eh.hullCard.shieldRechargeRate;
+            rechargeDelay = eh.hullCard.shieldRechargeDelay;
+        }
+
         maxSP = baseSP;
         currentSP = maxSP;
 
         //rechargeRate = eh.hullCard.shieldRechargeRate;
-        //rechargeDelay = eh.hullCard.shieldRechargeDelay;
-
-        rechargeRate = 1;
-        rechargeDelay = 1;
+        //rechargeDelay = eh.hullCard.shieldRechargeDelay;        
 
         if (isPlayer)
         {
