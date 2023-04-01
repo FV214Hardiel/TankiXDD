@@ -68,7 +68,7 @@ public class GameInfoSaver : MonoBehaviour
 
     private void OnDisable()
     {
-        SaveGame();
+        //SaveGame();
     }
 
     private void OnApplicationQuit()
@@ -99,11 +99,9 @@ public class GameInfoSaver : MonoBehaviour
     //    AddCurrency(45);
     //}
 
-    void Load()
+    public void Load()
     {
         CurrencyProp = new Currency();
-        
-
         tanksList.LoadHulls();
         tanksList.LoadTurrets();
 
@@ -112,7 +110,7 @@ public class GameInfoSaver : MonoBehaviour
         abilitiesList.Load();
     }
     public void SaveGame()
-    {
+    {        
         CurrencyProp.SaveCurrency();
 
         tanksList.SaveHulls();
