@@ -28,12 +28,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 381919c3018173941a44e49859a45c26, type: 2}
   unlockedHulls:
   - {fileID: 11400000, guid: a6f90ca75eb48db41ba8a76152dc65be, type: 2}
-  - {fileID: 11400000, guid: a539c60280a1b64478d9168c207d1670, type: 2}
-  - {fileID: 11400000, guid: 33ea55048071ec24686bb836f9d5dce3, type: 2}
-  - {fileID: 11400000, guid: 6ae095d1428ad2c45ade4ebcde8f8a9f, type: 2}
-  - {fileID: 11400000, guid: bec5a487a989fd64eb50686dced13a63, type: 2}
-  - {fileID: 11400000, guid: 91693ed0353c1a3428455b3e812b8440, type: 2}
   unlockedTurrets:
   - {fileID: 11400000, guid: aa46699136c8c7146a6d08fe79abaade, type: 2}
-  - {fileID: 11400000, guid: 96b5ba0a49cc07147a8b4dd7c8ecd43e, type: 2}
-  - {fileID: 11400000, guid: 381919c3018173941a44e49859a45c26, type: 2}
+  - {fileID: 11400000, guid: e85f8d3877507c5418dbfc9e41b00f9c, type: 2}
