@@ -38,7 +38,7 @@ public class LevelHandler : MonoBehaviour
     }
     public float TransformScoreToCurrency(float score)
     {
-        score = Mathf.Clamp(score, 0, 1000);
+        score = Mathf.Clamp(score, 0, 10000);
 
         return score * 0.1f;
     }
@@ -65,6 +65,7 @@ public class LevelHandler : MonoBehaviour
     {
         //Debug.Log("pobeda");        
         Time.timeScale = 1;
+        score += 1000;
         StartCoroutine(LevelEnding());
         GameHandler.instance.GameIsOver = true;
         GameHandler.instance.GameIsPaused = true;
