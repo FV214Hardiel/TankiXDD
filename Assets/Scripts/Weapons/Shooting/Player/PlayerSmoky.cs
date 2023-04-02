@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using UnityEngine;
 
 public class PlayerSmoky : PlayerShooting
@@ -20,6 +21,7 @@ public class PlayerSmoky : PlayerShooting
             inputActions.PlayerTankControl.Enable();
 
         shotDelegate = Shot;
+        hitDelegate = BasicHit;
 
         shotSound = GetComponent<AudioSource>();
         //chargeSound = transform.Find("ChargesSound").GetComponent<AudioSource>();
@@ -78,8 +80,9 @@ public class PlayerSmoky : PlayerShooting
                 //print("Damageble");
                 if (!damagable.IsDead)
                 {
-                    damagable.DealDamage(new Damage(shotDamage, source));
-                   
+                    // damagable.DealDamage(new Damage(shotDamage, source));
+                    hitDelegate.Invoke(damagable, new Damage(shotDamage, source));
+
                 }
             }
             hitEffect.transform.position = hit.point;
@@ -106,7 +109,8 @@ public class PlayerSmoky : PlayerShooting
                 //print("Damageble");
                 if (!damagable.IsDead)
                 {
-                    damagable.DealDamage(new Damage(shotDamage, source));
+                    //damagable.DealDamage(new Damage(shotDamage, source));
+                    hitDelegate.Invoke(damagable, new Damage(shotDamage, source));
                     health.Heal(damage * 0.5f, source);
 
                 }
@@ -115,9 +119,12 @@ public class PlayerSmoky : PlayerShooting
             hitEffect.Play();
 
         }
-        remainingDelay = delayBetweenShots;
-        
-        
+        remainingDelay = delayBetweenShots;        
+    }
+
+    protected override void BasicHit(IDamagable hit, Damage dmg)
+    {
+        hit.DealDamage(dmg);
     }
 }
 

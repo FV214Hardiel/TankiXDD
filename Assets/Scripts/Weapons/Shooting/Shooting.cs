@@ -10,6 +10,9 @@ public class Shooting : MonoBehaviour
     public delegate void ShotDelegate();
     public ShotDelegate shotDelegate;
 
+    public delegate void HitDelegate(IDamagable hit, Damage dmg);
+    public HitDelegate hitDelegate;
+
     public float weapRange;
     public float damage;
     protected float shotDamage;
@@ -61,5 +64,10 @@ public class Shooting : MonoBehaviour
     public virtual void DisableOverload()
     {
         shotDelegate = Shot;
+    }
+
+    protected virtual void BasicHit(IDamagable hit, Damage dmg)
+    {
+
     }
 }
