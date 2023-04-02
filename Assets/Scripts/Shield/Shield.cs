@@ -188,13 +188,14 @@ public class Shield : MonoBehaviour
     {
         takingEMPSound.Play();
         StopShieldRecharge();
-
+        
         if (!isPlayer)
         {
             if (takenDamageSum == 0)
             {
                 StartCoroutine(AccumulateDMG());
             }
+            takenDamageSum += Mathf.Clamp(dmgInstance.damage, 0, currentSP);
 
             PopupAdd(dmgInstance.damage);
         }       
