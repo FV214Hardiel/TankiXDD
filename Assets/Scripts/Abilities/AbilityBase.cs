@@ -29,6 +29,14 @@ public class AbilityBase : MonoBehaviour
 
     //
     protected float remainingCooldown;
+
+    protected void Start()
+    {      
+
+        GetStats();
+
+        SetIcon();
+    }
     
     public void GetStats()
     {
