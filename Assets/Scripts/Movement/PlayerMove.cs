@@ -21,12 +21,17 @@ public class PlayerMove : Move
     PlayerInput playerInput;
     PlayerInputActions playerInputActions;
 
-    Material trackShader;
+    //Material trackShader;
+    protected MaterialPropertyBlock materialPropertyBlock;
+    MeshRenderer mrenderer;
 
     public float multiplierForShader; 
 
     private void Start()
     {
+        mrenderer = GetComponent<MeshRenderer>();
+        materialPropertyBlock = new();
+
         maxSpeed = Speed;
 
         msMultipliers = new List<float> { 1f };
@@ -45,9 +50,11 @@ public class PlayerMove : Move
 
         StartCoroutine(CustomUpdate(0.2f));
 
-       trackShader = GetComponent<Renderer>().sharedMaterials[1];
+        materialPropertyBlock.SetFloat("_speed", 0f);
+        mrenderer.SetPropertyBlock(materialPropertyBlock);
+       //trackShader = GetComponent<Renderer>().sharedMaterials[1];
        
-       trackShader.SetFloat("_speed", 0f);
+       //trackShader.SetFloat("_speed", 0f);
 
     }
     private void Update()
@@ -64,8 +71,10 @@ public class PlayerMove : Move
         EngineSoundInput = Input.GetAxis("Vertical");
         PlayerRotInput = Input.GetAxis("Horizontal");
 
-        trackShader.SetFloat("_speed", -EngineSoundInput* multiplierForShader * maxSpeed - PlayerRotInput * 0.01f * maxSpeed);
+        //trackShader.SetFloat("_speed", -EngineSoundInput* multiplierForShader * maxSpeed - PlayerRotInput * 0.01f * maxSpeed);
 
+        materialPropertyBlock.SetFloat("_speed", -EngineSoundInput * multiplierForShader * maxSpeed - PlayerRotInput * 0.01f * maxSpeed);
+        mrenderer.SetPropertyBlock(materialPropertyBlock);
 
         //Setting audio frequency
         engineAudio.pitch = 0.2f + Mathf.Clamp01(Mathf.Abs(EngineSoundInput) + Mathf.Abs(PlayerRotInput)) * 0.4f;
