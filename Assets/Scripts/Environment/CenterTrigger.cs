@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpecialTrigger : MonoBehaviour
+public class CenterTrigger : MonoBehaviour
 {
-    IEntity source;
+    public IEntity source;
 
     private void Start()
     {
