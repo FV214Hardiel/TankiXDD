@@ -12,19 +12,15 @@ public class DomeShieldScript : AbilityBase
 
     GameObject deployedShield;
 
-    
-
-    void Start()
+    new void Start()
     {
-        GetStats();
-
-        SetIcon();
+        base.Start();        
 
         source = GetComponent<IEntity>();
 
-        
 
-        
+
+
     }
 
     // Update is called once per frame

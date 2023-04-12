@@ -21,6 +21,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4f7d1b0d62e7e044b8540203b22c470e, type: 2}
   - {fileID: 11400000, guid: 4c625a9a2785e0a4a99c21f6b01e1c93, type: 2}
   - {fileID: 11400000, guid: 1b4f3464182c28744be956cc27e68708, type: 2}
+  - {fileID: 11400000, guid: 170ae992984ea7145b2b6dfa78b6ea3e, type: 2}
   unlockedAbilities:
   - {fileID: 0}
   - {fileID: 11400000, guid: 348e2b6a096674c4fadc7aac0793709d, type: 2}
