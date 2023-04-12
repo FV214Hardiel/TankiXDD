@@ -201,7 +201,37 @@ public class TankEntity : MonoBehaviour, IDamagable, IEntity, IDestructible
 
     public void DealAOE(Damage dmgInstance)
     {
+        if (isDead)
+        {
+            return;
+        }
+        outOfDamage = 0; //On every attempt of dealing dmg timer resets
 
+        Damage newDmgInstance = dmgInstance; //Applying defence buffs and debuffs
+        if (health.receivingDamageEffects != null)
+        {
+            foreach (ReceivingDamageEffects item in health.receivingDamageEffects.GetInvocationList())
+            {
+                newDmgInstance.damage = item.Invoke(newDmgInstance.damage);
+            }
+        }
+
+
+        if (shield.currentSP > 0)
+        {
+            shield.TakingDMG(newDmgInstance);
+        }
+        else
+        {
+            health.TakingDMG(newDmgInstance);
+        }
+        if (newDmgInstance.source == Player.PlayerEntity) //Playing hit sound only for player
+        {
+            //hitMarker.Play();
+            UIHitmarkerScript.instance.CreateHitmarker();
+            LevelStatisticsManager.instance.AddValue("player_damage", newDmgInstance.damage);
+
+        }
     }
     public void LoseEMPTenacity(Damage dmgInstance)
     {
