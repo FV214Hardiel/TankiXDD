@@ -288,7 +288,6 @@ public class TankEntity : MonoBehaviour, IDamagable, IEntity, IDestructible
             item.gameObject.layer = LayerMask.NameToLayer(team);
 
         }
-
            
         effh = gameObject.AddComponent<EffectsHandler>();
 
@@ -328,9 +327,9 @@ public class TankEntity : MonoBehaviour, IDamagable, IEntity, IDestructible
         }        
 
         meshRenderers.Add(GetComponent<MeshRenderer>());
+                SetLayermasks();
 
-        SetLayermasks();       
-
+        
         foreach (MeshRenderer item in meshRenderers)
         {
             if (isSkin)
@@ -344,18 +343,9 @@ public class TankEntity : MonoBehaviour, IDamagable, IEntity, IDestructible
                 item.material.SetColor("_TankColor", basePlayerColor);
             }
 
-            item.gameObject.layer = LayerMask.NameToLayer(team);
+            item.gameObject.layer = LayerMask.NameToLayer(team);            
 
-            
-           // shield.EnableShieldShader();
-
-        }       
-
-        
-       
-
-        
-
+        }
 
     }
 

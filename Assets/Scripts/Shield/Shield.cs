@@ -22,9 +22,9 @@ public class Shield : MonoBehaviour
     protected AudioSource shieldBrokenSound;
     protected AudioSource shieldRechargingSound;
 
-    protected List<MaterialPropertyBlock> materialPropertyBlocks;
+    //protected List<MaterialPropertyBlock> materialPropertyBlocks;
    // protected List<MeshRenderer> meshRenderers;
-    protected MaterialPropertyBlock materialPropertyBlock;
+    //protected MaterialPropertyBlock materialPropertyBlock;
 
     bool isPlayer;
 
@@ -41,7 +41,7 @@ public class Shield : MonoBehaviour
 
     private void OnEnable()
     {
-        materialPropertyBlock = new();
+        //materialPropertyBlock = new();
 
         eh = GetComponent<TankEntity>();
         eh.ShieldScript = this;
@@ -131,6 +131,7 @@ public class Shield : MonoBehaviour
 
     public virtual void StartShieldRecharge()
     {
+        if (isRecharging) return;
         isRecharging = true;
 
         if (isPlayer)
@@ -142,6 +143,7 @@ public class Shield : MonoBehaviour
 
     public virtual void StopShieldRecharge()
     {
+        if (!isRecharging) return;
         isRecharging = false;
 
         if (isPlayer)
@@ -254,19 +256,17 @@ public class Shield : MonoBehaviour
 
     public virtual void EnableShieldShader() 
     {
-        materialPropertyBlock.SetFloat("_isShieldUp", 1.0f);
-        foreach (MeshRenderer item in eh.meshRenderers)
+        foreach (MeshRenderer item in eh.meshRenderers) //Changing shader
         {
-            item.SetPropertyBlock(materialPropertyBlock);
+            item.material.SetFloat("_isShieldUp", 1.0f);
         }
     }
 
     public virtual void DisableShieldShader() 
     {
-        materialPropertyBlock.SetFloat("_isShieldUp", 0.0f);
-        foreach (MeshRenderer item in eh.meshRenderers)
+        foreach (MeshRenderer item in eh.meshRenderers) //Changing shader
         {
-            item.SetPropertyBlock(materialPropertyBlock);
+            item.material.SetFloat("_isShieldUp", 0.0f);
         }
     }
 
