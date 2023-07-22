@@ -91,27 +91,26 @@ public class ThunderShell : MonoBehaviour
             shotVector = DisperseVector(transform.forward, pelletsAngle);
 
             if (Physics.Raycast(transform.position, shotVector, out hit, pelletsDistance))
-            {
-
-                
+            {                
                 WeaponTrail.Create(trail, transform.position, hit.point);
-                //EntityHandler eh = hit.collider.GetComponentInParent<EntityHandler>(false);
-                //if (eh != null)
+                //print(hit.collider);
+                //if (hit.collider.TryGetComponent(out IDamagable damagable))
                 //{
-                //    if (!eh.IsDead) //Checking if target is alive and wasnt already hit by this shot
-                //    {
-                //        eh.DealDamage(pelletDamage, source);
-
-                //    }
+                //    damagable.DealDamage(new Damage(damage, source));                   
                 //}
 
-                if (hit.collider.TryGetComponent(out IDamagable damagable))
+                IDamagable damagable = hit.collider.GetComponentInParent<IDamagable>();
+                if (damagable != null)
                 {
-                    damagable.DealDamage(new Damage(damage, source));                   
+                    if (!damagable.IsDead)
+                    {
+
+                        damagable.DealDamage(new Damage(pelletDamage, source));
+                    }
                 }
 
-
             }
+            else
             {
                 WeaponTrail.Create(trail, transform.position, transform.position + shotVector * pelletsDistance); //Shot VFX if no hit
             }
@@ -133,6 +132,8 @@ public class ThunderShell : MonoBehaviour
         sht.timer = tol;
         
     }
+
+    //public static void CreateBuckshot()
 
     Vector3 DisperseVector(Vector3 originalVector, float angle)
     {
