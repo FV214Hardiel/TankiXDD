@@ -4,7 +4,15 @@ using UnityEngine;
 
 public class PlayerThunder : PlayerShooting
 {
-    public GameObject shellPref;    
+    public GameObject shellPref;   
+    public GameObject trailPref;
+
+    public int pelletsCount;
+    public float pelletsDistance;
+    public float pelletsAngle;
+    public float pelletDamage;
+
+    public float delayBetweenShotsEnhanced;
 
     public float projectileSpeed;
     float timeOfLife;
@@ -57,7 +65,9 @@ public class PlayerThunder : PlayerShooting
 
     protected override void OverloadShot()
     {
-        print("OVERLOAD");
-        Shot();
+        shotSound.Play();
+        ThunderShell.CreatePellets(trailPref, muzzle.position, muzzle.forward, source, pelletsCount, pelletDamage, pelletsAngle, pelletsDistance, muzzle.up);
+        remainingDelay = delayBetweenShotsEnhanced;
+        
     }
 }

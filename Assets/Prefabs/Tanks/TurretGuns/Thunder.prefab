@@ -306,11 +306,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 517eca24da8d08e42b497c8b06c5e5a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  source: {fileID: 0}
   weapRange: 15
   damage: 400
-  angle: 0
   delayBetweenShots: 3
+  enemyMask:
+    serializedVersion: 2
+    m_Bits: 0
+  angle: 0
   isTargetLocked: 0
   shellPref: {fileID: 6277428715457980806, guid: 5bb08614d1ec6c74f8549efb7a9021c5, type: 3}
   projectileSpeed: 50
@@ -338,12 +340,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5440b6b5531ae1644af2b466bcd3a072, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  source: {fileID: 0}
   weapRange: 15
   damage: 300
-  angle: 0
   delayBetweenShots: 2
+  enemyMask:
+    serializedVersion: 2
+    m_Bits: 0
+  angle: 0
   shellPref: {fileID: 6277428715457980806, guid: 5bb08614d1ec6c74f8549efb7a9021c5, type: 3}
+  trailPref: {fileID: 213642979737029707, guid: fd1612da7c65ca7448a79bfb392733ae, type: 3}
+  pelletsCount: 6
+  pelletsDistance: 40
+  pelletsAngle: 8
+  pelletDamage: 15
+  delayBetweenShotsEnhanced: 0.7
   projectileSpeed: 60
 --- !u!82 &8355261736195734821
 AudioSource:

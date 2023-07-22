@@ -133,7 +133,44 @@ public class ThunderShell : MonoBehaviour
         
     }
 
-    //public static void CreateBuckshot()
+    public static void CreatePellets(GameObject trail, Vector3 pos, Vector3 forwardVector, IEntity source,
+        int pelletsCount, float pelletDamage, float pelletsAngle, float pelletsDistance, Vector3 upVector)
+    {
+        
+
+        Vector3 shotVector = Vector3.zero;
+
+        RaycastHit hit;
+        for (int i = 0; i < pelletsCount; i++)
+        {
+            shotVector = DisperseVector(forwardVector, pelletsAngle, upVector);
+
+            if (Physics.Raycast(pos, shotVector, out hit, pelletsDistance))
+            {
+                //WeaponTrail.Create(trail, forwardVector, hit.point);
+
+                WeaponTrail.Create(trail, pos, hit.point);
+
+
+                IDamagable damagable = hit.collider.GetComponentInParent<IDamagable>();
+                if (damagable != null)
+                {
+                    if (!damagable.IsDead)
+                    {
+
+                        damagable.DealDamage(new Damage(pelletDamage, source));
+                    }
+                }
+
+            }
+            else
+            {
+                WeaponTrail.Create(trail, pos, pos + shotVector * pelletsDistance); //Shot VFX if no hit
+            }
+
+        }
+        //Destroy(go.gameObject);
+    }
 
     Vector3 DisperseVector(Vector3 originalVector, float angle)
     {
@@ -147,6 +184,22 @@ public class ThunderShell : MonoBehaviour
 
         //Adding UP vector multiplied by ratio and random value and rotated on random angle
         vector += Quaternion.AngleAxis(Random.Range(1, 357), originalVector) * (Random.Range(0f, 1f) * ratioMultiplier * transform.up);
+
+        return vector.normalized;
+    }
+
+    static Vector3 DisperseVector(Vector3 originalVector, float angle, Vector3 upVector)
+    {
+        Vector3 vector = originalVector.normalized; //Original vector must be normalized
+
+        //Taking random values from pregenerated lists       
+
+        angle *= Mathf.Deg2Rad; //Angle from degrees to rads
+
+        float ratioMultiplier = Mathf.Tan(angle); //Tangens of angle for ratio between Dispersion Leg and Base Leg       
+
+        //Adding UP vector multiplied by ratio and random value and rotated on random angle
+        vector += Quaternion.AngleAxis(Random.Range(1, 357), originalVector) * (Random.Range(0f, 1f) * ratioMultiplier * upVector);
 
         return vector.normalized;
     }
