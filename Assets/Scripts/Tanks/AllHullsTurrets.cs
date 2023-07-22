@@ -201,8 +201,7 @@ public class AllHullsTurrets : ScriptableObject
 
 
 
-        //Enabling Shield and Health
-        //tunk.AddComponent<AIShield>();
+        //Enabling Shield and Health        
         tunk.AddComponent<Shield>();
         tunk.AddComponent<Health>();
         //tunk.GetComponent<HealthEnemy>().enabled = true;
