@@ -25,6 +25,9 @@ public class PlayerMove : Move
     protected MaterialPropertyBlock materialPropertyBlock;
     MeshRenderer mrenderer;
 
+    [SerializeField]
+    Transform tracksCenterForForceApply;
+
     public float multiplierForShader; 
 
     private void Start()
@@ -42,6 +45,8 @@ public class PlayerMove : Move
         rb.sleepThreshold = 0.2f;
 
         engineAudio = GetComponent<AudioSource>();
+
+        tracksCenterForForceApply = transform.Find("Tracks");
 
         playerInputActions = new();
         playerInputActions.PlayerTankControl.Enable();
@@ -126,7 +131,8 @@ public class PlayerMove : Move
     {
         if (!isOnGround) return;
 
-        rb.AddForce(PlayerMoveInput * Speed * transform.forward, ForceMode.Acceleration);
+        //rb.AddForce(PlayerMoveInput * Speed * transform.forward, ForceMode.Acceleration);
+        rb.AddForceAtPosition(PlayerMoveInput * Speed * transform.forward, tracksCenterForForceApply.position, ForceMode.Acceleration);
                 
         transform.Rotate(0f, PlayerRotInput * TurnSpeed, 0f);
     }
