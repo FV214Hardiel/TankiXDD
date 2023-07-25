@@ -7296,9 +7296,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0d60b6402e34474799e67f247778b57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  expForce: 0
+  damage: 45
   expRadius: 2.8
-  damage: 300
+  expDamage: 300
   pelletsCount: 6
   pelletsDistance: 40
   pelletsAngle: 8
