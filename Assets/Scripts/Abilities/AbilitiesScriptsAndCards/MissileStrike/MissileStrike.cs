@@ -22,11 +22,9 @@ public class MissileStrike : AbilityBase
 
     public float spawnHeight = 100;
     
-    void Start()
+    new void Start()
     {
-        GetStats();
-
-        SetIcon();
+        base.Start();
 
         source = GetComponent<IEntity>();
         //Debug.Log(abilitySlot);

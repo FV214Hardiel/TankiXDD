@@ -11,12 +11,10 @@ public class OverloadScript : AbilityBase
 
 
    
-    void Start()
+    new void Start()
     {
         //Basic setup
-        GetStats();
-
-        SetIcon();
+        base.Start();
 
         source = GetComponent<TankEntity>();
 

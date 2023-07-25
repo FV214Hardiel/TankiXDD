@@ -11,11 +11,9 @@ public class EMPAbilityScript : AbilityBase
 
     IEntity source;
 
-    void Start()
+    new void Start()
     {
-        GetStats();
-
-        SetIcon();
+        base.Start();
 
         source = GetComponent<IEntity>();
     }

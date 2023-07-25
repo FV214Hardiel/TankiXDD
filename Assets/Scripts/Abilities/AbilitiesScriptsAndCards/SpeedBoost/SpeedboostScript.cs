@@ -13,11 +13,9 @@ public class SpeedboostScript : AbilityBase
     IEntity source;
 
     Move moveScript;
-    void Start()
+    new void Start()
     {
-        GetStats();
-
-        SetIcon();
+        base.Start();
 
         source = GetComponent<IEntity>();
 
