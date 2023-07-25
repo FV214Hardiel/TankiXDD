@@ -163,7 +163,7 @@ public class AllHullsTurrets : ScriptableObject
         turret.GetComponentInChildren<Rotation>().enabled = true;
 
         gun.AddComponent<GunTarget>();
-        gun.GetComponentInChildren<PlayerShooting>().enabled = true;
+        //gun.GetComponentInChildren<PlayerShooting>().enabled = true;
         
 
 
@@ -219,8 +219,8 @@ public class AllHullsTurrets : ScriptableObject
         //Enabling AI scripts and deleting Player scripts
         DestroyImmediate(turret.GetComponentInChildren<Rotation>());
         DestroyImmediate(gun.GetComponentInChildren<GunTarget>());
-        DestroyImmediate(gun.GetComponentInChildren<PlayerShooting>());
-        gun.GetComponentInChildren<AIShooting>().enabled = true;
+        //DestroyImmediate(gun.GetComponentInChildren<PlayerShooting>());
+        //gun.GetComponentInChildren<AIShooting>().enabled = true;
 
         turret.transform.SetParent(tunk.transform); //Making created hull parent to turret       
         turret.transform.SetPositionAndRotation(tunk.transform.Find("mount").position, tunk.transform.rotation); //Mounting turret to hull

@@ -187,7 +187,6 @@ GameObject:
   - component: {fileID: 2759201032473687836}
   - component: {fileID: 4856061759488362554}
   - component: {fileID: 1747388056557551330}
-  - component: {fileID: 3689837469094919854}
   - component: {fileID: 4570149966750535368}
   - component: {fileID: 6633574672537723429}
   - component: {fileID: 8355261736195734821}
@@ -294,28 +293,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
---- !u!114 &3689837469094919854
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8608694163460753105}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 517eca24da8d08e42b497c8b06c5e5a4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weapRange: 15
-  damage: 400
-  delayBetweenShots: 3
-  enemyMask:
-    serializedVersion: 2
-    m_Bits: 0
-  angle: 0
-  isTargetLocked: 0
-  shellPref: {fileID: 6277428715457980806, guid: 5bb08614d1ec6c74f8549efb7a9021c5, type: 3}
-  projectileSpeed: 50
 --- !u!114 &4570149966750535368
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -335,20 +312,27 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8608694163460753105}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5440b6b5531ae1644af2b466bcd3a072, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   weapRange: 15
+  additionalRange: 30
   damage: 300
+  muzzle: {fileID: 7420944333429753526}
   delayBetweenShots: 2
   enemyMask:
+    serializedVersion: 2
+    m_Bits: 0
+  friendlyMask:
     serializedVersion: 2
     m_Bits: 0
   angle: 0
   shellPref: {fileID: 6277428715457980806, guid: 5bb08614d1ec6c74f8549efb7a9021c5, type: 3}
   trailPref: {fileID: 213642979737029707, guid: fd1612da7c65ca7448a79bfb392733ae, type: 3}
+  expRadius: 3
+  expDamage: 300
   pelletsCount: 6
   pelletsDistance: 40
   pelletsAngle: 8

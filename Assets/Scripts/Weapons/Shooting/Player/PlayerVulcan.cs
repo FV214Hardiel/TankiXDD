@@ -38,19 +38,21 @@ public class PlayerVulcan : PlayerShooting
 
         friendlyMask = source.FriendlyMasks;
 
-        disperseAngles = new();
-        for (int _ = 0; _ < 50; _++)
-        {
-            disperseAngles.Add((ushort)Random.Range(1, 357));
-        }
+        //disperseAngles = new();
+        //for (int _ = 0; _ < 50; _++)
+        //{
+        //    disperseAngles.Add((ushort)Random.Range(1, 357));
+        //}
 
-        disperseLengths = new();
-        for (int _ = 0; _ < 50; _++)
-        {
-            disperseLengths.Add(Random.Range(0f, 1f));
-        }
+        //disperseLengths = new();
+        //for (int _ = 0; _ < 50; _++)
+        //{
+        //    disperseLengths.Add(Random.Range(0f, 1f));
+        //}
 
-        index = 0;
+        //index = 0;
+
+        InitAnglesAndLengthLists();
 
         stacks = 0;
         stackTimer = 0;

@@ -86,7 +86,7 @@ public class AIThunder : AIShooting
     protected override void Shot()
     {
         shotSound.Play();
-        ThunderShell.CreateShot(shellPref, muzzle.position, muzzle.forward * projectileSpeed, source, damage, timeOfLife);
+        //ThunderShell.CreateShot(shellPref, muzzle.position, muzzle.forward * projectileSpeed, source, damage, timeOfLife);
         remainingDelay = delayBetweenShots;
     }
 }

@@ -10,16 +10,15 @@ public class ShieldOverloadScript : AbilityBase
     float remainingDuration;
     IEntity source;
 
-    Shooting shotScript;
-    void Start()
-    {
-        GetStats();
+    Weapon shotScript;
 
-        SetIcon();
+    new void Start()
+    {
+        base.Start();
 
         source = GetComponent<IEntity>();
 
-        shotScript = GetComponentInChildren<Shooting>();
+        shotScript = GetComponentInChildren<Weapon>();
     }
 
     // Update is called once per frame

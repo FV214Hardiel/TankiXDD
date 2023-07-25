@@ -2,17 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AIShooting : Shooting
+public class AIShooting : Weapon
 {
       
 
    
     protected Vector3 shotVector;
 
-    public float angle;
-    protected List<ushort> disperseAngles;
-    protected List<float> disperseLengths;
-    protected int index;
+    //public float angle;
+    //protected List<ushort> disperseAngles;
+    //protected List<float> disperseLengths;
+    //protected int index;
 
     
 

@@ -4,6 +4,8 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
+[RequireComponent(typeof(WeaponAI))]
+
 public class AIMove : Move
 {
     
@@ -40,12 +42,15 @@ public class AIMove : Move
 
     Transform muzzle;
 
+    WeaponAI weaponScript;
+
 
 
 
     void Start()
     {
         eh = GetComponent<TankEntity>();
+        weaponScript = GetComponent<WeaponAI>();
 
         ignoringLayers = eh.FriendlyMasks;
 
@@ -221,17 +226,22 @@ public class AIMove : Move
         {
             if (Vector3.Distance(transform.position, target.position) < (attackRange - 3)) //if enemy in range of attack then attack
             {
-                AIState = AIEnum.Attack;
-                agent.speed = maxSpeed / 3;
-                engineAudio.pitch = 0.6f;
+                //AIState = AIEnum.Attack;
+                //weaponScript.StartAttack();
+
+                //agent.speed = maxSpeed / 3;
+                //engineAudio.pitch = 0.6f;
+                SwitchToAttack();
                 //isTargetLocked = true;
             }
             else //if not just chase
             {
-                AIState = AIEnum.Chase;
-                agent.speed = maxSpeed;
-                engineAudio.pitch = 1;
-                chaseTimer = maxBlindChaseDuration;
+                //AIState = AIEnum.Chase;
+                //agent.speed = maxSpeed;
+                //engineAudio.pitch = 1;
+                //chaseTimer = maxBlindChaseDuration;
+
+                SwitchToChase();
             }
         }
     }
@@ -240,7 +250,7 @@ public class AIMove : Move
     {
         if (target == null)
         {
-            AIState = AIEnum.Patrol;
+            SwitchToPatrol();
             return;
         }
         relPos = Vector3.ProjectOnPlane((target.transform.position - turret.transform.position), transform.up);
@@ -252,7 +262,7 @@ public class AIMove : Move
     {
         if (target == null)
         {
-            AIState = AIEnum.Patrol;
+            SwitchToPatrol();
             return;
         }
         newTarget = SearchForEnemies(); //if a new enemy is found then switch on the new target
@@ -273,11 +283,7 @@ public class AIMove : Move
             {
                 if (chaseTimer <= 0) //if timer ran out then forget the target
                 {
-                    target = null;
-                    AIState = AIEnum.Patrol;
-                    
-                    agent.speed = maxSpeed / 2;
-                    engineAudio.pitch = 0.8f;
+                    SwitchToPatrol();
                 }
                 //if timer didnt run out then continue to last targets position
             }
@@ -287,9 +293,7 @@ public class AIMove : Move
                 agent.SetDestination(target.position);
                 if (Vector3.Distance(transform.position, target.position) < (attackRange - 3)) //if enemy in range of attack
                 {
-                    AIState = AIEnum.Attack;
-                    agent.speed = maxSpeed / 3;
-                    engineAudio.pitch = 0.6f;
+                    SwitchToAttack();
                     agent.SetDestination(target.position);
                     //isTargetLocked = true;
                 }
@@ -306,10 +310,7 @@ public class AIMove : Move
             {
                 if (chaseTimer <= 0) //if timer ran out then forget the target
                 {
-                    target = null;
-                    AIState = AIEnum.Patrol;
-                    agent.speed = maxSpeed / 2;
-                    engineAudio.pitch = 0.8f;
+                    SwitchToPatrol();
                 }
             }
 
@@ -321,7 +322,7 @@ public class AIMove : Move
     {
         if (target == null)
         {
-            AIState = AIEnum.Patrol;
+            SwitchToPatrol();
             return;
         }
 
@@ -334,7 +335,7 @@ public class AIMove : Move
     {
         if (target == null)
         {
-            AIState = AIEnum.Patrol;
+            SwitchToPatrol();
             return;
         }
         //if target isnt visible OR out of range then chase
@@ -355,11 +356,34 @@ public class AIMove : Move
             {
                 agent.SetDestination(target.position);
             }
-            chaseTimer = maxBlindChaseDuration;
-            AIState = AIEnum.Chase;
-            agent.speed = maxSpeed;
-            engineAudio.pitch = 1;
+            SwitchToChase();
         }
+    }
+
+    void SwitchToAttack()
+    {
+        AIState = AIEnum.Attack;
+        weaponScript.StartAttack();
+        agent.speed = maxSpeed / 3;
+        engineAudio.pitch = 0.6f;
+    }
+
+    void SwitchToPatrol()
+    {
+        target = null;
+        AIState = AIEnum.Patrol;
+        weaponScript.EndAttack();
+        agent.speed = maxSpeed / 2;
+        engineAudio.pitch = 0.8f;
+    }
+
+    void SwitchToChase()
+    {
+        chaseTimer = maxBlindChaseDuration;
+        AIState = AIEnum.Chase;
+        weaponScript.EndAttack();
+        agent.speed = maxSpeed;
+        engineAudio.pitch = 1;
     }
 
 }

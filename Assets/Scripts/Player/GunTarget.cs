@@ -29,7 +29,7 @@ public class GunTarget : MonoBehaviour
         groundTarget = GameObject.Find("GroundTargetUI").transform; //Just UI element
         targetDetector = GameObject.Find("TargetDetectorUI").GetComponent<UnityEngine.UI.RawImage>(); //Circle that shows if enemy is targeted
 
-        range = GetComponent<PlayerShooting>().weapRange + 3; //Range for RED dot (slightly more than actual)
+        range = GetComponent<Weapon>().weapRange + 3; //Range for RED dot (slightly more than actual)
 
         baseColor = targetDetector.color; 
         orange = new(1f, 0.56f, 0f); //Color for enemy out of range

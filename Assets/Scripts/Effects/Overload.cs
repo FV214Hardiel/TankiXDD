@@ -35,7 +35,7 @@ public class Overload : Effect
 
     public override void InitEffect()
     {
-        affectedObject.Gameobject.GetComponentInChildren<Shooting>().EnableOverload();
+        affectedObject.Gameobject.GetComponentInChildren<Weapon>().EnableOverload();
         //affectedObject.Gameobject.GetComponentInChildren<Shooting>().hitDelegate += Test;
 
     }   
@@ -43,7 +43,7 @@ public class Overload : Effect
 
     public override void EndEffect()
     {
-        affectedObject.Gameobject.GetComponentInChildren<Shooting>().DisableOverload();
+        affectedObject.Gameobject.GetComponentInChildren<Weapon>().DisableOverload();
         //affectedObject.Gameobject.GetComponentInChildren<Shooting>().hitDelegate -= Test;
     }
 
