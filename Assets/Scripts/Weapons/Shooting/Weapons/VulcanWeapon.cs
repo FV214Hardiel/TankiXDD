@@ -2,56 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerVulcan : PlayerShooting
+public class VulcanWeapon : Weapon
 {
     
-
     [SerializeField] byte stacks;
     public float stackDuration;
     float baseStackDur;
-    float stackTimer;
-    float modifiedDelay;   
-
-    Vector3 shotVector;
+    [SerializeField] float stackTimer;
+    float modifiedDelay;       
 
     AudioSource chargeSound;
 
     public GameObject prefabOfShot;
     public ParticleSystem shotEffect;
 
-    void Start()
+    new void Start()
     {
-        source = GetComponentInParent<IEntity>();
-        muzzle = transform.Find("muzzle");       
-
-        inputActions = new();
-       // if (!GameHandler.instance.GameIsPaused) 
-            inputActions.PlayerTankControl.Enable();
-
-        //shotSound = GetComponent<AudioSource>();
+        base.Start();
+        
         chargeSound = transform.Find("ChargesSound").GetComponent<AudioSource>();
-
-        remainingDelay = 0;
-        baseStackDur = stackDuration;
-
-        shotDelegate = Shot;
+       
+        baseStackDur = stackDuration;        
 
         friendlyMask = source.FriendlyMasks;
-
-        //disperseAngles = new();
-        //for (int _ = 0; _ < 50; _++)
-        //{
-        //    disperseAngles.Add((ushort)Random.Range(1, 357));
-        //}
-
-        //disperseLengths = new();
-        //for (int _ = 0; _ < 50; _++)
-        //{
-        //    disperseLengths.Add(Random.Range(0f, 1f));
-        //}
-
-        //index = 0;
-
+        
         InitAnglesAndLengthLists();
 
         stacks = 0;
@@ -59,33 +33,19 @@ public class PlayerVulcan : PlayerShooting
         
     }
     
-    void Update()
+    new void Update()
     {
-        if (GameHandler.instance.GameIsPaused) return; //Checking pause
+        base.Update();
 
         chargeSound.pitch = stacks > 0 ? (0.4f + stacks * 0.03f) : 0;
 
-        if (remainingDelay > 0) //Decreasing delay timer  
-        {
-            remainingDelay -= Time.deltaTime;
-            return;
-        }
         //Stacks are decreasing with time
         stackTimer -= Time.deltaTime;
-        if (stackTimer <= 0 && stacks > 0)
+        if (stackTimer <= 0 && stacks > 0 && !isOpenFire)
         {
             stacks--;
             stackTimer = stackDuration;
-        }
-       
-
-        inputValue = inputActions.PlayerTankControl.Fire.ReadValue<float>();
-
-        if (inputValue > 0) //Shot
-        {
-            shotVector = DisperseVector(muzzle.forward, angle);
-            shotDelegate();
-        }
+        }      
         
     }
 
@@ -108,7 +68,9 @@ public class PlayerVulcan : PlayerShooting
 
 
     protected override void Shot()
-    { 
+    {
+        shotVector = DisperseVector(muzzle.forward, angle);
+
         shotEffect.Play();
         
         if (Physics.Raycast(muzzle.position, shotVector, out RaycastHit hit, weapRange, ~friendlyMask))
@@ -141,6 +103,8 @@ public class PlayerVulcan : PlayerShooting
 
     protected override void OverloadShot()
     {
+        shotVector = DisperseVector(muzzle.forward, angle);
+
         shotEffect.Play();
 
         if (Physics.Raycast(muzzle.position, shotVector, out RaycastHit hit, weapRange, ~friendlyMask))

@@ -189,7 +189,6 @@ GameObject:
   - component: {fileID: 3525433281868757322}
   - component: {fileID: 4367804129768659205}
   - component: {fileID: 6052034561358946327}
-  - component: {fileID: 6784220450071641281}
   - component: {fileID: 4443009148935543413}
   m_Layer: 0
   m_Name: barrel
@@ -313,37 +312,25 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2967017560543666307}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 83b36be63c15d9d4f816620ba774501b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  source: {fileID: 0}
   weapRange: 50
+  additionalRange: 5
   damage: 10
-  angle: 4
+  muzzle: {fileID: 3182318828700097277}
   delayBetweenShots: 0.1
+  enemyMask:
+    serializedVersion: 2
+    m_Bits: 0
+  friendlyMask:
+    serializedVersion: 2
+    m_Bits: 0
+  angle: 4
   prefab: {fileID: 8537647364723216535, guid: 80977d32d624fed40a4b2fb700a28f5a, type: 3}
   projectileSpeed: 25
---- !u!114 &6784220450071641281
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2967017560543666307}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 83069fed38959e847ab6d13e1e03632d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  source: {fileID: 0}
-  damage: 2
-  angle: 2
-  prefab: {fileID: 8537647364723216535, guid: 80977d32d624fed40a4b2fb700a28f5a, type: 3}
-  delayBetweenShots: 0.2
-  weapRange: 40
-  projectileSpeed: 30
 --- !u!82 &4443009148935543413
 AudioSource:
   m_ObjectHideFlags: 0
@@ -355,9 +342,9 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 853da6c03ba1df04a89d8852a9bfec51, type: 3}
-  m_PlayOnAwake: 1
-  m_Volume: 0.6
-  m_Pitch: 1
+  m_PlayOnAwake: 0
+  m_Volume: 0.4
+  m_Pitch: 1.1
   Loop: 1
   Mute: 0
   Spatialize: 0

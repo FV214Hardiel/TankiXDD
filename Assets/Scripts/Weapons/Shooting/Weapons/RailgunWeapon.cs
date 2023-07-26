@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerRailgun : PlayerShooting
+public class RailgunWeapon : Weapon
 {  
     ParticleSystem chargeLight;
     public float chargeDuration;
@@ -11,48 +11,18 @@ public class PlayerRailgun : PlayerShooting
     public GameObject prefabOfShot;
 
 
-
-    void Start()
+    new void Start()
     {
-        source = GetComponentInParent<TankEntity>();
-        muzzle = transform.Find("muzzle");
-
-        shotDelegate = Shot;
-
-        inputActions = new();
-       // if (!GameHandler.instance.GameIsPaused) 
-            inputActions.PlayerTankControl.Enable();
-
-        shotSound = GetComponent<AudioSource>();
+        base.Start();
+        
         chargeSound = transform.Find("ChargeSound").GetComponent<AudioSource>();
 
         chargeLight = transform.Find("muzzleFlash").GetComponent<ParticleSystem>();
 
         enemyMask = source.EnemiesMasks + LevelHandler.instance.groundlayers;
 
-        remainingDelay = 0;
     }
-
     
-    void Update()
-    {
-
-        if (GameHandler.instance.GameIsPaused) return; //Checking pause
-
-        
-        if (remainingDelay > 0) //Decreasing delay timer  
-        {
-            remainingDelay -= Time.deltaTime;
-            return;
-        }
-
-        inputValue = inputActions.PlayerTankControl.Fire.ReadValue<float>();
-
-        if (inputValue > 0) //Shot
-        {                       
-            shotDelegate();
-        }
-    }
 
     protected override void Shot()
     {

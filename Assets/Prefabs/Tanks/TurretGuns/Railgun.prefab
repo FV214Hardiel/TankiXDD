@@ -141,7 +141,6 @@ GameObject:
   - component: {fileID: 276893834730560591}
   - component: {fileID: 2019369945758964540}
   - component: {fileID: 4980938522530382645}
-  - component: {fileID: 6102962902739307274}
   - component: {fileID: 893356684044580481}
   - component: {fileID: 5931847297143463599}
   - component: {fileID: 3379037883804154634}
@@ -250,28 +249,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
---- !u!114 &6102962902739307274
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6180493610794603404}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ebf974bbdbcdf748b54a7719d2afb0c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weapRange: 50
-  damage: 30
-  delayBetweenShots: 2
-  enemyMask:
-    serializedVersion: 2
-    m_Bits: 0
-  angle: 0
-  isTargetLocked: 0
-  chargeDuration: 0.8
-  shellPrefab: {fileID: 213642979737029707, guid: 0afeceafc47c0ff4b86059f6309b3749, type: 3}
 --- !u!114 &893356684044580481
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -291,15 +268,20 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6180493610794603404}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 64d0b2863a755454ebe8e66f77c3027e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   weapRange: 70
+  additionalRange: 0
   damage: 400
+  muzzle: {fileID: 1664727484551985704}
   delayBetweenShots: 2
   enemyMask:
+    serializedVersion: 2
+    m_Bits: 0
+  friendlyMask:
     serializedVersion: 2
     m_Bits: 0
   angle: 0

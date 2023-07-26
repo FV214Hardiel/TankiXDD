@@ -21,78 +21,15 @@ public class ThunderWeapon : Weapon
 
     public float projectileSpeed;
     float timeOfLife;
-    void Start()
+    new void Start()
     {
-        //Base setup for shooting
-        source = GetComponentInParent<TankEntity>();
-        muzzle = transform.Find("muzzle");
+        base.Start();
 
-        timeOfLife = weapRange / projectileSpeed;
-
-        shotSound = GetComponent<AudioSource>();
-
-        remainingDelay = 0;
-
-        enemyMask = source.EnemiesMasks;
+        timeOfLife = weapRange / projectileSpeed;       
 
         InitAnglesAndLengthLists();
-
-        shotDelegate = Shot;
-
-        source.EntityStunned += Stun;
-        source.EntityAwaken += UnStun;
-
-        if (source.isPlayer)
-        {
-            inputActions = new();
-
-            inputActions.PlayerTankControl.Enable();
-
-            inputActions.PlayerTankControl.Fire.started += (o) => OpenFire();
-            inputActions.PlayerTankControl.Fire.canceled += (o) => CeaseFire();
-        }        
-
-    }
-
-    public override void OpenFire()
-    {
-        
-        isOpenFire = true;
-        if (remainingDelay <= 0 && !isStunned)
-        {
-            shotDelegate();
-        }
-    }
-
-    public override void CeaseFire()
-    {
-        isOpenFire = false;
-    }
-
-    public override void Stun()
-    {
-        isStunned = true;
-    }
-
-    public override void UnStun()
-    {
-        isStunned = false;
-        if (isOpenFire && remainingDelay <= 0) shotDelegate();
-    }
-
-    void Update()
-    {       
-
-        if (GameHandler.instance.GameIsPaused) return; //Checking pause
-
-        if (remainingDelay > 0) //Decreasing delay timer  
-        {
-            remainingDelay -= Time.deltaTime;
-            if ( remainingDelay <= 0 && isOpenFire && !isStunned)  shotDelegate();
-            
-        }
-
-    }
+    }   
+  
 
     protected override void Shot()
     {

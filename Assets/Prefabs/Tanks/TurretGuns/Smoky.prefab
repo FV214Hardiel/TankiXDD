@@ -189,7 +189,6 @@ GameObject:
   - component: {fileID: 1650082506813670955}
   - component: {fileID: 5797800950937683440}
   - component: {fileID: 1639010579079659847}
-  - component: {fileID: 4983400906300002292}
   - component: {fileID: 4209149796619469078}
   m_Layer: 0
   m_Name: barrel
@@ -315,36 +314,23 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4089932773475674261}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 44a750476664ad8468db253e4272d4eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  source: {fileID: 0}
   weapRange: 50
+  additionalRange: 0
   damage: 10
-  angle: 0
+  muzzle: {fileID: 2595112251128731756}
   delayBetweenShots: 1
-  shotEffect: {fileID: 8145522921419673881}
-  hitEffect: {fileID: 3748262256023914457}
---- !u!114 &4983400906300002292
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4089932773475674261}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d86611d6ca09df2448335860f9ae964e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  source: {fileID: 0}
-  weapRange: 50
-  damage: 5
+  enemyMask:
+    serializedVersion: 2
+    m_Bits: 0
+  friendlyMask:
+    serializedVersion: 2
+    m_Bits: 0
   angle: 0
-  delayBetweenShots: 1.2
-  isTargetLocked: 0
   shotEffect: {fileID: 8145522921419673881}
   hitEffect: {fileID: 3748262256023914457}
 --- !u!82 &4209149796619469078

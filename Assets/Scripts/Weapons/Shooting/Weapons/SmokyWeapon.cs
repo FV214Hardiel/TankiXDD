@@ -3,65 +3,30 @@ using System.Collections.Generic;
 using System.Data;
 using UnityEngine;
 
-public class PlayerSmoky : PlayerShooting
+public class SmokyWeapon : Weapon
 {           
     public ParticleSystem shotEffect;
     public ParticleSystem hitEffect;
 
-    [SerializeField]
+    //[SerializeField]
     Health health;
 
-    void Start()
+    new void Start()
     {
-        source = GetComponentInParent<TankEntity>();
-        muzzle = transform.Find("muzzle");
+        base.Start();
 
-        inputActions = new();
-       // if (!GameHandler.instance.GameIsPaused) 
-            inputActions.PlayerTankControl.Enable();
-
-        shotDelegate = Shot;
-        hitDelegate = BasicHit;
-
-        shotSound = GetComponent<AudioSource>();
-        //chargeSound = transform.Find("ChargesSound").GetComponent<AudioSource>();
+        hitDelegate = BasicHit;        
 
         health = source.HealthScript;
-
-        remainingDelay = 0;
 
     }
 
     public override void EnableOverload()
     {
-        base.EnableOverload();
-        //if (health!= null)
-        //{
-        //    health = GetComponentInParent<Health>(true);
-        //}
+        base.EnableOverload();        
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (GameHandler.instance.GameIsPaused) return; //Checking pause
-               
-        if (remainingDelay > 0) //Decreasing delay timer  
-        {
-            remainingDelay -= Time.deltaTime;
-            return;
-        }     
-
-        inputValue = inputActions.PlayerTankControl.Fire.ReadValue<float>();
-
-        if (inputValue > 0) //Shot
-        {
-            //shotVector = DisperseVector(muzzle.forward, angle);
-            shotDelegate();
-        }
-    }
-
-    
+   
 
     protected override void Shot()
     {

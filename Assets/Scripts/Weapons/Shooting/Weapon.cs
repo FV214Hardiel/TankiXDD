@@ -36,6 +36,8 @@ public class Weapon : MonoBehaviour
 
     public Func<float, float> outputDamageModifiers;
 
+    protected Vector3 shotVector;
+
     public float angle;
     protected List<ushort> disperseAngles;
     protected List<float> disperseLengths;
@@ -43,6 +45,49 @@ public class Weapon : MonoBehaviour
 
     protected PlayerInputActions inputActions;
     protected float inputValue;
+
+    protected void OnEnable()
+    {
+        shotSound = GetComponent<AudioSource>();
+
+        remainingDelay = 0;
+
+        shotDelegate = Shot;
+
+        muzzle = transform.Find("muzzle");
+    }
+
+    protected void Start()
+    {
+        //Base setup for shooting
+        source = GetComponentInParent<TankEntity>(); 
+        enemyMask = source.EnemiesMasks;
+        source.EntityStunned += Stun;
+        source.EntityAwaken += UnStun;
+
+        if (source.isPlayer)
+        {
+            inputActions = new();
+
+            inputActions.PlayerTankControl.Enable();
+
+            inputActions.PlayerTankControl.Fire.started += (o) => OpenFire();
+            inputActions.PlayerTankControl.Fire.canceled += (o) => CeaseFire();
+        }
+
+    }
+
+    protected void Update()
+    {
+        if (GameHandler.instance.GameIsPaused) return; //Checking pause
+
+        if (remainingDelay > 0) //Decreasing delay timer  
+        {
+            remainingDelay -= Time.deltaTime;
+            if (remainingDelay <= 0 && isOpenFire && !isStunned) shotDelegate();
+
+        }
+    }
 
     protected virtual void Shot()
     {
@@ -80,11 +125,13 @@ public class Weapon : MonoBehaviour
 
     public virtual void Stun()
     {
-
+        isStunned = true;
     }
 
     public virtual void UnStun()
     {
+        isStunned = false;
+        if (isOpenFire && remainingDelay <= 0) shotDelegate();
 
     }
 
@@ -93,9 +140,16 @@ public class Weapon : MonoBehaviour
 
     }
 
-    public virtual void OpenFire() { }
+    public virtual void OpenFire() 
+    {
+        isOpenFire = true;
+        if (remainingDelay <= 0 && !isStunned)
+        {
+            shotDelegate();
+        }
+    }
 
-    public virtual void CeaseFire() { }
+    public virtual void CeaseFire() => isOpenFire = false;
 
     protected void InitAnglesAndLengthLists()
     {

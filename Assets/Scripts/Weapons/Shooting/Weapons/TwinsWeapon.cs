@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerTwins : PlayerShooting
+public class TwinsWeapon : Weapon
 {
     public GameObject shellPref;
 
@@ -19,37 +19,23 @@ public class PlayerTwins : PlayerShooting
 
     public bool test;
 
-    void Start()
+    new void Start()
     {
+        base.Start();
 
-       
-        //Base setup for shooting
-        source = GetComponentInParent<TankEntity>();
-
-        timeOfLife = weapRange / projectileSpeed;
-
-        shotSound = GetComponent<AudioSource>();
-
-        remainingDelay = 0;
-
-        //Delegate goes on
-        shotDelegate = Shot;
-
-        inputActions = new();
-       // if (!GameHandler.instance.GameIsPaused) 
-            inputActions.PlayerTankControl.Enable();
 
         //Specific setup
+        timeOfLife = weapRange / projectileSpeed;
+        
         debuffPower = 3;
         debuffDuration = 10;
 
         shotFromRight = true;
 
-        muzzleL = transform.Find("muzzleL");
-        muzzleR = transform.Find("muzzleR");
+        //muzzleL = transform.Find("muzzleL");
+        //muzzleR = transform.Find("muzzleR");
 
     }
-
 
     void Update()
     {
@@ -59,21 +45,7 @@ public class PlayerTwins : PlayerShooting
         if (remainingDelay > 0) //Decreasing delay timer  
         {
             remainingDelay -= Time.deltaTime;
-            return;
-        }
-
-        inputValue = inputActions.PlayerTankControl.Fire.ReadValue<float>();
-
-        //print(inputValue);
-       // print(inputActions);
-       // print(inputActions.PlayerTankControl);
-
-        //print("read value");
-        //Making a shot
-        if (inputValue > 0) 
-        {
-            
-            shotDelegate();           
+            if (remainingDelay <= 0 && isOpenFire && !isStunned) shotDelegate();
 
         }
 
