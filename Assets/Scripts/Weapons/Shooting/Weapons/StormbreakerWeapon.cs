@@ -1,78 +1,63 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerStormbreaker : PlayerShooting
+public class StormbreakerWeapon : Weapon
 {
     AudioSource chargingSound;
     AudioSource chargedSound;
 
     bool isCharging;
-
-    [SerializeField]
+    
     float chargeEnergy;
 
     public float maxCharge;
 
     Light chargeLight;
-    float testTimer;
+    //float testTimer;
 
     public LayerMask affectedLayers;
     public LayerMask stoppingLayers;
 
-
-    Vector3 shotVector;
-
     public GameObject prefabOfShot;
     public ParticleSystem shotEffect;
-    void Start()
+
+    new void OnEnable()
     {
-        source = GetComponentInParent<IEntity>();
-        muzzle = transform.Find("muzzle");
+        base.OnEnable();
+
         chargeLight = transform.Find("ChargeLight").GetComponent<Light>();
 
-        inputActions = new();
-        //if (!GameHandler.instance.GameIsPaused) 
-            inputActions.PlayerTankControl.Enable();
-
-        shotDelegate = Shot;
-       
-        inputActions.PlayerTankControl.Fire.started += FireButtonStarted;
-        inputActions.PlayerTankControl.Fire.canceled += FireButtonCanceled;
-
-        shotSound = GetComponent<AudioSource>();
         chargingSound = transform.Find("ChargingSound").GetComponent<AudioSource>();
         chargedSound = transform.Find("ChargedSound").GetComponent<AudioSource>();
-
-        remainingDelay = 0;
-
-        friendlyMask = source.FriendlyMasks;
-        enemyMask = source.EnemiesMasks;
-
-       
-        affectedLayers += enemyMask;
-
-        chargeEnergy = 0;
-
-       
-
     }
 
-    void Update()
+    new void Start()
+    {
+        base.Start();
+
+        friendlyMask = source.FriendlyMasks;
+        enemyMask = source.EnemiesMasks;       
+        affectedLayers += enemyMask;
+        chargeEnergy = 0;       
+    }
+
+    new void Update()
     {
         if (GameHandler.instance.GameIsPaused) return; //Checking pause
 
         if (remainingDelay > 0) //Decreasing delay timer  
         {
             remainingDelay -= Time.deltaTime;
-            return;
+            if (remainingDelay <= 0 && isOpenFire && !isStunned) StartCharge();
         }
 
         if (isCharging)
         {
-            testTimer += Time.deltaTime;
+            //testTimer += Time.deltaTime;
             chargeEnergy += Time.deltaTime * 10;
             chargeLight.intensity = chargeEnergy / maxCharge;
             if (chargeEnergy >= maxCharge)
@@ -82,6 +67,8 @@ public class PlayerStormbreaker : PlayerShooting
                 isCharging = false;
                 chargedSound.Play();
                 chargeLight.intensity = 3;
+
+                if (!source.isPlayer) Invoke(nameof(StopCharge), 1f); //fix for AI who stuck on charge
             }
         }
 
@@ -188,40 +175,76 @@ public class PlayerStormbreaker : PlayerShooting
         remainingDelay = delayBetweenShots;
     }
 
-    private void OnEnable()
+
+
+    //private void OnDestroy()
+    //{
+    //    inputActions.PlayerTankControl.Fire.started -= FireButtonStarted;
+    //    inputActions.PlayerTankControl.Fire.canceled -= FireButtonCanceled;
+    //}
+
+    public override void OpenFire()
     {
+        if (isOpenFire) return;
+
+        isOpenFire = true;
+        if (remainingDelay > 0 || isStunned) return;
+
+        StartCharge();
+
         
     }
 
-    private void OnDestroy()
+    public override void CeaseFire()
     {
-        inputActions.PlayerTankControl.Fire.started -= FireButtonStarted;
-        inputActions.PlayerTankControl.Fire.canceled -= FireButtonCanceled;
+        if (!isOpenFire) return;
+
+        isOpenFire = false;
+        StopCharge();
     }
 
-    void FireButtonStarted(InputAction.CallbackContext context)
+    void StartCharge()
     {
-        if (remainingDelay > 0) return;
-
-        
         isCharging = true;
         chargingSound.Play();
     }
 
-    void FireButtonCanceled(InputAction.CallbackContext context)
+    void StopCharge()
     {
-
         chargingSound.Stop();
         isCharging = false;
         if (chargeEnergy >= maxCharge)
         {
             chargedSound.Stop();
-            shotDelegate();            
-            
+            shotDelegate();
+
         }
         chargeEnergy = 0;
-        testTimer = 0;
         chargeLight.intensity = 0;
-        //print(testTimer);
     }
+
+    //void FireButtonStarted(InputAction.CallbackContext context)
+    //{
+    //    if (remainingDelay > 0) return;
+        
+    //    isCharging = true;
+    //    chargingSound.Play();
+    //}
+
+    //void FireButtonCanceled(InputAction.CallbackContext context)
+    //{
+
+    //    chargingSound.Stop();
+    //    isCharging = false;
+    //    if (chargeEnergy >= maxCharge)
+    //    {
+    //        chargedSound.Stop();
+    //        shotDelegate();            
+            
+    //    }
+    //    chargeEnergy = 0;
+    //    testTimer = 0;
+    //    chargeLight.intensity = 0;
+    //    //print(testTimer);
+    //}
 }
